@@ -21,7 +21,7 @@ public class AccountController {
 
     /**
      * Simple constructor that instantiates an AccountService object.
-     * @param accountService
+     * @param accountService The {@link AccountService} to use.
      */
     AccountController(AccountService accountService){
         this.accountService = accountService;
@@ -41,12 +41,26 @@ public class AccountController {
     /**
      * Called for the "/login" end point for POST method.  Uses form data to call the account servicer
      * and returns the result as JSON data to the front-end.
-     * @param credentials
+     * @param credentials The {@link LoginCredentials} to use.
      * @return
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public MockToken login(@RequestBody LoginCredentials credentials){
 
         return this.accountService.login(credentials);
+    }
+
+    /**
+     * Will request the userName of the user from the front-end and use it to send in to the service in order
+     * to delete the token and log out the user.  As of right now, this method does not have that capability
+     * to do this.  Validation will also be used here but we have no way of actually doing this presently, until
+     * we get AD information.
+     * @param userName
+     * @return This is going to return a message that lets the user know that the logout has been successful or not.
+     */
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    public String logout(@RequestBody String userName){
+
+        return this.accountService.logout(userName);
     }
 }

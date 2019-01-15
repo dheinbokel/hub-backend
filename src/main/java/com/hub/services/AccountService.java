@@ -26,4 +26,18 @@ public class AccountService {
         }
         return null; //would actually need to return an error, but for now, it will just return null
     }
+
+    /**
+     * Logs out the user.  Finds and deletes the token from AD.  The front end will pass in the userName
+     * of the user and search for the token based on that and deletes it to logout the user.
+     * @param userName
+     * @return
+     */
+    public String logout(String userName){
+
+        //This method will also delete the token off the server searching for the token using the userName
+        //being passed into it.  Since we don't have any way of using AD at the moment, we just return a success
+        //message that will be returned in the form of a String.
+        return "Logout Successful";
+    }
 }
