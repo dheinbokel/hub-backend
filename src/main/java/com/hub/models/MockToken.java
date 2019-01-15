@@ -1,4 +1,4 @@
-package models;
+package com.hub.models;
 
 /**
  * This class represents a fake token from Active Directory.  The fields represent what will be
