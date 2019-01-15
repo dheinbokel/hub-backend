@@ -1,0 +1,56 @@
+/**
+ * Built script is what runs first when building the project.
+ */
+buildscript {
+    /**
+     * mavenCentral is where our Gradle build script looks for the dependencies needed for our project,
+     * such as, Spring Boot.
+     */
+    repositories {
+        mavenCentral()
+    }
+    /**
+     * A dependency is a JAR file that contains all of the code behind the library Spring Boot).
+     * The class path determines the specific name and version of the file we need.
+     */
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.5.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+/**
+ * These are the details of our current deliverable (artifact).
+ */
+bootJar {
+    baseName = 'hub-back-end'
+    version =  '0.1.0'
+}
+
+/**
+ * Same as above.
+ */
+repositories {
+    mavenCentral()
+}
+
+/**
+ * Java version of our deliverable (this is Java 11 which switched to using year and month of
+ * release in their naming convention).
+ */
+sourceCompatibility = 18.9
+targetCompatibility = 18.9
+
+/**
+ * The dependencies of our dependency.  So, an example would be that our project relies on Spring Boot,
+ * and then Spring Boot has its own dependencies that we need to grab.
+ */
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
