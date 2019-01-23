@@ -43,8 +43,8 @@ repositories {
  * Java version of our deliverable (this is Java 11 which switched to using year and month of
  * release in their naming convention).
  */
-sourceCompatibility = 18.9
-targetCompatibility = 18.9
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 /**
  * The dependencies of our dependency.  So, an example would be that our project relies on Spring Boot,
@@ -52,5 +52,10 @@ targetCompatibility = 18.9
  */
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    //compile("com.h2database:h2")
+    compile 'mysql:mysql-connector-java'
+    //compile 'javax.xml.bind:jaxb-api:2.3.0'
     testCompile('org.springframework.boot:spring-boot-starter-test')
+    //testCompile("junit:junit")
 }
