@@ -21,8 +21,8 @@ public class AccountService {
     public MockToken login(LoginCredentials credentials){
 
         if(credentials != null) {
-            return new MockToken("dheinbokel", "Doug",
-                    "Heinbokel", "Back End", "Cool guy");
+            return new MockToken("jdoe", "John",
+                    "Doe", "Back End", "admin");
         }
         return null; //would actually need to return an error, but for now, it will just return null
     }

@@ -4,10 +4,7 @@ import com.hub.daos.ContentRepository;
 import com.hub.models.Content;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * This class was created by Doug Heinbokel on 1/20/19.  The purpose of this class is to
@@ -16,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * be called for different user needs.  @Controller lets Spring know that this class
  * is a controller and will listen for HTTP requests.
  */
+@CrossOrigin(maxAge = 3600)
 @Controller
 @RequestMapping(value = "/content")
 public class ContentController {

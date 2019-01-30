@@ -2,17 +2,15 @@ package com.hub.controllers;
 
 import com.hub.models.LoginCredentials;
 import com.hub.models.MockToken;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 import com.hub.services.AccountService;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * This class handles account actions such as logging in and out.  Takes in HTTP requests (such as
  * those that come from the Angular front end app) and returns a response to the requester.
  * @author Doug Heinbokel on 1/14/19
  */
+@CrossOrigin(maxAge = 3600)
 @RestController
 @RequestMapping("/accounts")
 public class AccountController {
