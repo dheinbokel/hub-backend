@@ -47,6 +47,7 @@ public class ContentController {
      * @param isActive
      * @return
      */
+    /*
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public @ResponseBody String addContent(@RequestParam String content, @RequestParam String contentName,
                                            @RequestParam String contentTpye, @RequestParam String createDate,
@@ -60,5 +61,5 @@ public class ContentController {
         p.setActive(isActive);
         contentRepository.save(p);
         return "Saved";
-    }
+    }*/
 }

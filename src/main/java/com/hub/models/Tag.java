@@ -1,6 +1,8 @@
 package com.hub.models;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * This class represents a tag that can be applied to a piece of content. The Entity tag lets spring know that it will
@@ -23,6 +25,12 @@ public class Tag {
     private Integer tagID;
     @Column(name = "TAG_NAME")
     private String tagName;
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                CascadeType.PERSIST, CascadeType.MERGE
+            },
+            mappedBy = "tags")
+    private Set<Article> articles = new HashSet<>();
 
     /**
      * Simple default constructor for the Tag class.
@@ -48,5 +56,13 @@ public class Tag {
 
     public void setTagName(String tagName) {
         this.tagName = tagName;
+    }
+
+    public Set<Article> getArticles() {
+        return articles;
+    }
+
+    public void setArticles(Set<Article> articles) {
+        this.articles = articles;
     }
 }

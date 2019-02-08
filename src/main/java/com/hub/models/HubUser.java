@@ -1,6 +1,8 @@
 package com.hub.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class represents the user of the Hub.  After logging in, this information will be sent to the front end to keep
@@ -23,6 +25,8 @@ public class HubUser {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "USER_ID")
     private Integer userID;
+    @Column(name = "USERNAME")
+    private String userName;
     @Column(name = "PASSWORD")
     private String hubPassword;
     @Column(name = "EMAIL")
@@ -37,6 +41,9 @@ public class HubUser {
     private Integer frID;
     @Column(name = "PERMISSIONS_ID")
     private Integer prmID;
+    @OneToMany
+    @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
+    private List<Comments> userComments = new ArrayList<>();
 
     /**
      * Simple default constructor for the class.
@@ -110,5 +117,21 @@ public class HubUser {
 
     public void setPrmID(Integer prmID) {
         this.prmID = prmID;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public List<Comments> getUserComments() {
+        return userComments;
+    }
+
+    public void setUserComments(List<Comments> userComments) {
+        this.userComments = userComments;
     }
 }

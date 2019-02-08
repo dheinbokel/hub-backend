@@ -1,6 +1,7 @@
 package com.hub.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,7 +26,7 @@ public class Department {
     private String dptName;
     @OneToMany
     @JoinColumn(name = "DEPARTMENT_ID", referencedColumnName = "DEPARTMENT_ID")
-    private List<HubUser> hubUsers;
+    private List<HubUser> hubUsers = new ArrayList<>();
 
     /**
      * Default constructor, needed for spring to interact with entity.

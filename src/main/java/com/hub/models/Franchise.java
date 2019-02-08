@@ -1,6 +1,7 @@
 package com.hub.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,7 +28,7 @@ public class Franchise {
     private String frLocation;
     @OneToMany
     @JoinColumn(name = "FRANCHISE_ID", referencedColumnName = "FRANCHISE_ID")
-    private List<HubUser> hubUsers;
+    private List<HubUser> hubUsers = new ArrayList<>();
 
     /**
      * A simple default constructor for the Franchise class.
