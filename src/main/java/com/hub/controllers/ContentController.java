@@ -40,26 +40,13 @@ public class ContentController {
     /**
      * End point is called when the user would like to add content to the database.  Requests
      * fields to be sent in and then the object is saved to the database.
-     * @param content
-     * @param contentName
-     * @param contentTpye
-     * @param createDate
-     * @param isActive
-     * @return
      */
-    /*
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public @ResponseBody String addContent(@RequestParam String content, @RequestParam String contentName,
-                                           @RequestParam String contentTpye, @RequestParam String createDate,
-                                           @RequestParam boolean isActive){
 
-        Content p = new Content();
-        p.setContent(content);
-        p.setContentName(contentName);
-        p.setContentType(contentTpye);
-        p.setCreateDate(createDate);
-        p.setActive(isActive);
-        contentRepository.save(p);
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    public @ResponseBody String addContent(@RequestBody Content content){
+
+
+        contentRepository.save(content);
         return "Saved";
-    }*/
+    }
 }

@@ -1,6 +1,8 @@
 package com.hub.models;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * This class represents groups.  (come back with a better explanation).
@@ -24,6 +26,12 @@ public class Groups {
     private Integer groupID;
     @Column(name = "GROUP_NAME")
     private String groupName;
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST, CascadeType.MERGE
+            },
+            mappedBy = "groups")
+    private Set<HubUser> hubUsers = new HashSet<>();
 
     /**
      * Simple default constructor for the Groups class.
@@ -49,5 +57,13 @@ public class Groups {
 
     public void setGroupName(String groupName) {
         this.groupName = groupName;
+    }
+
+    public Set<HubUser> getHubUsers() {
+        return hubUsers;
+    }
+
+    public void setHubUsers(Set<HubUser> hubUsers) {
+        this.hubUsers = hubUsers;
     }
 }

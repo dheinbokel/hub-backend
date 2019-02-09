@@ -31,6 +31,12 @@ public class Tag {
             },
             mappedBy = "tags")
     private Set<Article> articles = new HashSet<>();
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST, CascadeType.MERGE
+            },
+            mappedBy = "tags")
+    private Set<HubUser> hubUsers = new HashSet<>();
 
     /**
      * Simple default constructor for the Tag class.
@@ -64,5 +70,13 @@ public class Tag {
 
     public void setArticles(Set<Article> articles) {
         this.articles = articles;
+    }
+
+    public Set<HubUser> getHubUsers() {
+        return hubUsers;
+    }
+
+    public void setHubUsers(Set<HubUser> hubUsers) {
+        this.hubUsers = hubUsers;
     }
 }

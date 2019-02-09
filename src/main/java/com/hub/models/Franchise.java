@@ -29,6 +29,9 @@ public class Franchise {
     @OneToMany
     @JoinColumn(name = "FRANCHISE_ID", referencedColumnName = "FRANCHISE_ID")
     private List<HubUser> hubUsers = new ArrayList<>();
+    @OneToMany
+    @JoinColumn(name = "FRANCHISE_ID", referencedColumnName = "FRANCHISE_ID")
+    private List<HubEvent> hubEvents = new ArrayList<>();
 
     /**
      * A simple default constructor for the Franchise class.
@@ -70,5 +73,13 @@ public class Franchise {
 
     public void setHubUsers(List<HubUser> hubUsers) {
         this.hubUsers = hubUsers;
+    }
+
+    public List<HubEvent> getHubEvents() {
+        return hubEvents;
+    }
+
+    public void setHubEvents(List<HubEvent> hubEvents) {
+        this.hubEvents = hubEvents;
     }
 }

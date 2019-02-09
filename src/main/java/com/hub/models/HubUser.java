@@ -1,8 +1,13 @@
 package com.hub.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * This class represents the user of the Hub.  After logging in, this information will be sent to the front end to keep
@@ -12,6 +17,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "HUB_USER")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class HubUser {
 
     /**
@@ -25,25 +31,59 @@ public class HubUser {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "USER_ID")
     private Integer userID;
+
+    @NotNull
     @Column(name = "USERNAME")
     private String userName;
+
+    @NotNull
     @Column(name = "PASSWORD")
     private String hubPassword;
+
+    @NotNull
     @Column(name = "EMAIL")
     private String email;
+
+    @NotNull
     @Column(name = "FIRST_NAME")
     private String fName;
+
+    @NotNull
     @Column(name = "LAST_NAME")
     private String lName;
+
     @Column(name = "DEPARTMENT_ID")
     private Integer dptID;
+
     @Column(name = "FRANCHISE_ID")
     private Integer frID;
+
     @Column(name = "PERMISSIONS_ID")
     private Integer prmID;
+
     @OneToMany
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
     private List<Comments> userComments = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(name = "SUBSCRIPTIONS",
+            joinColumns = { @JoinColumn(name = "USER_ID") },
+            inverseJoinColumns = { @JoinColumn(name = "TAG_ID") })
+    private Set<Tag> tags = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(name = "USER_GROUPS",
+            joinColumns = { @JoinColumn(name = "USER_ID") },
+            inverseJoinColumns = { @JoinColumn(name = "GROUP_ID") })
+    private Set<Groups> groups = new HashSet<>();
 
     /**
      * Simple default constructor for the class.
@@ -133,5 +173,21 @@ public class HubUser {
 
     public void setUserComments(List<Comments> userComments) {
         this.userComments = userComments;
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public Set<Groups> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(Set<Groups> groups) {
+        this.groups = groups;
     }
 }

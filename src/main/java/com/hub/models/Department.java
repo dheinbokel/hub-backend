@@ -27,6 +27,9 @@ public class Department {
     @OneToMany
     @JoinColumn(name = "DEPARTMENT_ID", referencedColumnName = "DEPARTMENT_ID")
     private List<HubUser> hubUsers = new ArrayList<>();
+    @OneToMany
+    @JoinColumn(name = "DEPARTMENT_ID", referencedColumnName = "DEPARTMENT_ID")
+    private List<HubEvent> hubEvents = new ArrayList<>();
 
     /**
      * Default constructor, needed for spring to interact with entity.
@@ -60,6 +63,14 @@ public class Department {
 
     public void setHubUsers(List<HubUser> hubUsers) {
         this.hubUsers = hubUsers;
+    }
+
+    public List<HubEvent> getHubEvents() {
+        return hubEvents;
+    }
+
+    public void setHubEvents(List<HubEvent> hubEvents) {
+        this.hubEvents = hubEvents;
     }
 }
 
