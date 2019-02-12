@@ -8,14 +8,14 @@ public class Comments {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "CONTENT_ID")
-    private Integer contentID;
+    @Column(name = "COMMENT_ID")
+    private Integer commentID;
     @Column(name = "COMMENT")
     private String comment;
     @Column(name = "CREATE_DATE")
     private String createDate;
-    @Column(name = "ARTICLE_ID")
-    private Integer articleID;
+    @Column(name = "CONTENT_ID")
+    private Integer contentID;
     @Column(name = "USER_ID")
     private Integer userID;
 
@@ -26,12 +26,13 @@ public class Comments {
     /**
      * Getters and setters for the comments class.
      */
-    public Integer getContentID() {
-        return contentID;
+
+    public Integer getCommentID() {
+        return commentID;
     }
 
-    public void setContentID(Integer contentID) {
-        this.contentID = contentID;
+    public void setCommentID(Integer commentID) {
+        this.commentID = commentID;
     }
 
     public String getComment() {
@@ -50,12 +51,12 @@ public class Comments {
         this.createDate = createDate;
     }
 
-    public Integer getArticleID() {
-        return articleID;
+    public Integer getContentID() {
+        return contentID;
     }
 
-    public void setArticleID(Integer articleID) {
-        this.articleID = articleID;
+    public void setContentID(Integer contentID) {
+        this.contentID = contentID;
     }
 
     public Integer getUserID() {

@@ -75,16 +75,6 @@ public class HubUser {
             inverseJoinColumns = { @JoinColumn(name = "TAG_ID") })
     private Set<Tag> tags = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            })
-    @JoinTable(name = "USER_GROUPS",
-            joinColumns = { @JoinColumn(name = "USER_ID") },
-            inverseJoinColumns = { @JoinColumn(name = "GROUP_ID") })
-    private Set<Groups> groups = new HashSet<>();
-
     /**
      * Simple default constructor for the class.
      */
@@ -183,11 +173,4 @@ public class HubUser {
         this.tags = tags;
     }
 
-    public Set<Groups> getGroups() {
-        return groups;
-    }
-
-    public void setGroups(Set<Groups> groups) {
-        this.groups = groups;
-    }
 }

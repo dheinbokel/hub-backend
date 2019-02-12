@@ -30,7 +30,7 @@ public class Tag {
                 CascadeType.PERSIST, CascadeType.MERGE
             },
             mappedBy = "tags")
-    private Set<Article> articles = new HashSet<>();
+    private Set<Content> contents = new HashSet<>();
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST, CascadeType.MERGE
@@ -48,6 +48,7 @@ public class Tag {
     /**
      * Getters and setters for the Tag class.
      */
+
     public Integer getTagID() {
         return tagID;
     }
@@ -64,12 +65,12 @@ public class Tag {
         this.tagName = tagName;
     }
 
-    public Set<Article> getArticles() {
-        return articles;
+    public Set<Content> getContents() {
+        return contents;
     }
 
-    public void setArticles(Set<Article> articles) {
-        this.articles = articles;
+    public void setContents(Set<Content> contents) {
+        this.contents = contents;
     }
 
     public Set<HubUser> getHubUsers() {

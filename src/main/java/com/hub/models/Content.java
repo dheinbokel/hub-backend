@@ -8,6 +8,10 @@
 package com.hub.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "CONTENT")
@@ -23,12 +27,20 @@ public class Content {
     private Integer contentID;
     @Column(name = "CONTENT_LOCATION")
     private String contentLocation;
-    @Column(name = "CONTENT_TYPE")
-    private String contentType;
-    @Column(name = "ARTICLE_POS")
-    private String articlePosition;
-    @Column(name = "ARTICLE_ID")
-    private Integer articleID;
+    @Column(name = "DATE_CREATED")
+    private String createDate;
+    @Column(name = "ACTIVE")
+    private boolean isActive;
+    @OneToMany
+    @JoinColumn(name = "CONTENT_ID", referencedColumnName = "CONTENT_ID")
+    private List<Comments> contentComments = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "ARTICLE_TAGS",
+            joinColumns = {@JoinColumn(name = "CONTENT_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "TAG_ID")})
+    private Set<Tag> tags = new HashSet<>();
+
 
     public Content(){
         
@@ -37,6 +49,7 @@ public class Content {
     /**
      * Getters and Setters for the Content entity.
      */
+
     public Integer getContentID() {
         return contentID;
     }
@@ -53,27 +66,35 @@ public class Content {
         this.contentLocation = contentLocation;
     }
 
-    public String getContentType() {
-        return contentType;
+    public String getCreateDate() {
+        return createDate;
     }
 
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
     }
 
-    public String getArticlePosition() {
-        return articlePosition;
+    public boolean isActive() {
+        return isActive;
     }
 
-    public void setArticlePosition(String articlePosition) {
-        this.articlePosition = articlePosition;
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
-    public Integer getArticleID() {
-        return articleID;
+    public List<Comments> getContentComments() {
+        return contentComments;
     }
 
-    public void setArticleID(Integer articleID) {
-        this.articleID = articleID;
+    public void setContentComments(List<Comments> contentComments) {
+        this.contentComments = contentComments;
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
     }
 }
