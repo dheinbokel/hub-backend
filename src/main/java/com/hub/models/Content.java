@@ -41,6 +41,13 @@ public class Content {
             inverseJoinColumns = {@JoinColumn(name = "TAG_ID")})
     private Set<Tag> tags = new HashSet<>();
 
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST, CascadeType.MERGE
+            },
+            mappedBy = "contents")
+    private Set<HubUser> hubUsers = new HashSet<>();
+
 
     public Content(){
         
