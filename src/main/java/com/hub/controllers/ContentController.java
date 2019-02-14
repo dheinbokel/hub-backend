@@ -3,7 +3,6 @@ package com.hub.controllers;
 import com.hub.daos.ContentRepository;
 import com.hub.models.Content;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
  * is a controller and will listen for HTTP requests.
  */
 @CrossOrigin(maxAge = 3600)
-@Controller
+@RestController
 @RequestMapping(value = "/content")
 public class ContentController {
 
@@ -41,7 +40,6 @@ public class ContentController {
      * End point is called when the user would like to add content to the database.  Requests
      * fields to be sent in and then the object is saved to the database.
      */
-
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public @ResponseBody String addContent(@RequestBody Content content){
 
