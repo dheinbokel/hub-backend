@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @CrossOrigin(maxAge = 3600)
 @RestController
-@RequestMapping("/accounts")
+@RequestMapping(value = "/accounts")
 public class AccountController {
 
     private AccountService accountService;

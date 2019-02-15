@@ -24,10 +24,10 @@ public class Department {
     private Integer dptID;
     @Column(name = "DPT_NAME")
     private String dptName;
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "DEPARTMENT_ID", referencedColumnName = "DEPARTMENT_ID")
     private List<HubUser> hubUsers = new ArrayList<>();
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "DEPARTMENT_ID", referencedColumnName = "DEPARTMENT_ID")
     private List<HubEvent> hubEvents = new ArrayList<>();
 
