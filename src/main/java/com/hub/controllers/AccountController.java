@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
  * those that come from the Angular front end app) and returns a response to the requester.
  * @author Doug Heinbokel on 1/14/19
  */
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
 @RequestMapping(value = "/accounts")
 public class AccountController {
