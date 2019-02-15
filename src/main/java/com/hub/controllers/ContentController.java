@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
  * be called for different user needs.  @Controller lets Spring know that this class
  * is a controller and will listen for HTTP requests.
  */
+@CrossOrigin(origins = "*", allowCredentials = "true", allowedHeaders = "*")
 @RestController
 @RequestMapping(value = "/content")
 public class ContentController {
