@@ -1,9 +1,12 @@
 package com.hub.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "HUB_EVENT")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class HubEvent {
 
     @Id
