@@ -43,7 +43,6 @@ public class ContentController {
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public @ResponseBody String addContent(@RequestBody Content content){
 
-
         contentRepository.save(content);
         return "Saved";
     }

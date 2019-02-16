@@ -1,9 +1,9 @@
 package com.hub.daos;
 
 import com.hub.models.Franchise;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FranchiseRepository extends CrudRepository<Franchise, Integer> {
+public interface FranchiseRepository extends JpaRepository<Franchise, Integer> {
 }
