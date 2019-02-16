@@ -22,7 +22,7 @@ public class Content {
 
     /**
      * These are the fields for the entity.  They mirror the column names in the database
-     * for the Content table.  The final field is the foreign key that relates to the article tables primary key.
+     * for the Content table. The final field is the foreign key that relates to the article tables primary key.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
