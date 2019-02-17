@@ -36,4 +36,16 @@ public class BusinessInfoController {
     public Franchise getFranchiseById(@PathVariable(value = "id") Integer frID){
         return franchiseRepository.getOne(frID);
     }
+
+    @RequestMapping(value = "/departments/add", method = RequestMethod.POST)
+    public @ResponseBody Department addDepartment(@RequestBody Department department){
+        departmentRepository.save(department);
+        return department;
+    }
+
+    @RequestMapping(value = "/franchises/add", method = RequestMethod.POST)
+    public @ResponseBody Franchise addFranchise(@RequestBody Franchise franchise){
+        franchiseRepository.save(franchise);
+        return franchise;
+    }
 }
