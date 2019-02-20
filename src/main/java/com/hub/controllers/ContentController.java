@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
  */
 @CrossOrigin(origins = "*", allowCredentials = "true", allowedHeaders = "*")
 @RestController
-@RequestMapping(value = "/content")
 public class ContentController {
 
     @Autowired
@@ -31,19 +30,30 @@ public class ContentController {
      * database.  It sends back the entire list as JSON.
      * @return Iterable<Content>
      */
-    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    @RequestMapping(value = "/content", method = RequestMethod.GET)
     public @ResponseBody Iterable<Content> getAllContent(){
         return contentRepository.findAll();
+    }
+
+    /**
+     * End point is called when a user would like to get a particular piece of content by its id.  The user must provide
+     * an id that they would like to search by.
+     * @param contentID
+     * @return
+     */
+    @RequestMapping(value = "/content/{id}", method = RequestMethod.GET)
+    public Content getContentById(@PathVariable(value = "id") Integer contentID){
+        return contentRepository.getOne(contentID);
     }
 
     /**
      * End point is called when the user would like to add content to the database.  Requests
      * fields to be sent in and then the object is saved to the database.
      */
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public @ResponseBody String addContent(@RequestBody Content content){
+    @RequestMapping(value = "/content/add", method = RequestMethod.GET)
+    public @ResponseBody Content addContent(@RequestBody Content content){
 
         contentRepository.save(content);
-        return "Saved";
+        return content;
     }
 }

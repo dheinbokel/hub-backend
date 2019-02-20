@@ -1,10 +1,9 @@
 package com.hub.controllers;
 
 import com.hub.daos.UsersRepository;
+import com.hub.models.HubUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*", allowCredentials = "true", allowedHeaders = "*")
 @RestController
@@ -14,5 +13,19 @@ public class UserController {
     @Autowired
     private UsersRepository usersRepository;
 
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public @ResponseBody HubUser addUser(@RequestBody HubUser hubUser){
+        usersRepository.save(hubUser);
+        return hubUser;
+    }
 
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    public @ResponseBody Iterable<HubUser> getAllUsers(){
+        return usersRepository.findAll();
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public HubUser getUserById(@PathVariable(value = "id")Integer userID){
+        return usersRepository.getOne(userID);
+    }
 }
