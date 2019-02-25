@@ -50,7 +50,7 @@ public class ContentController {
      * End point is called when the user would like to add content to the database.  Requests
      * fields to be sent in and then the object is saved to the database.
      */
-    @RequestMapping(value = "/content/add", method = RequestMethod.GET)
+    @RequestMapping(value = "/content/add", method = RequestMethod.POST)
     public @ResponseBody Content addContent(@RequestBody Content content){
 
         contentRepository.save(content);
