@@ -5,6 +5,8 @@ import com.hub.models.Content;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 /**
  * This class was created by Doug Heinbokel on 1/20/19.  The purpose of this class is to
  * listen for calls from the front end with regard to content creation.  When the front
@@ -42,8 +44,8 @@ public class ContentController {
      * @return
      */
     @RequestMapping(value = "/content/{id}", method = RequestMethod.GET)
-    public Content getContentById(@PathVariable(value = "id") Integer contentID){
-        return contentRepository.getOne(contentID);
+    public Optional<Content> getContentById(@PathVariable(value = "id") Integer contentID){
+        return contentRepository.findById(contentID);
     }
 
     /**

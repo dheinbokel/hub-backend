@@ -5,6 +5,8 @@ import com.hub.models.HubUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @CrossOrigin(origins = "*", allowCredentials = "true", allowedHeaders = "*")
 @RestController
 @RequestMapping(value = "/users")
@@ -25,7 +27,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public HubUser getUserById(@PathVariable(value = "id")Integer userID){
-        return usersRepository.getOne(userID);
+    public Optional<HubUser> getUserById(@PathVariable(value = "id")Integer userID){
+        return usersRepository.findById(userID);
     }
 }
