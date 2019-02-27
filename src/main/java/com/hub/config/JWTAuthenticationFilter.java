@@ -31,18 +31,24 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res) throws AuthenticationException {
         try{
             HubUser credentials = new ObjectMapper().readValue(req.getInputStream(), HubUser.class);
-            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(credentials.getUserName(), credentials.getHubPassword(), new ArrayList<>()));
+            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(credentials.getUserName(), credentials.getPassword(), new ArrayList<>()));
         }catch (IOException e){
             throw new RuntimeException(e);
         }
     }
     @Override
     protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain, Authentication authentication) throws IOException, ServletException{
-        String token = JWT.create()
-                .withSubject(((User)authentication.getPrincipal()).getUsername())
+
+        User user = (User) authentication.getPrincipal();
+
+        String token = JWT.create().withSubject(user.getUsername()).withNotBefore(new Date())
+                .withClaim("userName", user.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstants.EXPERATION_TIME))
                 .sign(Algorithm.HMAC512(SecurityConstants.SECRET.getBytes()));
+
         res.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + token);
         res.addHeader("Access-Control-Expose-Headers", "Authorization");
+
+        res.getWriter().write("{\"" + SecurityConstants.HEADER_STRING + "\":\"" + token + "\"}");
     }
 }

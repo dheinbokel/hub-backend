@@ -38,7 +38,7 @@ public class HubUser {
 
     @NotNull
     @Column(name = "PASSWORD")
-    private String hubPassword;
+    private String password;
 
     @NotNull
     @Column(name = "EMAIL")
@@ -103,12 +103,12 @@ public class HubUser {
         this.userID = userID;
     }
 
-    public String getHubPassword() {
-        return hubPassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setHubPassword(String hubPassword) {
-        this.hubPassword = hubPassword;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getEmail() {

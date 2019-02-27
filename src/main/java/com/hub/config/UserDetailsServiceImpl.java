@@ -22,11 +22,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException{
 
-        HubUser hubUser = usersRepository.findByUsername(userName);
+        HubUser hubUser = usersRepository.findByUserName(userName);
 
         if(hubUser == null){
             throw new UsernameNotFoundException(userName);
         }
-        return new User(hubUser.getUserName(), hubUser.getHubPassword(), new ArrayList<>());
+        return new User(hubUser.getUserName(), hubUser.getPassword(), new ArrayList<>());
     }
 }
