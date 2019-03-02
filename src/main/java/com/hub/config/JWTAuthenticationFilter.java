@@ -3,6 +3,7 @@ package com.hub.config;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hub.daos.UsersRepository;
 import com.hub.models.HubUser;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,9 +23,11 @@ import java.util.Date;
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private AuthenticationManager authenticationManager;
+    private UsersRepository usersRepository;
 
-    JWTAuthenticationFilter(AuthenticationManager authenticationManager){
+    JWTAuthenticationFilter(AuthenticationManager authenticationManager, UsersRepository usersRepository){
         this.authenticationManager = authenticationManager;
+        this.usersRepository = usersRepository;
     }
 
     @Override
@@ -41,8 +44,18 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         User user = (User) authentication.getPrincipal();
 
-        String token = JWT.create().withSubject(user.getUsername()).withNotBefore(new Date())
-                .withClaim("userName", user.getUsername())
+        HubUser hubUser = usersRepository.findByUserName(user.getUsername());
+
+        String token = JWT.create().withSubject(hubUser.getUserName())
+                .withNotBefore(new Date())
+                .withClaim("userName", hubUser.getUserName())
+                .withClaim("userID", hubUser.getUserID())
+                .withClaim("email", hubUser.getEmail())
+                .withClaim("fName", hubUser.getfName())
+                .withClaim("lName", hubUser.getlName())
+                .withClaim("dptID", hubUser.getDptID())
+                .withClaim("frID", hubUser.getFrID())
+                .withClaim("prmID", hubUser.getPrmID())
                 .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstants.EXPERATION_TIME))
                 .sign(Algorithm.HMAC512(SecurityConstants.SECRET.getBytes()));
 
