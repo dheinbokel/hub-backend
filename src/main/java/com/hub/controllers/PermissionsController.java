@@ -1,24 +1,30 @@
 package com.hub.controllers;
 
-import com.hub.daos.PermissionsRepository;
 import com.hub.models.HubPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.hub.services.PermissionService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @CrossOrigin(origins = "*", allowCredentials = "true", allowedHeaders = "*")
 @RestController
 public class PermissionsController {
 
-    @Autowired
-    private PermissionsRepository permissionsRepository;
+    private PermissionService permissionService;
+
+    PermissionsController(PermissionService permissionService){
+        this.permissionService = permissionService;
+    }
 
     @RequestMapping(value = "/permissions", method = RequestMethod.GET)
     public @ResponseBody Iterable<HubPermissions> getAllPermissions(){
-        return permissionsRepository.findAll();
+        return permissionService.getAllPermissions();
     }
 
     @RequestMapping(value = "/permissions/{id}", method = RequestMethod.GET)
-    public HubPermissions getPermissionById(@PathVariable(value = "id") Integer prmID){
-        return permissionsRepository.getOne(prmID);
+    public Optional<HubPermissions> getPermissionById(@PathVariable(value = "id") Integer prmID){
+        return permissionService.findPermissionById(prmID);
     }
+
+
 }

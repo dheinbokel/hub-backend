@@ -1,6 +1,6 @@
 package com.hub.config;
 
-import javassist.NotFoundException;
+import com.hub.exceptions.HubNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -78,13 +78,13 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Handles the NotFoundException
+     * Handles the HubNotFoundException
      * @param e the exception being handled
      * @return The {@Link ErrorInfo} to return 404.
      */
-    @ExceptionHandler(NotFoundException.class)
+    @ExceptionHandler(HubNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    static ErrorInfo handleNotFoundException(NotFoundException e){
+    static ErrorInfo handleHubNotFoundException(HubNotFoundException e){
 
         return new ErrorInfo(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND.getReasonPhrase(), e.getMessage());
     }
