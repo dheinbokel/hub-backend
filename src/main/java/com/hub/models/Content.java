@@ -28,15 +28,20 @@ public class Content {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "CONTENT_ID")
     private Integer contentID;
+
     @Column(name = "CONTENT_LOCATION")
     private String contentLocation;
+
     @Column(name = "DATE_CREATED")
     private String createDate;
+
     @Column(name = "ACTIVE")
     private boolean isActive;
+
     @OneToMany
     @JoinColumn(name = "CONTENT_ID", referencedColumnName = "CONTENT_ID")
     private List<Comments> contentComments = new ArrayList<>();
+
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "ARTICLE_TAGS",
@@ -44,12 +49,16 @@ public class Content {
             inverseJoinColumns = {@JoinColumn(name = "TAG_ID")})
     private Set<Tag> tags = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST, CascadeType.MERGE
-            },
-            mappedBy = "contents")
-    private Set<HubUser> hubUsers = new HashSet<>();
+    @OneToMany
+    @JoinColumn(name = "CONTENT_ID", referencedColumnName = "CONTENT_ID")
+    private List<Like> likes = new ArrayList<>();
+
+//    @ManyToMany(fetch = FetchType.LAZY,
+//            cascade = {
+//                    CascadeType.PERSIST, CascadeType.MERGE
+//            },
+//            mappedBy = "contents")
+//    private Set<HubUser> hubUsers = new HashSet<>();
 
 
     public Content(){
@@ -108,11 +117,19 @@ public class Content {
         this.tags = tags;
     }
 
-    public Set<HubUser> getHubUsers() {
-        return hubUsers;
+    public List<Like> getLikes() {
+        return likes;
     }
 
-    public void setHubUsers(Set<HubUser> hubUsers) {
-        this.hubUsers = hubUsers;
+    public void setLikes(List<Like> likes) {
+        this.likes = likes;
     }
+
+    //    public Set<HubUser> getHubUsers() {
+//        return hubUsers;
+//    }
+//
+//    public void setHubUsers(Set<HubUser> hubUsers) {
+//        this.hubUsers = hubUsers;
+//    }
 }

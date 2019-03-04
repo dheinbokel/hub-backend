@@ -1,7 +1,8 @@
 package com.hub.controllers;
 
-import com.hub.daos.ContentRepository;
 import com.hub.models.Content;
+import com.hub.models.Like;
+import com.hub.services.ContentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ import java.util.Optional;
 public class ContentController {
 
     @Autowired
-    private ContentRepository contentRepository;
+    private ContentService contentService;
 
     /*
     ContentController(ContentRepository contentRepository){
@@ -34,7 +35,7 @@ public class ContentController {
      */
     @RequestMapping(value = "/content", method = RequestMethod.GET)
     public @ResponseBody Iterable<Content> getAllContent(){
-        return contentRepository.findAll();
+        return contentService.findAllContent();
     }
 
     /**
@@ -45,7 +46,7 @@ public class ContentController {
      */
     @RequestMapping(value = "/content/{id}", method = RequestMethod.GET)
     public Optional<Content> getContentById(@PathVariable(value = "id") Integer contentID){
-        return contentRepository.findById(contentID);
+        return contentService.findContentById(contentID);
     }
 
     /**
@@ -55,7 +56,12 @@ public class ContentController {
     @RequestMapping(value = "/content/add", method = RequestMethod.POST)
     public @ResponseBody Content addContent(@RequestBody Content content){
 
-        contentRepository.save(content);
-        return content;
+        return contentService.addContent(content);
+    }
+
+    @RequestMapping(value = "/content/like/{userID}/{contentID}", method = RequestMethod.POST)
+    public @ResponseBody Like likeContent(@PathVariable(value = "userID") Integer userID, @PathVariable(value = "contentID") Integer contentID){
+
+        return contentService.likeContent(userID, contentID);
     }
 }
