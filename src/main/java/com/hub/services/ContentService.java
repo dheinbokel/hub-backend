@@ -32,7 +32,7 @@ public class ContentService {
         if(content.isPresent()){
             return content;
         }
-        throw new HubNotFoundException("Could not find permissions for permission ID: " + contentID);
+        throw new HubNotFoundException("Could not find content for contentID: " + contentID);
     }
 
     /**
@@ -55,7 +55,7 @@ public class ContentService {
         return  content;
     }
 
-    public Like likeContent(Integer userID, Integer contentID){
+    public void likeContent(Integer userID, Integer contentID){
 
         String user = userID.toString();
         String content = contentID.toString();
@@ -65,7 +65,6 @@ public class ContentService {
         Like newLike = new Like(likeID, userID, contentID);
         likeRepository.save(newLike);
 
-        return newLike;
     }
 
 }

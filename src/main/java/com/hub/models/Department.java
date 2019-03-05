@@ -25,11 +25,14 @@ public class Department {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "DEPARTMENT_ID")
     private Integer dptID;
+
     @Column(name = "DPT_NAME")
     private String dptName;
+
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "DEPARTMENT_ID", referencedColumnName = "DEPARTMENT_ID")
     private List<HubUser> hubUsers = new ArrayList<>();
+
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "DEPARTMENT_ID", referencedColumnName = "DEPARTMENT_ID")
     private List<HubEvent> hubEvents = new ArrayList<>();

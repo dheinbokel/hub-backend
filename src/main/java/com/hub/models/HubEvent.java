@@ -13,16 +13,22 @@ public class HubEvent {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "EVENT_ID")
     private Integer eventID;
+
     @Column(name = "DEPARTMENT_ID")
     private Integer dptID;
+
     @Column(name = "FRANCHISE_ID")
     private Integer frID;
+
     @Column(name = "EVENT_NAME")
     private String eventName;
+
     @Column(name = "EVENT_DETAILS")
     private String eventDetails;
+
     @Column(name = "START_DATE")
     private String startDate;
+
     @Column(name = "END_DATE")
     private String endDate;
 

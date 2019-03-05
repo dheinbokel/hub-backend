@@ -1,31 +1,36 @@
 package com.hub.controllers;
 
-import com.hub.daos.HubEventRepository;
 import com.hub.models.HubEvent;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.hub.services.EventService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @CrossOrigin(origins = "*", allowCredentials = "true", allowedHeaders = "*")
 @RestController
 @RequestMapping(value = "/events")
 public class HubEventController {
 
-    @Autowired
-    private HubEventRepository hubEventRepository;
+    private EventService eventService;
+
+    HubEventController(EventService eventService){
+
+        this.eventService = eventService;
+    }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public @ResponseBody Iterable<HubEvent> getAllEvents(){
-        return hubEventRepository.findAll();
+        return eventService.findAllEvents();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public @ResponseBody HubEvent getEventById(@PathVariable(value = "id")Integer eventID){
-        return hubEventRepository.getOne(eventID);
+    public Optional<HubEvent> getEventById(@PathVariable(value = "id")Integer eventID){
+        return eventService.findEventById(eventID);
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public @ResponseBody HubEvent addEvent(@RequestBody HubEvent hubEvent){
-        hubEventRepository.save(hubEvent);
+        eventService.addEvent(hubEvent);
         return hubEvent;
     }
 }

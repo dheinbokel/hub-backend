@@ -13,12 +13,16 @@ public class Comments {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "COMMENT_ID")
     private Integer commentID;
+
     @Column(name = "COMMENT")
     private String comment;
+
     @Column(name = "CREATE_DATE")
     private String createDate;
+
     @Column(name = "CONTENT_ID")
     private Integer contentID;
+
     @Column(name = "USER_ID")
     private Integer userID;
 

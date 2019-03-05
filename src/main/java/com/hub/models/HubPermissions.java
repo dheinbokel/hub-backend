@@ -25,10 +25,13 @@ public class HubPermissions {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "PERMISSIONS_ID")
     private Integer prmID;
+
     @Column(name = "CREATE_ITEM")
     private boolean createItem;
+
     @Column(name = "NAME")
     private String prmName;
+
     @OneToMany
     @JoinColumn(name = "PERMISSIONS_ID", referencedColumnName = "PERMISSIONS_ID")
     private List<HubUser> hubUsers = new ArrayList<>();

@@ -25,13 +25,17 @@ public class Franchise {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "FRANCHISE_ID")
     private Integer frID;
+
     @Column(name = "NAME")
     private String frName;
+
     @Column(name = "LOCATION")
     private String frLocation;
+
     @OneToMany
     @JoinColumn(name = "FRANCHISE_ID", referencedColumnName = "FRANCHISE_ID")
     private List<HubUser> hubUsers = new ArrayList<>();
+
     @OneToMany
     @JoinColumn(name = "FRANCHISE_ID", referencedColumnName = "FRANCHISE_ID")
     private List<HubEvent> hubEvents = new ArrayList<>();

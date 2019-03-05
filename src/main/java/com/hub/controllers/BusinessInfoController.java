@@ -1,51 +1,52 @@
 package com.hub.controllers;
 
-import com.hub.daos.DepartmentRepository;
-import com.hub.daos.FranchiseRepository;
 import com.hub.models.Department;
 import com.hub.models.Franchise;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.hub.services.BusinessInfoService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @CrossOrigin(origins = "*", allowCredentials = "true", allowedHeaders = "*")
 @RestController
 public class BusinessInfoController {
 
-    @Autowired
-    private DepartmentRepository departmentRepository;
+    private BusinessInfoService businessInfoService;
 
-    @Autowired
-    private FranchiseRepository franchiseRepository;
+    BusinessInfoController(BusinessInfoService businessInfoService){
+
+        this.businessInfoService = businessInfoService;
+    }
 
     @RequestMapping(value = "/departments", method = RequestMethod.GET)
     public @ResponseBody Iterable<Department> getAllDepartments(){
-        return departmentRepository.findAll();
+        return businessInfoService.findAllDepartments();
     }
 
     @RequestMapping(value = "/departments/{id}", method = RequestMethod.GET)
-    public Department getDepartmentById(@PathVariable(value = "id") Integer dptID){
-        return departmentRepository.getOne(dptID);
+    public Optional<Department> getDepartmentById(@PathVariable(value = "id") Integer dptID){
+        return businessInfoService.findDepartmentById(dptID);
     }
 
     @RequestMapping(value = "/franchises", method = RequestMethod.GET)
     public @ResponseBody Iterable<Franchise> getAllFranchises(){
-        return franchiseRepository.findAll();
+        return businessInfoService.findAllFranchises();
     }
 
     @RequestMapping(value = "/franchises/{id}", method = RequestMethod.GET)
-    public Franchise getFranchiseById(@PathVariable(value = "id") Integer frID){
-        return franchiseRepository.getOne(frID);
+    public Optional<Franchise> getFranchiseById(@PathVariable(value = "id") Integer frID){
+        return businessInfoService.findFranchiseById(frID);
     }
 
     @RequestMapping(value = "/departments/add", method = RequestMethod.POST)
     public @ResponseBody Department addDepartment(@RequestBody Department department){
-        departmentRepository.save(department);
+        businessInfoService.addDepartment(department);
         return department;
     }
 
     @RequestMapping(value = "/franchises/add", method = RequestMethod.POST)
     public @ResponseBody Franchise addFranchise(@RequestBody Franchise franchise){
-        franchiseRepository.save(franchise);
+        businessInfoService.addFranchise(franchise);
         return franchise;
     }
 }

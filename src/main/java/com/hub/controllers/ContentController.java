@@ -1,7 +1,6 @@
 package com.hub.controllers;
 
 import com.hub.models.Content;
-import com.hub.models.Like;
 import com.hub.services.ContentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -59,9 +58,15 @@ public class ContentController {
         return contentService.addContent(content);
     }
 
+    /**
+     * This endpoint is used when the user likes or attempts to like a piece of content.
+     * @param userID
+     * @param contentID
+     * @return
+     */
     @RequestMapping(value = "/content/like/{userID}/{contentID}", method = RequestMethod.POST)
-    public @ResponseBody Like likeContent(@PathVariable(value = "userID") Integer userID, @PathVariable(value = "contentID") Integer contentID){
+    public void likeContent(@PathVariable(value = "userID") Integer userID, @PathVariable(value = "contentID") Integer contentID){
 
-        return contentService.likeContent(userID, contentID);
+        contentService.likeContent(userID, contentID);
     }
 }

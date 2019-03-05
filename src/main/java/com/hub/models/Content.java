@@ -53,14 +53,6 @@ public class Content {
     @JoinColumn(name = "CONTENT_ID", referencedColumnName = "CONTENT_ID")
     private List<Like> likes = new ArrayList<>();
 
-//    @ManyToMany(fetch = FetchType.LAZY,
-//            cascade = {
-//                    CascadeType.PERSIST, CascadeType.MERGE
-//            },
-//            mappedBy = "contents")
-//    private Set<HubUser> hubUsers = new HashSet<>();
-
-
     public Content(){
         
     }
@@ -125,11 +117,4 @@ public class Content {
         this.likes = likes;
     }
 
-    //    public Set<HubUser> getHubUsers() {
-//        return hubUsers;
-//    }
-//
-//    public void setHubUsers(Set<HubUser> hubUsers) {
-//        this.hubUsers = hubUsers;
-//    }
 }

@@ -26,14 +26,17 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "TAG_ID")
     private Integer tagID;
+
     @Column(name = "TAG_NAME")
     private String tagName;
+
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                 CascadeType.PERSIST, CascadeType.MERGE
             },
             mappedBy = "tags")
     private Set<Content> contents = new HashSet<>();
+
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST, CascadeType.MERGE
