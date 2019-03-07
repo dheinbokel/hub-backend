@@ -2,6 +2,7 @@ package com.hub.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -34,12 +35,11 @@ public class HubUser {
     private Integer userID;
 
     @NotNull
-    @Column(name = "USERNAME")
+    @Column(name = "USERNAME", unique = true)
     private String userName;
 
     @NotNull
     @Column(name = "PASSWORD")
-    @JsonIgnore
     private String password;
 
     @NotNull
@@ -99,10 +99,12 @@ public class HubUser {
         this.userID = userID;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
 
+    @JsonProperty
     public void setPassword(String password) {
         this.password = password;
     }
