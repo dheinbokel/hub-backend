@@ -1,31 +1,36 @@
 package com.hub.controllers;
 
-import com.hub.daos.TagRepository;
 import com.hub.models.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.hub.services.TagService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @CrossOrigin(origins = "*", allowCredentials = "true", allowedHeaders = "*")
 @RestController
 @RequestMapping(value = "/tags")
 public class TagController {
 
-    @Autowired
-    private TagRepository tagRepository;
+    private TagService tagService;
+
+    TagController(TagService tagService){
+
+        this.tagService = tagService;
+    }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public @ResponseBody Iterable<Tag> getAllTags(){
-        return tagRepository.findAll();
+        return tagService.findAllTags();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public @ResponseBody Tag getTagById(@PathVariable(value = "id") Integer tagID){
-        return tagRepository.getOne(tagID);
+    public @ResponseBody Optional<Tag> getTagById(@PathVariable(value = "id") Integer tagID){
+        return tagService.findTagById(tagID);
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public @ResponseBody Tag addTag(@RequestBody Tag tag){
-        tagRepository.save(tag);
+        tagService.addTag(tag);
         return tag;
     }
 }

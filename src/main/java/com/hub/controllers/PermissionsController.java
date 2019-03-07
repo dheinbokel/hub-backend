@@ -22,7 +22,7 @@ public class PermissionsController {
     }
 
     @RequestMapping(value = "/permissions/{id}", method = RequestMethod.GET)
-    public Optional<HubPermissions> getPermissionById(@PathVariable(value = "id") Integer prmID){
+    public @ResponseBody Optional<HubPermissions> getPermissionById(@PathVariable(value = "id") Integer prmID){
         return permissionService.findPermissionById(prmID);
     }
 

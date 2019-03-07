@@ -24,7 +24,7 @@ public class HubEventController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Optional<HubEvent> getEventById(@PathVariable(value = "id")Integer eventID){
+    public @ResponseBody Optional<HubEvent> getEventById(@PathVariable(value = "id")Integer eventID){
         return eventService.findEventById(eventID);
     }
 

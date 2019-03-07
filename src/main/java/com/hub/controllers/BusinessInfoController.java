@@ -24,7 +24,7 @@ public class BusinessInfoController {
     }
 
     @RequestMapping(value = "/departments/{id}", method = RequestMethod.GET)
-    public Optional<Department> getDepartmentById(@PathVariable(value = "id") Integer dptID){
+    public @ResponseBody Optional<Department> getDepartmentById(@PathVariable(value = "id") Integer dptID){
         return businessInfoService.findDepartmentById(dptID);
     }
 
@@ -34,7 +34,7 @@ public class BusinessInfoController {
     }
 
     @RequestMapping(value = "/franchises/{id}", method = RequestMethod.GET)
-    public Optional<Franchise> getFranchiseById(@PathVariable(value = "id") Integer frID){
+    public @ResponseBody Optional<Franchise> getFranchiseById(@PathVariable(value = "id") Integer frID){
         return businessInfoService.findFranchiseById(frID);
     }
 

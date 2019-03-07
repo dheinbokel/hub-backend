@@ -2,7 +2,6 @@ package com.hub.controllers;
 
 import com.hub.models.Content;
 import com.hub.services.ContentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -18,14 +17,12 @@ import java.util.Optional;
 @RestController
 public class ContentController {
 
-    @Autowired
     private ContentService contentService;
 
-    /*
-    ContentController(ContentRepository contentRepository){
-        this.contentRepository = contentRepository;
-    }*/
+    ContentController(ContentService contentService){
 
+        this.contentService = contentService;
+    }
 
     /**
      * This endpoint method is used to return a list of every piece of content from the
@@ -44,7 +41,7 @@ public class ContentController {
      * @return
      */
     @RequestMapping(value = "/content/{id}", method = RequestMethod.GET)
-    public Optional<Content> getContentById(@PathVariable(value = "id") Integer contentID){
+    public @ResponseBody Optional<Content> getContentById(@PathVariable(value = "id") Integer contentID){
         return contentService.findContentById(contentID);
     }
 

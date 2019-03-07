@@ -1,8 +1,7 @@
 package com.hub.controllers;
 
-import com.hub.daos.UsersRepository;
 import com.hub.models.HubUser;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.hub.services.UserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,27 +12,30 @@ import java.util.Optional;
 @RequestMapping(value = "/users")
 public class UserController {
 
-    @Autowired
-    private UsersRepository usersRepository;
-
-    @Autowired
+    private UserService userService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    UserController(UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder){
+
+        this.userService = userService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public @ResponseBody HubUser addUser(@RequestBody HubUser hubUser){
 
         hubUser.setPassword(bCryptPasswordEncoder.encode(hubUser.getPassword()));
-        usersRepository.save(hubUser);
+        userService.addUser(hubUser);
         return hubUser;
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public @ResponseBody Iterable<HubUser> getAllUsers(){
-        return usersRepository.findAll();
+        return userService.findAllUsers();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Optional<HubUser> getUserById(@PathVariable(value = "id")Integer userID){
-        return usersRepository.findById(userID);
+    public @ResponseBody Optional<HubUser> getUserById(@PathVariable(value = "id")Integer userID){
+        return userService.findUserById(userID);
     }
 }
