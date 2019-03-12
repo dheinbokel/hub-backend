@@ -32,6 +32,9 @@ public class Content {
     @Column(name = "CONTENT_LOCATION")
     private String contentLocation;
 
+    @Column(name = "CONTENT_TYPE")
+    private String contentType;
+
     @Column(name = "DATE_CREATED")
     private String createDate;
 
@@ -60,7 +63,6 @@ public class Content {
     /**
      * Getters and Setters for the Content entity.
      */
-
     public Integer getContentID() {
         return contentID;
     }
@@ -117,4 +119,11 @@ public class Content {
         this.likes = likes;
     }
 
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
 }
