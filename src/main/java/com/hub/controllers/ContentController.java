@@ -62,7 +62,9 @@ public class ContentController {
 
     /**
      * End point is called when the user would like to add content to the database.  Requests
-     * fields to be sent in and then the object is saved to the database.
+     * fields to be sent in and then the object is saved to the database.  Requires a file, contentName, and contentType
+     * to be sent in with the body of the response as form-data. Sets all of the content fields and submits them to the
+     * content service.
      */
     @RequestMapping(value = "/content/add", method = RequestMethod.POST)
     public @ResponseBody Content addContent(@RequestParam("file") MultipartFile file, @RequestParam String contentName,
@@ -75,9 +77,15 @@ public class ContentController {
                 .path(fileName)
                 .toUriString();
 
+        /**
+         * Sets the current date and time of the post.
+         */
         Calendar cal = Calendar.getInstance();
         String dateTime = sdf.format(cal.getTime());
 
+        /**
+         * Setting the fields in the content class.
+         */
         Content content = new Content();
         content.setFileName(fileName);
         content.setFileDownloadUri(fileDownloadUri);
@@ -87,11 +95,21 @@ public class ContentController {
         content.setCreateDate(dateTime);
         content.setActive(true);
 
+        /**
+         * Adding the content to the database.
+         */
         contentService.addContent(content);
 
         return content;
     }
 
+    /**
+     * This endpoint sends the directory of the content file to the user to display or download. It requires a file name
+     * and a request.
+     * @param fileName
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/downloadFile/{fileName:.+}", method = RequestMethod.GET)
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
         // Load file as Resource

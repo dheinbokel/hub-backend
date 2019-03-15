@@ -22,6 +22,10 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 
+/**
+ * This class's purpose is to perform the logic behind the requests made to the content controller's endpoints.
+ * This class was created by Doug Heinbokel on 2/28/19
+ */
 @Service
 public class ContentService {
 
@@ -29,6 +33,12 @@ public class ContentService {
     private LikeRepository likeRepository;
     private final Path fileStorageLocation;
 
+    /**
+     * Constructor for the class.
+     * @param contentRepository
+     * @param likeRepository
+     * @param fileStorageProperties
+     */
     ContentService(ContentRepository contentRepository, LikeRepository likeRepository, FileStorageProperties fileStorageProperties){
         this.contentRepository = contentRepository;
         this.likeRepository = likeRepository;
@@ -118,6 +128,12 @@ public class ContentService {
         }
     }
 
+    /**
+     * Adds a record in the like table with an associated userID and contentID.  The count of records associated with a
+     * particular piece of content can be used to check the amount of likes a piece of content has.
+     * @param userID
+     * @param contentID
+     */
     public void likeContent(Integer userID, Integer contentID){
 
         String user = userID.toString();
