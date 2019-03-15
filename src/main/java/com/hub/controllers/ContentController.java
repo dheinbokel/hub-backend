@@ -2,8 +2,21 @@ package com.hub.controllers;
 
 import com.hub.models.Content;
 import com.hub.services.ContentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Optional;
 
 /**
@@ -18,6 +31,8 @@ import java.util.Optional;
 public class ContentController {
 
     private ContentService contentService;
+    private static final Logger logger = LoggerFactory.getLogger(ContentController.class);
+    private static final DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
     ContentController(ContentService contentService){
 
@@ -50,9 +65,55 @@ public class ContentController {
      * fields to be sent in and then the object is saved to the database.
      */
     @RequestMapping(value = "/content/add", method = RequestMethod.POST)
-    public @ResponseBody Content addContent(@RequestBody Content content){
+    public @ResponseBody Content addContent(@RequestParam("file") MultipartFile file, @RequestParam String contentName,
+                        @RequestParam String contentType){
 
-        return contentService.addContent(content);
+        String fileName = contentService.storeFile(file);
+
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/downloadFile/")
+                .path(fileName)
+                .toUriString();
+
+        Calendar cal = Calendar.getInstance();
+        String dateTime = sdf.format(cal.getTime());
+
+        Content content = new Content();
+        content.setFileName(fileName);
+        content.setFileDownloadUri(fileDownloadUri);
+        content.setSize(file.getSize());
+        content.setContentName(contentName);
+        content.setContentType(contentType);
+        content.setCreateDate(dateTime);
+        content.setActive(true);
+
+        contentService.addContent(content);
+
+        return content;
+    }
+
+    @RequestMapping(value = "/downloadFile/{fileName:.+}", method = RequestMethod.GET)
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
+        // Load file as Resource
+        Resource resource = contentService.loadFileAsResource(fileName);
+
+        // Try to determine file's content type
+        String contentType = null;
+        try {
+            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+        } catch (IOException ex) {
+            logger.info("Could not determine file type.");
+        }
+
+        // Fallback to the default content type if type could not be determined
+        if(contentType == null) {
+            contentType = "application/octet-stream";
+        }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
     }
 
     /**

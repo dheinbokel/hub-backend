@@ -29,11 +29,20 @@ public class Content {
     @Column(name = "CONTENT_ID")
     private Integer contentID;
 
+    @Column(name = "FILE_NAME")
+    private String fileName;
+
     @Column(name = "CONTENT_LOCATION")
-    private String contentLocation;
+    private String fileDownloadUri;
+
+    @Column(name = "CONTENT_NAME")
+    private String contentName;
 
     @Column(name = "CONTENT_TYPE")
     private String contentType;
+
+    @Column(name = "CONTENT_SIZE")
+    private long size;
 
     @Column(name = "DATE_CREATED")
     private String createDate;
@@ -69,14 +78,6 @@ public class Content {
 
     public void setContentID(Integer contentID) {
         this.contentID = contentID;
-    }
-
-    public String getContentLocation() {
-        return contentLocation;
-    }
-
-    public void setContentLocation(String contentLocation) {
-        this.contentLocation = contentLocation;
     }
 
     public String getCreateDate() {
@@ -125,5 +126,37 @@ public class Content {
 
     public void setContentType(String contentType) {
         this.contentType = contentType;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getFileDownloadUri() {
+        return fileDownloadUri;
+    }
+
+    public void setFileDownloadUri(String fileDownloadUri) {
+        this.fileDownloadUri = fileDownloadUri;
+    }
+
+    public long getSize() {
+        return size;
+    }
+
+    public void setSize(long size) {
+        this.size = size;
+    }
+
+    public String getContentName() {
+        return contentName;
+    }
+
+    public void setContentName(String contentName) {
+        this.contentName = contentName;
     }
 }
