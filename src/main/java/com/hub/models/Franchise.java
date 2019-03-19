@@ -1,6 +1,8 @@
 package com.hub.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -74,18 +76,22 @@ public class Franchise {
         this.frLocation = frLocation;
     }
 
+    @JsonIgnore
     public List<HubUser> getHubUsers() {
         return hubUsers;
     }
 
+    @JsonProperty
     public void setHubUsers(List<HubUser> hubUsers) {
         this.hubUsers = hubUsers;
     }
 
+    @JsonIgnore
     public List<HubEvent> getHubEvents() {
         return hubEvents;
     }
 
+    @JsonProperty
     public void setHubEvents(List<HubEvent> hubEvents) {
         this.hubEvents = hubEvents;
     }

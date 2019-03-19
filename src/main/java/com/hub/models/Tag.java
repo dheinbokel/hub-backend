@@ -1,6 +1,8 @@
 package com.hub.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -71,18 +73,22 @@ public class Tag {
         this.tagName = tagName;
     }
 
+    @JsonIgnore
     public Set<Content> getContents() {
         return contents;
     }
 
+    @JsonProperty
     public void setContents(Set<Content> contents) {
         this.contents = contents;
     }
 
+    @JsonIgnore
     public Set<HubUser> getHubUsers() {
         return hubUsers;
     }
 
+    @JsonProperty
     public void setHubUsers(Set<HubUser> hubUsers) {
         this.hubUsers = hubUsers;
     }

@@ -165,26 +165,32 @@ public class HubUser {
         this.userName = userName;
     }
 
+    @JsonIgnore
     public List<Comments> getUserComments() {
         return userComments;
     }
 
+    @JsonProperty
     public void setUserComments(List<Comments> userComments) {
         this.userComments = userComments;
     }
 
+    @JsonIgnore
     public Set<Tag> getTags() {
         return tags;
     }
 
+    @JsonProperty
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
     }
 
+    @JsonIgnore
     public List<Like> getLikes() {
         return likes;
     }
 
+    @JsonProperty
     public void setLikes(List<Like> likes) {
         this.likes = likes;
     }

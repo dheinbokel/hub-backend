@@ -7,7 +7,9 @@
 
 package com.hub.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -96,25 +98,31 @@ public class Content {
         isActive = active;
     }
 
+    @JsonIgnore
     public List<Comments> getContentComments() {
         return contentComments;
     }
 
+    @JsonProperty
     public void setContentComments(List<Comments> contentComments) {
         this.contentComments = contentComments;
     }
 
+    @JsonIgnore
     public Set<Tag> getTags() {
         return tags;
     }
 
+    @JsonProperty
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
     }
 
+
     public List<Like> getLikes() {
         return likes;
     }
+
 
     public void setLikes(List<Like> likes) {
         this.likes = likes;

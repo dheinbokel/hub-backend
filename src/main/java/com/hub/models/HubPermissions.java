@@ -1,6 +1,8 @@
 package com.hub.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -70,10 +72,12 @@ public class HubPermissions {
         this.prmName = prmName;
     }
 
+    @JsonIgnore
     public List<HubUser> getHubUsers() {
         return hubUsers;
     }
 
+    @JsonProperty
     public void setHubUsers(List<HubUser> hubUsers) {
         this.hubUsers = hubUsers;
     }
