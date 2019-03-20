@@ -49,6 +49,12 @@ public class ContentController {
         return contentService.findAllContent();
     }
 
+    @RequestMapping(value = "/content/all/{contentType}", method = RequestMethod.GET)
+    public @ResponseBody Iterable<Content> findByContentType(@PathVariable(value = "contentType") String contentType){
+
+        return contentService.findByContentType(contentType);
+    }
+
     /**
      * End point is called when a user would like to get a particular piece of content by its id.  The user must provide
      * an id that they would like to search by.

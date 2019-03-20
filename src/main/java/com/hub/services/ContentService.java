@@ -68,6 +68,16 @@ public class ContentService {
     }
 
     /**
+     * Returns all content with the content type that matches what is passed into the parameters.
+     * @param contentType
+     * @return
+     */
+    public Iterable<Content> findByContentType(String contentType){
+
+        return contentRepository.findByContentType(contentType);
+    }
+
+    /**
      * Gets all the content from the database.
      * @return
      */
