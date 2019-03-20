@@ -49,4 +49,14 @@ public class BusinessInfoController {
         businessInfoService.addFranchise(franchise);
         return franchise;
     }
+
+    @RequestMapping(value = "/franchises/byname/{frName}", method = RequestMethod.GET)
+    public @ResponseBody Franchise getFranchiseByName(@PathVariable(value = "frName") String frName){
+        return businessInfoService.findFranchiseByFrName(frName);
+    }
+
+    @RequestMapping(value = "/departments/byname/{dptName}", method = RequestMethod.GET)
+    public @ResponseBody Department getDepartmentByName(@PathVariable(value = "dptName") String dptName){
+        return businessInfoService.findDepartmentByDptName(dptName);
+    }
 }

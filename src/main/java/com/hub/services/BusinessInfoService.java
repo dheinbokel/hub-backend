@@ -64,4 +64,14 @@ public class BusinessInfoService {
 
         return franchise;
     }
+
+    public Department findDepartmentByDptName(String dptName){
+
+        return departmentRepository.findByDptName(dptName);
+    }
+
+    public Franchise findFranchiseByFrName(String frName){
+
+        return franchiseRepository.findByFrName(frName);
+    }
 }

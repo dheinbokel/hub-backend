@@ -49,6 +49,12 @@ public class ContentController {
         return contentService.findAllContent();
     }
 
+    /**
+     * This method returns all content with the same content type as what was passed through the parameters.  It sends
+     * it back in the form of an iterable in the response body. Sends iterable in JSON.
+     * @param contentType
+     * @return
+     */
     @RequestMapping(value = "/content/all/{contentType}", method = RequestMethod.GET)
     public @ResponseBody Iterable<Content> findByContentType(@PathVariable(value = "contentType") String contentType){
 
