@@ -1,6 +1,7 @@
 package com.hub.controllers;
 
 import com.hub.models.Content;
+import com.hub.models.QuillContent;
 import com.hub.services.ContentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -156,5 +157,17 @@ public class ContentController {
     public void likeContent(@PathVariable(value = "userID") Integer userID, @PathVariable(value = "contentID") Integer contentID){
 
         contentService.likeContent(userID, contentID);
+    }
+
+    @RequestMapping(value = "/quill/add", method = RequestMethod.POST)
+    public @ResponseBody QuillContent addQuillContent(@RequestBody QuillContent quillContent){
+        contentService.addQuillContent(quillContent);
+        return quillContent;
+    }
+
+    @RequestMapping(value = "quill/all", method = RequestMethod.GET)
+    public @ResponseBody Iterable<QuillContent> getAllQuillContent(){
+
+        return contentService.getAllQuillContent();
     }
 }

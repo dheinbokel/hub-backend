@@ -2,11 +2,13 @@ package com.hub.services;
 
 import com.hub.daos.ContentRepository;
 import com.hub.daos.LikeRepository;
+import com.hub.daos.QuillContentRepository;
 import com.hub.exceptions.FileStorageException;
 import com.hub.exceptions.HubFileNotFoundException;
 import com.hub.exceptions.HubNotFoundException;
 import com.hub.models.Content;
 import com.hub.models.Like;
+import com.hub.models.QuillContent;
 import com.hub.property.FileStorageProperties;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -31,6 +33,7 @@ public class ContentService {
 
     private ContentRepository contentRepository;
     private LikeRepository likeRepository;
+    private QuillContentRepository quillContentRepository;
     private final Path fileStorageLocation;
 
     /**
@@ -39,9 +42,10 @@ public class ContentService {
      * @param likeRepository
      * @param fileStorageProperties
      */
-    ContentService(ContentRepository contentRepository, LikeRepository likeRepository, FileStorageProperties fileStorageProperties){
+    ContentService(ContentRepository contentRepository, LikeRepository likeRepository, FileStorageProperties fileStorageProperties, QuillContentRepository quillContentRepository){
         this.contentRepository = contentRepository;
         this.likeRepository = likeRepository;
+        this.quillContentRepository = quillContentRepository;
 
         this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir())
                 .toAbsolutePath().normalize();
@@ -154,6 +158,18 @@ public class ContentService {
         Like newLike = new Like(likeID, userID, contentID);
         likeRepository.save(newLike);
 
+    }
+
+    public QuillContent addQuillContent(QuillContent quillContent){
+
+        quillContentRepository.save(quillContent);
+
+        return quillContent;
+    }
+
+    public Iterable<QuillContent> getAllQuillContent(){
+
+        return quillContentRepository.findAll();
     }
 
 }
