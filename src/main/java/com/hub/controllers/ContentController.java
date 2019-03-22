@@ -1,7 +1,6 @@
 package com.hub.controllers;
 
 import com.hub.models.Content;
-import com.hub.models.QuillContent;
 import com.hub.services.ContentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -159,15 +158,42 @@ public class ContentController {
         contentService.likeContent(userID, contentID);
     }
 
-    @RequestMapping(value = "/quill/add", method = RequestMethod.POST)
-    public @ResponseBody QuillContent addQuillContent(@RequestBody QuillContent quillContent){
-        contentService.addQuillContent(quillContent);
-        return quillContent;
-    }
+//    @RequestMapping(value = "/quill/add", method = RequestMethod.POST)
+//    public @ResponseBody QuillContent addQuillContent(@RequestBody QuillContent quillContent){
+//        contentService.addQuillContent(quillContent);
+//        return quillContent;
+//    }
+//
+//    @RequestMapping(value = "quill/all", method = RequestMethod.GET)
+//    public @ResponseBody Iterable<QuillContent> getAllQuillContent(){
+//
+//        return contentService.getAllQuillContent();
+//    }
 
-    @RequestMapping(value = "quill/all", method = RequestMethod.GET)
-    public @ResponseBody Iterable<QuillContent> getAllQuillContent(){
+    /**
+     * Temporary endpoint for adding content the temporary way.
+     * @param contents
+     * @param contentName
+     * @param contentType
+     * @return
+     */
+    @RequestMapping(value = "/content/quill/add", method = RequestMethod.POST)
+    public @ResponseBody Content addQuillContent(@RequestParam String contents, @RequestParam String contentName,
+                                            @RequestParam String contentType){
 
-        return contentService.getAllQuillContent();
+        Calendar cal = Calendar.getInstance();
+        String dateTime = sdf.format(cal.getTime());
+
+        Content content = new Content();
+        content.setFileName("None");
+        content.setFileDownloadUri(contents);
+        content.setSize(0);
+        content.setContentName(contentName);
+        content.setContentType(contentType);
+        content.setCreateDate(dateTime);
+        content.setActive(true);
+
+        contentService.addContentQuill(content);
+        return content;
     }
 }

@@ -8,7 +8,6 @@ import com.hub.exceptions.HubFileNotFoundException;
 import com.hub.exceptions.HubNotFoundException;
 import com.hub.models.Content;
 import com.hub.models.Like;
-import com.hub.models.QuillContent;
 import com.hub.property.FileStorageProperties;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -160,16 +159,22 @@ public class ContentService {
 
     }
 
-    public QuillContent addQuillContent(QuillContent quillContent){
+//    public QuillContent addQuillContent(QuillContent quillContent){
+//
+//        quillContentRepository.save(quillContent);
+//
+//        return quillContent;
+//    }
+//
+//    public Iterable<QuillContent> getAllQuillContent(){
+//
+//        return quillContentRepository.findAll();
+//    }
 
-        quillContentRepository.save(quillContent);
+    public Content addContentQuill(Content content){
 
-        return quillContent;
+        contentRepository.save(content);
+
+        return content;
     }
-
-    public Iterable<QuillContent> getAllQuillContent(){
-
-        return quillContentRepository.findAll();
-    }
-
 }

@@ -10,4 +10,6 @@ public interface CommentsRepository extends JpaRepository<Comments, Integer> {
     Iterable<Comments> findByContentID(Integer contentID);
 
     Iterable<Comments> findByUserID(Integer userID);
+
+    Iterable<Comments> findByUserName(String username);
 }

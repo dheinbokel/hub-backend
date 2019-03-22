@@ -58,6 +58,17 @@ public class CommentController {
     }
 
     /**
+     * This endpoint returns all comments, as an iterable, that were made by a user with the path variable username.
+     * @param userName
+     * @return
+     */
+    @RequestMapping(value = "/all/username/{userName}", method = RequestMethod.GET)
+    public @ResponseBody Iterable<Comments> findByUserName(@PathVariable(value = "userName") String userName){
+
+        return commentService.findByUserName(userName);
+    }
+
+    /**
      * This endpoint returns a comment based on the commentID passed into the endpoint as a path variable.  May come back
      * as null if there is no comment with the id input.
      * @param commentID
@@ -78,4 +89,5 @@ public class CommentController {
         commentService.addComment(comments);
         return comments;
     }
+
 }

@@ -67,6 +67,16 @@ public class CommentService {
     }
 
     /**
+     * Returns an iterable list of comments based on the username passed into the parameters.
+     * @param username
+     * @return
+     */
+    public Iterable<Comments> findByUserName(String username){
+
+        return commentsRepository.findByUserName(username);
+    }
+
+    /**
      * Takes in a comment from the controller and saves it to the database as a comment record.
      * @param comments
      * @return

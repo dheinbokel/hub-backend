@@ -23,6 +23,9 @@ public class Comments {
     @Column(name = "CONTENT_ID")
     private Integer contentID;
 
+    @Column(name = "COMMENTER")
+    private String userName;
+
     @Column(name = "USER_ID")
     private Integer userID;
 
@@ -72,5 +75,13 @@ public class Comments {
 
     public void setUserID(Integer userID) {
         this.userID = userID;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }
