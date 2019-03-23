@@ -1,6 +1,7 @@
 package com.hub.controllers;
 
 import com.hub.models.Content;
+import com.hub.models.QuillContent;
 import com.hub.services.ContentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -158,17 +159,18 @@ public class ContentController {
         contentService.likeContent(userID, contentID);
     }
 
-//    @RequestMapping(value = "/quill/add", method = RequestMethod.POST)
-//    public @ResponseBody QuillContent addQuillContent(@RequestBody QuillContent quillContent){
-//        contentService.addQuillContent(quillContent);
-//        return quillContent;
-//    }
-//
-//    @RequestMapping(value = "quill/all", method = RequestMethod.GET)
-//    public @ResponseBody Iterable<QuillContent> getAllQuillContent(){
-//
-//        return contentService.getAllQuillContent();
-//    }
+    @RequestMapping(value = "/quill/add", method = RequestMethod.POST)
+    public @ResponseBody
+    QuillContent addQuillContent(@RequestBody QuillContent quillContent){
+        contentService.addQuillContent(quillContent);
+        return quillContent;
+    }
+
+    @RequestMapping(value = "quill/all", method = RequestMethod.GET)
+    public @ResponseBody Iterable<QuillContent> getAllQuillContent(){
+
+        return contentService.getAllQuillContent();
+    }
 
     /**
      * Temporary endpoint for adding content the temporary way.
@@ -195,5 +197,11 @@ public class ContentController {
 
         contentService.addContentQuill(content);
         return content;
+    }
+
+    @RequestMapping(value = "/content/quill/bycontenttype/{contentType}", method = RequestMethod.GET)
+    public @ResponseBody Iterable<QuillContent> getQuillByContentType(@PathVariable(value = "contentType") String contentType){
+
+        return contentService.getQuillByContentType(contentType);
     }
 }
