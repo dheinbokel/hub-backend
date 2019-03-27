@@ -1,8 +1,11 @@
 package com.hub.services;
 
+import com.hub.RequestModels.SubscriptionRequest;
+import com.hub.daos.SubscriptionRepository;
 import com.hub.daos.UsersRepository;
 import com.hub.exceptions.HubNotFoundException;
 import com.hub.models.HubUser;
+import com.hub.models.Subscription;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -14,10 +17,12 @@ import java.util.Optional;
 public class UserService {
 
     private UsersRepository usersRepository;
+    private SubscriptionRepository subscriptionRepository;
 
-    UserService(UsersRepository usersRepository){
+    UserService(UsersRepository usersRepository, SubscriptionRepository subscriptionRepository){
 
         this.usersRepository = usersRepository;
+        this.subscriptionRepository = subscriptionRepository;
     }
 
     /**
@@ -98,5 +103,71 @@ public class UserService {
     public HubUser findUserByUserName(String userName){
 
         return usersRepository.findByUserName(userName);
+    }
+
+    public Iterable<Subscription> findSubByUserID(Integer userID){
+
+        return subscriptionRepository.findByUserID(userID);
+    }
+
+    public Iterable<Subscription> findSubByTagID(Integer tagID){
+
+        return subscriptionRepository.findByTagID(tagID);
+    }
+
+    public void addSub(SubscriptionRequest subscriptionRequest){
+
+        String user;
+
+        if(subscriptionRequest.getUserID() >= 10){
+
+            user = subscriptionRequest.getUserID().toString();
+        }
+        else{
+
+            user = "0" + subscriptionRequest.getUserID().toString();
+        }
+
+        Integer[] subTags = subscriptionRequest.getTags();
+        String tag;
+
+        for(Integer subtag : subTags){
+
+            if(subtag >= 10){
+
+                tag = subtag.toString();
+            }
+            else{
+
+                tag = "0" + subtag.toString();
+            }
+
+            String subID = user + tag;
+
+            Subscription subscription = new Subscription(subID, subscriptionRequest.getUserID(), subtag);
+            subscriptionRepository.save(subscription);
+        }
+//        String user;
+//
+//        if(userID >= 10){
+//            user = userID.toString();
+//        }
+//        else{
+//            user = "0" + userID.toString();
+//        }
+//
+//        String tag;
+//
+//        if(tagID >= 10) {
+//            tag = tagID.toString();
+//        }
+//        else{
+//            tag = "0" + tagID.toString();
+//        }
+//        String subID = user + tag;
+//
+//        Subscription subscription = new Subscription(subID, userID, tagID);
+//        subscriptionRepository.save(subscription);
+
     }
 }

@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class represents a tag that can be applied to a piece of content. The Entity tag lets spring know that it will
@@ -32,19 +32,13 @@ public class Tag {
     @Column(name = "TAG_NAME")
     private String tagName;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                CascadeType.PERSIST, CascadeType.MERGE
-            },
-            mappedBy = "tags")
-    private Set<Content> contents = new HashSet<>();
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "TAG_ID", referencedColumnName = "TAG_ID")
+    private List<ContentTag> contentTags = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST, CascadeType.MERGE
-            },
-            mappedBy = "tags")
-    private Set<HubUser> hubUsers = new HashSet<>();
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "TAG_ID", referencedColumnName = "TAG_ID")
+    private List<Subscription> subscriptions = new ArrayList<>();
 
     /**
      * Simple default constructor for the Tag class.
@@ -74,22 +68,24 @@ public class Tag {
     }
 
     @JsonIgnore
-    public Set<Content> getContents() {
-        return contents;
+    public List<ContentTag> getContentTags() {
+        return contentTags;
     }
 
     @JsonProperty
-    public void setContents(Set<Content> contents) {
-        this.contents = contents;
+    public void setContentTags(List<ContentTag> contentTags) {
+        this.contentTags = contentTags;
     }
 
     @JsonIgnore
-    public Set<HubUser> getHubUsers() {
-        return hubUsers;
+    public List<Subscription> getSubscriptions() {
+        return subscriptions;
     }
 
     @JsonProperty
-    public void setHubUsers(Set<HubUser> hubUsers) {
-        this.hubUsers = hubUsers;
+    public void setSubscriptions(List<Subscription> subscriptions) {
+        this.subscriptions = subscriptions;
     }
+
+
 }

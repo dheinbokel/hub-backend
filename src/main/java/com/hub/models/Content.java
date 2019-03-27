@@ -13,9 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "CONTENT")
@@ -56,12 +54,9 @@ public class Content {
     @JoinColumn(name = "CONTENT_ID", referencedColumnName = "CONTENT_ID")
     private List<Comments> contentComments = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "ARTICLE_TAGS",
-            joinColumns = {@JoinColumn(name = "CONTENT_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "TAG_ID")})
-    private Set<Tag> tags = new HashSet<>();
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CONTENT_ID", referencedColumnName = "CONTENT_ID")
+    private List<ContentTag> contentTags = new ArrayList<>();
 
     @OneToMany
     @JoinColumn(name = "CONTENT_ID", referencedColumnName = "CONTENT_ID")
@@ -109,20 +104,18 @@ public class Content {
     }
 
     @JsonIgnore
-    public Set<Tag> getTags() {
-        return tags;
+    public List<ContentTag> getContentTags() {
+        return contentTags;
     }
 
     @JsonProperty
-    public void setTags(Set<Tag> tags) {
-        this.tags = tags;
+    public void setContentTags(List<ContentTag> contentTags) {
+        this.contentTags = contentTags;
     }
-
 
     public List<Like> getLikes() {
         return likes;
     }
-
 
     public void setLikes(List<Like> likes) {
         this.likes = likes;

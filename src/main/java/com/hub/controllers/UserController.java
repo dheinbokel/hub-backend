@@ -1,6 +1,8 @@
 package com.hub.controllers;
 
+import com.hub.RequestModels.SubscriptionRequest;
 import com.hub.models.HubUser;
+import com.hub.models.Subscription;
 import com.hub.services.UserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -94,7 +96,25 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/byusername/{userName}", method = RequestMethod.GET)
-    public @ResponseBody HubUser getUserByUserName(@PathVariable(value = "userName")String userName){
+    public @ResponseBody HubUser getUserByUserName(@PathVariable(value = "userName") String userName){
         return userService.findUserByUserName(userName);
+    }
+
+    @RequestMapping(value = "/subscription/byuserid/{userID}", method = RequestMethod.GET)
+    public @ResponseBody Iterable<Subscription> getSubByUserID(@PathVariable(value = "userID") Integer userID){
+
+        return userService.findSubByUserID(userID);
+    }
+
+    @RequestMapping(value = "/subscription/bytagid/{tagID}", method = RequestMethod.GET)
+    public @ResponseBody Iterable<Subscription> getSubByTagID(@PathVariable(value = "tagID") Integer tagID){
+
+        return userService.findSubByTagID(tagID);
+    }
+
+    @RequestMapping(value = "/subscription/add", method = RequestMethod.POST)
+    public void subscribe(@RequestBody SubscriptionRequest subscriptionRequest){
+
+        userService.addSub(subscriptionRequest);
     }
 }

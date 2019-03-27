@@ -7,9 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * This class represents the user of the Hub.  After logging in, this information will be sent to the front end to keep
@@ -67,15 +65,9 @@ public class HubUser {
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
     private List<Comments> userComments = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            })
-    @JoinTable(name = "SUBSCRIPTIONS",
-            joinColumns = { @JoinColumn(name = "USER_ID") },
-            inverseJoinColumns = { @JoinColumn(name = "TAG_ID") })
-    private Set<Tag> tags = new HashSet<>();
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
+    private List<Subscription> subscriptions = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
@@ -176,16 +168,6 @@ public class HubUser {
     }
 
     @JsonIgnore
-    public Set<Tag> getTags() {
-        return tags;
-    }
-
-    @JsonProperty
-    public void setTags(Set<Tag> tags) {
-        this.tags = tags;
-    }
-
-    @JsonIgnore
     public List<Like> getLikes() {
         return likes;
     }
@@ -195,4 +177,13 @@ public class HubUser {
         this.likes = likes;
     }
 
+    @JsonIgnore
+    public List<Subscription> getSubscriptions() {
+        return subscriptions;
+    }
+
+    @JsonProperty
+    public void setSubscriptions(List<Subscription> subscriptions) {
+        this.subscriptions = subscriptions;
+    }
 }

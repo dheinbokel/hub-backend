@@ -1,14 +1,14 @@
 package com.hub.services;
 
 import com.hub.daos.ContentRepository;
+import com.hub.daos.ContentTagRepository;
 import com.hub.daos.LikeRepository;
-import com.hub.daos.QuillContentRepository;
 import com.hub.exceptions.FileStorageException;
 import com.hub.exceptions.HubFileNotFoundException;
 import com.hub.exceptions.HubNotFoundException;
 import com.hub.models.Content;
+import com.hub.models.ContentTag;
 import com.hub.models.Like;
-import com.hub.models.QuillContent;
 import com.hub.property.FileStorageProperties;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -33,7 +33,7 @@ public class ContentService {
 
     private ContentRepository contentRepository;
     private LikeRepository likeRepository;
-    private QuillContentRepository quillContentRepository;
+    private ContentTagRepository contentTagRepository;
     private final Path fileStorageLocation;
 
     /**
@@ -42,10 +42,11 @@ public class ContentService {
      * @param likeRepository
      * @param fileStorageProperties
      */
-    ContentService(ContentRepository contentRepository, LikeRepository likeRepository, FileStorageProperties fileStorageProperties, QuillContentRepository quillContentRepository){
+    ContentService(ContentRepository contentRepository, LikeRepository likeRepository, FileStorageProperties fileStorageProperties,
+                   ContentTagRepository contentTagRepository){
         this.contentRepository = contentRepository;
         this.likeRepository = likeRepository;
-        this.quillContentRepository = quillContentRepository;
+        this.contentTagRepository = contentTagRepository;
 
         this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir())
                 .toAbsolutePath().normalize();
@@ -150,9 +151,23 @@ public class ContentService {
      */
     public void likeContent(Integer userID, Integer contentID){
 
-        String user = userID.toString();
-        String content = contentID.toString();
+        String user;
 
+        if(userID >= 10){
+            user = userID.toString();
+        }
+        else{
+            user = "0" + userID.toString();
+        }
+
+        String content;
+
+        if(contentID >= 10) {
+            content = contentID.toString();
+        }
+        else{
+            content = "0" + contentID.toString();
+        }
         String likeID = user + content;
 
         Like newLike = new Like(likeID, userID, contentID);
@@ -160,27 +175,39 @@ public class ContentService {
 
     }
 
-    public Iterable<QuillContent> getQuillByContentType(String contentType){
+    public void addTagToContent(Integer contentID, Integer tagID){
 
-        return quillContentRepository.findByContentType(contentType);
+        String content;
+
+        if(contentID >= 10){
+            content = contentID.toString();
+        }
+        else{
+            content = "0" + contentID.toString();
+        }
+
+        String tag;
+
+        if(tagID >= 10) {
+            tag = tagID.toString();
+        }
+        else{
+            tag = "0" + tagID.toString();
+        }
+        String contentTagID = content + tag;
+
+        ContentTag contentTag = new ContentTag(contentTagID, contentID, tagID);
+        contentTagRepository.save(contentTag);
     }
 
-    public QuillContent addQuillContent(QuillContent quillContent){
+    public Iterable<ContentTag> getContentTagsByContentID(Integer contentID){
 
-        quillContentRepository.save(quillContent);
-
-        return quillContent;
+        return contentTagRepository.findByContentID(contentID);
     }
 
-    public Iterable<QuillContent> getAllQuillContent(){
+    public Iterable<ContentTag> getContentTagsByTagID(Integer tagID){
 
-        return quillContentRepository.findAll();
+        return contentTagRepository.findByTagID(tagID);
     }
 
-    public Content addContentQuill(Content content){
-
-        contentRepository.save(content);
-
-        return content;
-    }
 }
