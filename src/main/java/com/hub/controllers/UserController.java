@@ -2,6 +2,7 @@ package com.hub.controllers;
 
 import com.hub.RequestModels.SubscriptionRequest;
 import com.hub.models.HubUser;
+import com.hub.models.Notification;
 import com.hub.models.Subscription;
 import com.hub.services.UserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -116,5 +117,11 @@ public class UserController {
     public void subscribe(@RequestBody SubscriptionRequest subscriptionRequest){
 
         userService.addSub(subscriptionRequest);
+    }
+
+    @RequestMapping(value = "/notifications/{userID}", method = RequestMethod.GET)
+    public Iterable<Notification> getNotificationByUserID(@PathVariable(value = "userID") Integer userID){
+
+        return userService.findNotificationByUserID(userID);
     }
 }

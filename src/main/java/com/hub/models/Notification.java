@@ -1,6 +1,8 @@
 package com.hub.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 
@@ -17,9 +19,6 @@ public class Notification {
     @Column(name = "MESSAGE")
     private String message;
 
-    @Column(name = "CONTENT_NAME")
-    private String contentName;
-
     @Column(name = "CONTENT_ID")
     private Integer contentID;
 
@@ -34,7 +33,7 @@ public class Notification {
     }
 
     public Notification(String contentName, Integer contentID, Integer userID) {
-        this.contentName = contentName;
+
         this.contentID = contentID;
         this.userID = userID;
         this.isActive = true;
@@ -57,14 +56,6 @@ public class Notification {
         this.message = message;
     }
 
-    public String getContentName() {
-        return contentName;
-    }
-
-    public void setContentName(String contentName) {
-        this.contentName = contentName;
-    }
-
     public Integer getContentID() {
         return contentID;
     }
@@ -73,10 +64,12 @@ public class Notification {
         this.contentID = contentID;
     }
 
+    @JsonIgnore
     public Integer getUserID() {
         return userID;
     }
 
+    @JsonProperty
     public void setUserID(Integer userID) {
         this.userID = userID;
     }

@@ -65,6 +65,10 @@ public class HubUser {
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
     private List<Comments> userComments = new ArrayList<>();
 
+    @OneToMany
+    @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
+    private List<Notification> notifications = new ArrayList<>();
+
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
     private List<Subscription> subscriptions = new ArrayList<>();
@@ -185,5 +189,13 @@ public class HubUser {
     @JsonProperty
     public void setSubscriptions(List<Subscription> subscriptions) {
         this.subscriptions = subscriptions;
+    }
+
+    public List<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(List<Notification> notifications) {
+        this.notifications = notifications;
     }
 }

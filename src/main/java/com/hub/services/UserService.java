@@ -1,10 +1,12 @@
 package com.hub.services;
 
 import com.hub.RequestModels.SubscriptionRequest;
+import com.hub.daos.NotificationRepository;
 import com.hub.daos.SubscriptionRepository;
 import com.hub.daos.UsersRepository;
 import com.hub.exceptions.HubNotFoundException;
 import com.hub.models.HubUser;
+import com.hub.models.Notification;
 import com.hub.models.Subscription;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +20,13 @@ public class UserService {
 
     private UsersRepository usersRepository;
     private SubscriptionRepository subscriptionRepository;
+    private NotificationRepository notificationRepository;
 
-    UserService(UsersRepository usersRepository, SubscriptionRepository subscriptionRepository){
+    UserService(UsersRepository usersRepository, SubscriptionRepository subscriptionRepository, NotificationRepository notificationRepository){
 
         this.usersRepository = usersRepository;
         this.subscriptionRepository = subscriptionRepository;
+        this.notificationRepository = notificationRepository;
     }
 
     /**
@@ -103,6 +107,11 @@ public class UserService {
     public HubUser findUserByUserName(String userName){
 
         return usersRepository.findByUserName(userName);
+    }
+
+    public Iterable<Notification> findNotificationByUserID(Integer userID){
+
+        return notificationRepository.findByUserID(userID);
     }
 
     public Iterable<Subscription> findSubByUserID(Integer userID){
