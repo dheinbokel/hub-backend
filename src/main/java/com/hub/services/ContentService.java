@@ -1,14 +1,10 @@
 package com.hub.services;
 
-import com.hub.daos.ContentRepository;
-import com.hub.daos.ContentTagRepository;
-import com.hub.daos.LikeRepository;
+import com.hub.daos.*;
 import com.hub.exceptions.FileStorageException;
 import com.hub.exceptions.HubFileNotFoundException;
 import com.hub.exceptions.HubNotFoundException;
-import com.hub.models.Content;
-import com.hub.models.ContentTag;
-import com.hub.models.Like;
+import com.hub.models.*;
 import com.hub.property.FileStorageProperties;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -22,7 +18,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * This class's purpose is to perform the logic behind the requests made to the content controller's endpoints.
@@ -34,6 +32,8 @@ public class ContentService {
     private ContentRepository contentRepository;
     private LikeRepository likeRepository;
     private ContentTagRepository contentTagRepository;
+    private NotificationRepository notificationRepository;
+    private SubscriptionRepository subscriptionRepository;
     private final Path fileStorageLocation;
 
     /**
@@ -43,10 +43,12 @@ public class ContentService {
      * @param fileStorageProperties
      */
     ContentService(ContentRepository contentRepository, LikeRepository likeRepository, FileStorageProperties fileStorageProperties,
-                   ContentTagRepository contentTagRepository){
+                   ContentTagRepository contentTagRepository, NotificationRepository notificationRepository, SubscriptionRepository subscriptionRepository){
         this.contentRepository = contentRepository;
         this.likeRepository = likeRepository;
         this.contentTagRepository = contentTagRepository;
+        this.notificationRepository = notificationRepository;
+        this.subscriptionRepository = subscriptionRepository;
 
         this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir())
                 .toAbsolutePath().normalize();
@@ -209,28 +211,29 @@ public class ContentService {
             contentTagRepository.save(contTag);
         }
 
+    }
 
-//        String content;
-//
-//        if(contentID >= 10){
-//            content = contentID.toString();
-//        }
-//        else{
-//            content = "0" + contentID.toString();
-//        }
-//
-//        String tag;
-//
-//        if(tagID >= 10) {
-//            tag = tagID.toString();
-//        }
-//        else{
-//            tag = "0" + tagID.toString();
-//        }
-//        String contentTagID = content + tag;
-//
-//        ContentTag contentTag = new ContentTag(contentTagID, contentID, tagID);
-//        contentTagRepository.save(contentTag);
+    public void sendNotifications(Integer contentID, String contentName, Integer[] tagArray){
+
+        Set<Integer> subs = new HashSet<>();
+
+        Integer[] tags = tagArray;
+
+        for(Integer tag: tags){
+
+            Iterable<Subscription> subscriptions = subscriptionRepository.findByTagID(tag);
+
+            for(Subscription subscription: subscriptions){
+
+                subs.add(subscription.getUserID());
+            }
+        }
+
+        for(Integer id: subs){
+
+            Notification notification = new Notification(contentName, contentID, id);
+            notificationRepository.save(notification);
+        }
     }
 
     public Iterable<ContentTag> getContentTagsByContentID(Integer contentID){

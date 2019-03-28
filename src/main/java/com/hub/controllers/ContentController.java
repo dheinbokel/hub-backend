@@ -125,7 +125,9 @@ public class ContentController {
          */
         contentService.addContent(content);
 
-        contentService.addTagToContent(94, tagArray);
+        contentService.addTagToContent(content.getContentID(), tagArray);
+
+        contentService.sendNotifications(content.getContentID(), content.getContentName(), tagArray);
 
         return content;
     }
