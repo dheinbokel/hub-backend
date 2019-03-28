@@ -147,27 +147,6 @@ public class UserService {
             Subscription subscription = new Subscription(subID, subscriptionRequest.getUserID(), subtag);
             subscriptionRepository.save(subscription);
         }
-//        String user;
-//
-//        if(userID >= 10){
-//            user = userID.toString();
-//        }
-//        else{
-//            user = "0" + userID.toString();
-//        }
-//
-//        String tag;
-//
-//        if(tagID >= 10) {
-//            tag = tagID.toString();
-//        }
-//        else{
-//            tag = "0" + tagID.toString();
-//        }
-//        String subID = user + tag;
-//
-//        Subscription subscription = new Subscription(subID, userID, tagID);
-//        subscriptionRepository.save(subscription);
 
     }
 }

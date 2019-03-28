@@ -93,7 +93,7 @@ public class ContentController {
      */
     @RequestMapping(value = "/content/add", method = RequestMethod.POST)
     public @ResponseBody Content addContent(@RequestParam("file") MultipartFile file, @RequestParam String contentName,
-                        @RequestParam String contentType){
+                        @RequestParam String contentType, @RequestParam Integer[] tagArray){
 
         String fileName = contentService.storeFile(file);
 
@@ -124,6 +124,8 @@ public class ContentController {
          * Adding the content to the database.
          */
         contentService.addContent(content);
+
+        contentService.addTagToContent(94, tagArray);
 
         return content;
     }
@@ -171,10 +173,10 @@ public class ContentController {
         contentService.likeContent(userID, contentID);
     }
 
-    @RequestMapping(value = "/content/tag/{contentID}/{tagID}", method = RequestMethod.POST)
-    public void addTag(@PathVariable(value = "contentID") Integer contentID, @PathVariable(value = "tagID") Integer tagID){
-
-        contentService.addTagToContent(contentID, tagID);
-    }
+//    @RequestMapping(value = "/content/tag/{contentID}/{tagID}", method = RequestMethod.POST)
+//    public void addTag(@PathVariable(value = "contentID") Integer contentID, @PathVariable(value = "tagID") Integer tagID){
+//
+//        contentService.addTagToContent(contentID, tagID);
+//    }
 
 }

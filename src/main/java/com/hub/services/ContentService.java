@@ -175,29 +175,62 @@ public class ContentService {
 
     }
 
-    public void addTagToContent(Integer contentID, Integer tagID){
+    public void addTagToContent(Integer contentID, Integer[] tagArray){
 
         String content;
 
         if(contentID >= 10){
+
             content = contentID.toString();
         }
         else{
+
             content = "0" + contentID.toString();
         }
 
+        Integer[] contentTags = tagArray;
+
         String tag;
 
-        if(tagID >= 10) {
-            tag = tagID.toString();
-        }
-        else{
-            tag = "0" + tagID.toString();
-        }
-        String contentTagID = content + tag;
+        for(Integer contentTag : contentTags){
 
-        ContentTag contentTag = new ContentTag(contentTagID, contentID, tagID);
-        contentTagRepository.save(contentTag);
+            if(contentTag >= 10){
+
+                tag = contentTag.toString();
+            }
+            else{
+
+                tag = "0" + contentTag.toString();
+            }
+
+            String contentTagID = content + tag;
+
+            ContentTag contTag = new ContentTag(contentTagID, contentID, contentTag);
+            contentTagRepository.save(contTag);
+        }
+
+
+//        String content;
+//
+//        if(contentID >= 10){
+//            content = contentID.toString();
+//        }
+//        else{
+//            content = "0" + contentID.toString();
+//        }
+//
+//        String tag;
+//
+//        if(tagID >= 10) {
+//            tag = tagID.toString();
+//        }
+//        else{
+//            tag = "0" + tagID.toString();
+//        }
+//        String contentTagID = content + tag;
+//
+//        ContentTag contentTag = new ContentTag(contentTagID, contentID, tagID);
+//        contentTagRepository.save(contentTag);
     }
 
     public Iterable<ContentTag> getContentTagsByContentID(Integer contentID){

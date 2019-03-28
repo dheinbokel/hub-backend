@@ -1,6 +1,6 @@
 package com.hub.services;
 
-import com.hub.models.LoginCredentials;
+import com.hub.RequestModels.LoginCredentials;
 import com.hub.models.MockToken;
 import org.springframework.stereotype.Service;
 

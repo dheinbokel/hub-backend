@@ -1,6 +1,6 @@
 package com.hub.controllers;
 
-import com.hub.models.LoginCredentials;
+import com.hub.RequestModels.LoginCredentials;
 import com.hub.models.MockToken;
 import com.hub.services.AccountService;
 import org.springframework.web.bind.annotation.*;

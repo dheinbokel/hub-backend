@@ -1,4 +1,4 @@
-package com.hub.models;
+package com.hub.RequestModels;
 
 /**
  * This class represents the data from the login form from the front-end.  The JSON that comes in from the form
