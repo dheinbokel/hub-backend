@@ -93,9 +93,19 @@ public class ContentController {
      */
     @RequestMapping(value = "/content/add", method = RequestMethod.POST)
     public @ResponseBody Content addContent(@RequestParam("file") MultipartFile file, @RequestParam String contentName,
-                        @RequestParam String contentType, @RequestParam Integer[] tagArray){
+                        @RequestParam String contentType, @RequestParam String tagArray){
 
         String fileName = contentService.storeFile(file);
+
+        String[] inputArray = tagArray.split(",");
+
+        Integer[] numbers = new Integer[inputArray.length];
+
+        for(int i = 0;i < inputArray.length;i++)
+        {
+
+            numbers[i] = Integer.parseInt(inputArray[i]);
+        }
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/downloadFile/")
@@ -125,9 +135,9 @@ public class ContentController {
          */
         contentService.addContent(content);
 
-        contentService.addTagToContent(content.getContentID(), tagArray);
+        contentService.addTagToContent(content.getContentID(), numbers);
 
-        contentService.sendNotifications(content.getContentID(), content.getContentName(), tagArray);
+        contentService.sendNotifications(content.getContentID(), content.getContentName(), numbers);
 
         return content;
     }
