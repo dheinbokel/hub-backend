@@ -1,5 +1,6 @@
 package com.hub.controllers;
 
+import com.hub.RequestModels.NotificationRequest;
 import com.hub.RequestModels.SubscriptionRequest;
 import com.hub.models.HubUser;
 import com.hub.models.Notification;
@@ -8,6 +9,7 @@ import com.hub.services.UserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 /**
@@ -123,5 +125,21 @@ public class UserController {
     public Iterable<Notification> getNotificationByUserID(@PathVariable(value = "userID") Integer userID){
 
         return userService.findNotificationByUserID(userID);
+    }
+
+    /**
+     * This endpoint deletes all notifications with the ids given in the NotificationRequest's notificationsIDs field.
+     * @param notificationRequest
+     */
+    @RequestMapping(value = "/notifications/remove", method = RequestMethod.DELETE)
+    public void deleteNotificationsByUserID(@RequestBody NotificationRequest notificationRequest){
+
+        userService.deleteNotificationsByID(notificationRequest);
+    }
+
+    @RequestMapping(value = "/notifications/switch", method = RequestMethod.PUT)
+    public ArrayList<Notification> setNotificationsInactive(@RequestBody NotificationRequest notificationRequest){
+
+        return userService.setNotificationInactive(notificationRequest);
     }
 }

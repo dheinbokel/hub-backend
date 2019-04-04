@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface NotificationRepository extends JpaRepository<Notification, Integer> {
 
     Iterable<Notification> findByUserID(Integer userID);
+
 }

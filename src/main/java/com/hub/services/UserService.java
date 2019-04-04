@@ -1,5 +1,6 @@
 package com.hub.services;
 
+import com.hub.RequestModels.NotificationRequest;
 import com.hub.RequestModels.SubscriptionRequest;
 import com.hub.daos.NotificationRepository;
 import com.hub.daos.SubscriptionRepository;
@@ -10,6 +11,7 @@ import com.hub.models.Notification;
 import com.hub.models.Subscription;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 /**
@@ -157,5 +159,33 @@ public class UserService {
             subscriptionRepository.save(subscription);
         }
 
+    }
+
+    public void deleteNotificationsByID(NotificationRequest notificationRequest){
+
+        Integer[] ids = notificationRequest.getNotificationIDs();
+
+        for(Integer id : ids){
+
+            notificationRepository.deleteById(id);
+        }
+    }
+
+    public ArrayList<Notification> setNotificationInactive(NotificationRequest notificationRequest){
+
+        Integer[] ids = notificationRequest.getNotificationIDs();
+        ArrayList<Notification> notifications = new ArrayList<>();
+
+        for(Integer id : ids){
+
+            Notification notification = notificationRepository.findById(id)
+                    .orElseThrow(() -> new HubNotFoundException("Could not find Notification for notificationID: " + id));
+
+            notification.setActive(false);
+
+            Notification updatedNotification = notificationRepository.save(notification);
+            notifications.add(updatedNotification);
+        }
+        return notifications;
     }
 }
