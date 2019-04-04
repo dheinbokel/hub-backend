@@ -121,6 +121,11 @@ public class UserController {
         userService.addSub(subscriptionRequest);
     }
 
+    /**
+     * This endpoint finds and returns all notifications that share a userID with the userID in the path variable
+     * @param userID Integer
+     * @return Iterable of notification objects.
+     */
     @RequestMapping(value = "/notifications/{userID}", method = RequestMethod.GET)
     public Iterable<Notification> getNotificationByUserID(@PathVariable(value = "userID") Integer userID){
 
@@ -137,6 +142,12 @@ public class UserController {
         userService.deleteNotificationsByID(notificationRequest);
     }
 
+    /**
+     * This endpoint requires a NotificationRequest object and sets all notifications sent in to inactive. Sends back an
+     * ArrayList of notifications that were set to inactive.
+     * @param notificationRequest
+     * @return
+     */
     @RequestMapping(value = "/notifications/switch", method = RequestMethod.PUT)
     public ArrayList<Notification> setNotificationsInactive(@RequestBody NotificationRequest notificationRequest){
 

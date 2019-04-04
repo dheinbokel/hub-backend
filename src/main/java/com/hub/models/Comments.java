@@ -29,8 +29,12 @@ public class Comments {
     @Column(name = "USER_ID")
     private Integer userID;
 
+    @Column(name = "ACTIVE")
+    private boolean isActive;
+
     Comments(){
 
+        isActive = true;
     }
 
     /**
@@ -83,5 +87,13 @@ public class Comments {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }

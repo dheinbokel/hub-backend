@@ -90,4 +90,40 @@ public class CommentController {
         return comments;
     }
 
+    /**
+     * This endpoint is for altering a comment object to change what is in the comment. Requires a Comments object with the
+     * edited text and an Integer commentID.
+     * @param comments Comments object
+     * @param id Integer
+     * @return the comment that was altered.
+     */
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
+    public @ResponseBody Comments editComment(@RequestBody Comments comments, @PathVariable(value = "id") Integer id){
+
+        return commentService.changeComment(comments, id);
+    }
+
+    /**
+     * This endpoint changes the active status of the comment from true to false and false to true depending on what the
+     * current active status is. Requires and Integer commentID and returns the comment that was toggled.
+     * @param id Integer
+     * @return Comments object
+     */
+    @RequestMapping(value = "/toggle/{id}", method = RequestMethod.PUT)
+    public @ResponseBody Comments toggleComment(@PathVariable(value = "id") Integer id){
+
+        return commentService.toggleComment(id);
+    }
+
+    /**
+     * This endpoint deletes a comment with the commentID matching the id sent in through the path variable. The id value
+     * Integer is sent back.
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    public @ResponseBody Integer deleteComment(@PathVariable(value = "id") Integer id){
+
+        return commentService.deleteComment(id);
+    }
 }

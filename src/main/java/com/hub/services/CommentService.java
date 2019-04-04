@@ -86,4 +86,37 @@ public class CommentService {
         commentsRepository.save(comments);
         return comments;
     }
+
+    public Comments changeComment(Comments comments, Integer id){
+
+        Comments comment = commentsRepository.findById(id)
+                .orElseThrow(() -> new HubNotFoundException("Could not find comment for commentID: " + id));
+
+        comment.setComment(comments.getComment());
+        Comments updatedComment = commentsRepository.save(comment);
+
+        return updatedComment;
+    }
+
+    public Comments toggleComment(Integer id){
+
+        Comments comment = commentsRepository.findById(id)
+                .orElseThrow(() -> new HubNotFoundException("Could not find comment for commentID: " + id));
+
+        if(comment.isActive()){
+            comment.setActive(false);
+        }
+        else{
+            comment.setActive(true);
+        }
+
+        Comments updatedComment = commentsRepository.save(comment);
+        return updatedComment;
+    }
+
+    public Integer deleteComment(Integer id){
+
+        commentsRepository.deleteById(id);
+        return id;
+    }
 }
