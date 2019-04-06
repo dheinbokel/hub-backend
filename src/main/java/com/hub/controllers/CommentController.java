@@ -110,7 +110,7 @@ public class CommentController {
      * @return Comments object
      */
     @RequestMapping(value = "/toggle/{id}", method = RequestMethod.PUT)
-    public @ResponseBody Comments toggleComment(@PathVariable(value = "id") Integer id){
+    public @ResponseBody Integer toggleComment(@PathVariable(value = "id") Integer id){
 
         return commentService.toggleComment(id);
     }

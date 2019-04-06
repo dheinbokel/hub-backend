@@ -85,6 +85,12 @@ public class ContentController {
         return contentService.getContentTagsByTagID(tagID);
     }
 
+    @RequestMapping(value = "/content/toggle/{contentID}", method = RequestMethod.PUT)
+    public @ResponseBody Integer toggleContent(@PathVariable(value = "contentID") Integer contentID){
+
+        return contentService.toggleContent(contentID);
+    }
+
     /**
      * End point is called when the user would like to add content to the database.  Requests
      * fields to be sent in and then the object is saved to the database.  Requires a file, contentName, and contentType

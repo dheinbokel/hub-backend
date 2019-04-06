@@ -61,11 +61,14 @@ public class HubUser {
     @Column(name = "PERMISSIONS_ID")
     private Integer prmID;
 
-    @OneToMany
+    @Column(name = "ACTIVE")
+    private boolean isActive;
+
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
     private List<Comments> userComments = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
     private List<Notification> notifications = new ArrayList<>();
 
@@ -82,6 +85,7 @@ public class HubUser {
      */
     HubUser(){
 
+        isActive = true;
     }
 
     /**
@@ -191,11 +195,21 @@ public class HubUser {
         this.subscriptions = subscriptions;
     }
 
+    @JsonIgnore
     public List<Notification> getNotifications() {
         return notifications;
     }
 
+    @JsonProperty
     public void setNotifications(List<Notification> notifications) {
         this.notifications = notifications;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }

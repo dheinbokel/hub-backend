@@ -246,4 +246,20 @@ public class ContentService {
         return contentTagRepository.findByTagID(tagID);
     }
 
+    public Integer toggleContent(Integer contentID){
+
+        Content content = contentRepository.findById(contentID)
+                .orElseThrow(() -> new HubNotFoundException("Could not find content for contentID: " + contentID));
+
+        if(content.isActive()){
+            content.setActive(false);
+        }
+        else{
+            content.setActive(true);
+        }
+
+        contentRepository.save(content);
+        return contentID;
+    }
+
 }

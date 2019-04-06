@@ -98,7 +98,7 @@ public class CommentService {
         return updatedComment;
     }
 
-    public Comments toggleComment(Integer id){
+    public Integer toggleComment(Integer id){
 
         Comments comment = commentsRepository.findById(id)
                 .orElseThrow(() -> new HubNotFoundException("Could not find comment for commentID: " + id));
@@ -110,8 +110,8 @@ public class CommentService {
             comment.setActive(true);
         }
 
-        Comments updatedComment = commentsRepository.save(comment);
-        return updatedComment;
+        commentsRepository.save(comment);
+        return id;
     }
 
     public Integer deleteComment(Integer id){

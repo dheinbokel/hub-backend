@@ -44,6 +44,19 @@ public class UserController {
         return hubUser;
     }
 
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
+    public @ResponseBody HubUser editUser(@RequestBody HubUser hubUser, @PathVariable(value = "id") Integer id){
+
+        hubUser.setPassword(bCryptPasswordEncoder.encode(hubUser.getPassword()));
+        return userService.editUser(hubUser, id);
+    }
+
+    @RequestMapping(value = "/toggle/{userID}", method = RequestMethod.PUT)
+    public @ResponseBody Integer toggleUser(@PathVariable(value = "userID")Integer userID){
+
+        return userService.toggleUser(userID);
+    }
+
     /**
      * Returns all users in the database as an iterable of HubUsers.
      * @return
@@ -115,10 +128,20 @@ public class UserController {
         return userService.findSubByTagID(tagID);
     }
 
+    /**
+     * This endpoint is used for adding a subscription to a certain tag. It takes in a SubscriptionRequest object.
+     * @param subscriptionRequest
+     */
     @RequestMapping(value = "/subscription/add", method = RequestMethod.POST)
     public void subscribe(@RequestBody SubscriptionRequest subscriptionRequest){
 
         userService.addSub(subscriptionRequest);
+    }
+
+    @RequestMapping(value = "/subscription/remove/{subID}", method = RequestMethod.DELETE)
+    public String deleteSub(@PathVariable(value = "subID") String subID){
+
+        return userService.deleteSubscriptionByID(subID);
     }
 
     /**

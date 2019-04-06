@@ -6,9 +6,7 @@ import com.hub.daos.NotificationRepository;
 import com.hub.daos.SubscriptionRepository;
 import com.hub.daos.UsersRepository;
 import com.hub.exceptions.HubNotFoundException;
-import com.hub.models.HubUser;
-import com.hub.models.Notification;
-import com.hub.models.Subscription;
+import com.hub.models.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -171,6 +169,13 @@ public class UserService {
         }
     }
 
+    public String deleteSubscriptionByID(String subID){
+
+        subscriptionRepository.deleteById(subID);
+
+        return subID;
+    }
+
     public ArrayList<Notification> setNotificationInactive(NotificationRequest notificationRequest){
 
         Integer[] ids = notificationRequest.getNotificationIDs();
@@ -187,5 +192,40 @@ public class UserService {
             notifications.add(updatedNotification);
         }
         return notifications;
+    }
+
+    public HubUser editUser(HubUser hubUser, Integer id){
+
+        HubUser user = usersRepository.findById(id)
+                .orElseThrow(() -> new HubNotFoundException("Could not find user for userID: " + id));
+
+        user.setUserName(hubUser.getUserName());
+        user.setPassword(hubUser.getPassword());
+        user.setEmail(hubUser.getEmail());
+        user.setfName(hubUser.getfName());
+        user.setlName(hubUser.getlName());
+        user.setDptID(hubUser.getDptID());
+        user.setFrID(hubUser.getFrID());
+        user.setPrmID(hubUser.getPrmID());
+
+        HubUser updatedUser = usersRepository.save(user);
+
+        return updatedUser;
+    }
+
+    public Integer toggleUser(Integer userID){
+
+        HubUser user = usersRepository.findById(userID)
+                .orElseThrow(() -> new HubNotFoundException("Could not find user for userID: " + userID));
+
+        if(user.isActive()){
+            user.setActive(false);
+        }
+        else{
+            user.setActive(true);
+        }
+
+        usersRepository.save(user);
+        return userID;
     }
 }
