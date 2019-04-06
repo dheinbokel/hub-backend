@@ -1,5 +1,6 @@
 package com.hub.services;
 
+import com.hub.RequestModels.ContentTagRequest;
 import com.hub.daos.*;
 import com.hub.exceptions.FileStorageException;
 import com.hub.exceptions.HubFileNotFoundException;
@@ -18,9 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 /**
  * This class's purpose is to perform the logic behind the requests made to the content controller's endpoints.
@@ -211,6 +210,32 @@ public class ContentService {
             contentTagRepository.save(contTag);
         }
 
+    }
+
+    public ArrayList<ContentTag> getContentTagByAllTags(ContentTagRequest contentTagRequest){
+
+        Integer[] tagArray = contentTagRequest.getTagIdArray();
+        Set<Integer> usedIDs = new HashSet<>();
+        ArrayList<ContentTag> contentTags = new ArrayList<>();
+
+        for(Integer tag : tagArray){
+
+            Iterable<ContentTag> contentTags1 = contentTagRepository.findByTagID(tag);
+
+            for(ContentTag contentTag : contentTags1){
+
+                if(usedIDs.contains(contentTag.getContentID())) {
+                    //Do Nothing
+                }
+                else{
+                    usedIDs.add(contentTag.getContentID());
+                    contentTags.add(contentTag);
+                }
+            }
+        }
+        contentTags.sort(Comparator.comparing(a -> a.getContentID()));
+        Collections.reverse(contentTags);
+        return contentTags;
     }
 
     public void sendNotifications(Integer contentID, String contentName, Integer[] tagArray){

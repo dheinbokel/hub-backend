@@ -1,5 +1,6 @@
 package com.hub.controllers;
 
+import com.hub.RequestModels.ContentTagRequest;
 import com.hub.models.Content;
 import com.hub.models.ContentTag;
 import com.hub.services.ContentService;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Optional;
 
@@ -83,6 +85,12 @@ public class ContentController {
     public @ResponseBody Iterable<ContentTag> getContentTagByTagID(@PathVariable(value = "tagID") Integer tagID){
 
         return contentService.getContentTagsByTagID(tagID);
+    }
+
+    @RequestMapping(value = "/contentTags", method = RequestMethod.GET)
+    public @ResponseBody ArrayList<ContentTag> getContentTagsByTagsArray(@RequestBody ContentTagRequest contentTagRequest){
+
+        return contentService.getContentTagByAllTags(contentTagRequest);
     }
 
     @RequestMapping(value = "/content/toggle/{contentID}", method = RequestMethod.PUT)
