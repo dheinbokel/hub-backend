@@ -102,4 +102,28 @@ public class BusinessInfoController {
     public @ResponseBody Department getDepartmentByName(@PathVariable(value = "dptName") String dptName){
         return businessInfoService.findDepartmentByDptName(dptName);
     }
+
+    @RequestMapping(value = "/departments/edit/{dptID}", method = RequestMethod.PUT)
+    public @ResponseBody Department editDepartment(@RequestBody Department department, @PathVariable(value = "dptID") Integer dptID){
+
+        return businessInfoService.editDepartment(department, dptID);
+    }
+
+    @RequestMapping(value = "/franchises/edit/{frID}", method = RequestMethod.PUT)
+    public @ResponseBody Franchise editFranchise(@RequestBody Franchise franchise, @PathVariable(value = "frID") Integer frID){
+
+        return businessInfoService.editFranchise(franchise, frID);
+    }
+
+    @RequestMapping(value = "/franchises/toggle/{frID}", method = RequestMethod.PUT)
+    public @ResponseBody Integer toggleFranchise(@PathVariable(value = "frID") Integer frID){
+
+        return businessInfoService.toggleFranchise(frID);
+    }
+
+    @RequestMapping(value = "/departments/toggle/{dptID}", method = RequestMethod.PUT)
+    public @ResponseBody Integer toggleDepartments(@PathVariable(value = "dptID") Integer dptID){
+
+        return businessInfoService.toggleDepartment(dptID);
+    }
 }

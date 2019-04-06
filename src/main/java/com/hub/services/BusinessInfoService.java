@@ -112,4 +112,61 @@ public class BusinessInfoService {
 
         return franchiseRepository.findByFrName(frName);
     }
+
+    public Franchise editFranchise(Franchise franchise, Integer frID){
+
+        Franchise franchise2 = franchiseRepository.findById(frID)
+                .orElseThrow(() -> new HubNotFoundException("Could not find franchise for frID: " + frID));
+
+        franchise2.setFrName(franchise.getFrName());
+        franchise2.setFrLocation(franchise.getFrLocation());
+
+        Franchise updatedFranchise = franchiseRepository.save(franchise2);
+        return updatedFranchise;
+    }
+
+    public Department editDepartment(Department department, Integer dptID){
+
+        Department department1 = departmentRepository.findById(dptID)
+                .orElseThrow(() -> new HubNotFoundException("Could not find department for dptID: " + dptID));
+
+        department1.setDptName(department.getDptName());
+
+        Department updatedDepartment = departmentRepository.save(department1);
+        return updatedDepartment;
+    }
+
+    public Integer toggleDepartment(Integer dptID){
+
+        Department department = departmentRepository.findById(dptID)
+                .orElseThrow(() -> new HubNotFoundException("Could not find department for dptID: " + dptID));
+
+        if(department.isActive()){
+            department.setActive(false);
+        }
+        else{
+            department.setActive(true);
+        }
+
+        departmentRepository.save(department);
+
+        return dptID;
+    }
+
+    public Integer toggleFranchise(Integer frID){
+
+        Franchise franchise = franchiseRepository.findById(frID)
+                .orElseThrow(() -> new HubNotFoundException("Could not find franchise for frID: " + frID));
+
+        if(franchise.isActive()){
+            franchise.setActive(false);
+        }
+        else{
+            franchise.setActive(true);
+        }
+
+        franchiseRepository.save(franchise);
+
+        return frID;
+    }
 }

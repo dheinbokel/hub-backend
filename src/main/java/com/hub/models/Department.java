@@ -31,6 +31,9 @@ public class Department {
     @Column(name = "DPT_NAME")
     private String dptName;
 
+    @Column(name = "ACTIVE")
+    private boolean isActive;
+
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "DEPARTMENT_ID", referencedColumnName = "DEPARTMENT_ID")
     private List<HubUser> hubUsers = new ArrayList<>();
@@ -43,8 +46,8 @@ public class Department {
      * Default constructor, needed for spring to interact with entity.
      */
     Department(){
-
-    };
+        isActive = true;
+    }
 
     /**
      * Getters and Setters for the Department class.
@@ -83,6 +86,14 @@ public class Department {
     @JsonProperty
     public void setHubEvents(List<HubEvent> hubEvents) {
         this.hubEvents = hubEvents;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }
 

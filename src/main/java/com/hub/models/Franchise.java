@@ -34,6 +34,9 @@ public class Franchise {
     @Column(name = "LOCATION")
     private String frLocation;
 
+    @Column(name = "ACTIVE")
+    private boolean isActive;
+
     @OneToMany
     @JoinColumn(name = "FRANCHISE_ID", referencedColumnName = "FRANCHISE_ID")
     private List<HubUser> hubUsers = new ArrayList<>();
@@ -46,7 +49,7 @@ public class Franchise {
      * A simple default constructor for the Franchise class.
      */
     Franchise(){
-
+        isActive = true;
     }
 
     /**
@@ -94,5 +97,13 @@ public class Franchise {
     @JsonProperty
     public void setHubEvents(List<HubEvent> hubEvents) {
         this.hubEvents = hubEvents;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }
