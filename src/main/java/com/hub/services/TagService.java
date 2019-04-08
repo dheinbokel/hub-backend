@@ -40,4 +40,31 @@ public class TagService {
 
         return tag;
     }
+
+    public Integer toggleTag(Integer tagID){
+
+        Tag tag = tagRepository.findById(tagID)
+                .orElseThrow(() -> new HubNotFoundException("Could not find tag for tagID: " + tagID));
+
+        if(tag.isActive()){
+            tag.setActive(false);
+        }
+        else{
+            tag.setActive(true);
+        }
+
+        tagRepository.save(tag);
+        return tagID;
+    }
+
+    public Tag editTag(Tag tag, Integer tagID){
+
+        Tag newTag = tagRepository.findById(tagID)
+                .orElseThrow(() -> new HubNotFoundException("Could not find tag for tagID: " + tagID));
+
+        newTag.setTagName(tag.getTagName());
+
+        Tag updatedTag = tagRepository.save(newTag);
+        return updatedTag;
+    }
 }

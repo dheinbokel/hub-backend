@@ -126,6 +126,13 @@ public class UserService {
 
     public void addSub(SubscriptionRequest subscriptionRequest){
 
+        Iterable<Subscription> subscriptions = subscriptionRepository.findByUserID(subscriptionRequest.getUserID());
+
+        for(Subscription subscription : subscriptions){
+
+            subscriptionRepository.deleteById(subscription.getSubID());
+        }
+
         String user;
 
         if(subscriptionRequest.getUserID() >= 10){

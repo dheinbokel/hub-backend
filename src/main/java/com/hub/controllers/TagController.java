@@ -33,4 +33,16 @@ public class TagController {
         tagService.addTag(tag);
         return tag;
     }
+
+    @RequestMapping(value = "/toggle/{tagID}", method = RequestMethod.PUT)
+    public @ResponseBody Integer toggleTag(@PathVariable(value = "tagID") Integer tagID){
+
+        return tagService.toggleTag(tagID);
+    }
+
+    @RequestMapping(value = "/edit/{tagID}", method = RequestMethod.PUT)
+    public @ResponseBody Tag editTag(@RequestBody Tag tag, @PathVariable(value = "tagID") Integer tagID){
+
+        return tagService.editTag(tag, tagID);
+    }
 }

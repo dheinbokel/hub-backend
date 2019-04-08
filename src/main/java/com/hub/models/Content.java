@@ -63,7 +63,7 @@ public class Content {
     private List<Like> likes = new ArrayList<>();
 
     public Content(){
-        
+
     }
 
     /**
@@ -85,10 +85,12 @@ public class Content {
         this.createDate = createDate;
     }
 
+    @JsonIgnore
     public boolean isActive() {
         return isActive;
     }
 
+    @JsonProperty
     public void setActive(boolean active) {
         isActive = active;
     }

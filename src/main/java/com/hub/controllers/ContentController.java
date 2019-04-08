@@ -156,6 +156,14 @@ public class ContentController {
         return content;
     }
 
+    @RequestMapping(value = "/content/edit/{contentID}", method = RequestMethod.PUT)
+    public @ResponseBody Content editContent(@RequestParam("file") MultipartFile file, @RequestParam String contentName,
+                                            @RequestParam String contentType, @RequestParam String tagArray,
+                                             @PathVariable(value = "contentID") Integer contentID){
+
+        return contentService.editContent(contentID, file, contentName, contentType, tagArray);
+    }
+
     /**
      * This endpoint sends the directory of the content file to the user to display or download. It requires a file name
      * and a request.

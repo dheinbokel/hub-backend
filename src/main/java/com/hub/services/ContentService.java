@@ -12,6 +12,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -287,4 +288,50 @@ public class ContentService {
         return contentID;
     }
 
+    public Content editContent(Integer contentID, MultipartFile file, String contentName, String contentType, String tagArray){
+
+        Content content = contentRepository.findById(contentID)
+                .orElseThrow(() -> new HubNotFoundException("Could not find content for contentID: " + contentID));
+
+        String fileName = storeFile(file);
+
+        String[] inputArray = tagArray.split(",");
+
+        Integer[] numbers = new Integer[inputArray.length];
+
+        for(int i = 0;i < inputArray.length;i++)
+        {
+
+            numbers[i] = Integer.parseInt(inputArray[i]);
+        }
+
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/downloadFile/")
+                .path(fileName)
+                .toUriString();
+
+        content.setFileName(fileName);
+        content.setFileDownloadUri(fileDownloadUri);
+        content.setSize(file.getSize());
+        content.setContentName(contentName);
+        content.setContentType(contentType);
+
+        deleteContentTagsByID(contentID);
+
+        Content updatedContent = contentRepository.save(content);
+        addTagToContent(content.getContentID(), numbers);
+        sendNotifications(content.getContentID(), content.getContentName(), numbers);
+
+        return updatedContent;
+    }
+
+    public void deleteContentTagsByID(Integer contentID){
+
+        Iterable<ContentTag> contentTags = contentTagRepository.findByContentID(contentID);
+
+        for(ContentTag contentTag : contentTags){
+
+            contentTagRepository.deleteById(contentTag.getContentTagID());
+        }
+    }
 }

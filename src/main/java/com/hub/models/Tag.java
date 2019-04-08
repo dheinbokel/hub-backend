@@ -32,6 +32,9 @@ public class Tag {
     @Column(name = "TAG_NAME")
     private String tagName;
 
+    @Column(name = "ACTIVE")
+    private boolean isActive;
+
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "TAG_ID", referencedColumnName = "TAG_ID")
     private List<ContentTag> contentTags = new ArrayList<>();
@@ -45,6 +48,7 @@ public class Tag {
      */
     Tag(){
 
+        isActive = true;
     }
 
     /**
@@ -87,5 +91,11 @@ public class Tag {
         this.subscriptions = subscriptions;
     }
 
+    public boolean isActive() {
+        return isActive;
+    }
 
+    public void setActive(boolean active) {
+        isActive = active;
+    }
 }
