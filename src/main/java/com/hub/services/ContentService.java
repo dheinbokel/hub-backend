@@ -212,7 +212,7 @@ public class ContentService {
         }
     }
 
-    public void addTagToContent(Integer contentID, Integer[] tagArray){
+    public void addTagToContent(Integer contentID, String contentName, Integer[] tagArray){
 
         String content;
 
@@ -242,7 +242,7 @@ public class ContentService {
 
             String contentTagID = content + tag;
 
-            ContentTag contTag = new ContentTag(contentTagID, contentID, contentTag);
+            ContentTag contTag = new ContentTag(contentTagID, contentName, contentID, contentTag);
             contentTagRepository.save(contTag);
         }
 
@@ -354,7 +354,7 @@ public class ContentService {
         deleteContentTagsByID(contentID);
 
         Content updatedContent = contentRepository.save(content);
-        addTagToContent(content.getContentID(), numbers);
+        addTagToContent(content.getContentID(),contentName, numbers);
         sendNotifications(content.getContentID(), content.getContentName(), numbers);
 
         return updatedContent;

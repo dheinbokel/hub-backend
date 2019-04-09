@@ -16,6 +16,9 @@ public class ContentTag {
     @Column(name = "CONTENT_TAG_ID")
     private String contentTagID;
 
+    @Column(name = "RELATED_CONTENT")
+    private String relatedContent;
+
     @Column(name = "CONTENT_ID")
     private Integer contentID;
 
@@ -26,8 +29,9 @@ public class ContentTag {
 
     }
 
-    public ContentTag(String contentTagID, Integer contentID, Integer tagID) {
+    public ContentTag(String contentTagID, String relatedContent, Integer contentID, Integer tagID) {
         this.contentTagID = contentTagID;
+        this.relatedContent = relatedContent;
         this.contentID = contentID;
         this.tagID = tagID;
     }
@@ -54,5 +58,13 @@ public class ContentTag {
 
     public void setTagID(Integer tagID) {
         this.tagID = tagID;
+    }
+
+    public String getRelatedContent() {
+        return relatedContent;
+    }
+
+    public void setRelatedContent(String relatedContent) {
+        this.relatedContent = relatedContent;
     }
 }

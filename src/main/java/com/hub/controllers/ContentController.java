@@ -149,7 +149,7 @@ public class ContentController {
          */
         contentService.addContent(content);
 
-        contentService.addTagToContent(content.getContentID(), numbers);
+        contentService.addTagToContent(content.getContentID(), contentName, numbers);
 
         contentService.sendNotifications(content.getContentID(), content.getContentName(), numbers);
 
