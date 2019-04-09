@@ -1,19 +1,24 @@
 package com.hub.services;
 
+import com.hub.daos.SubscriptionRepository;
 import com.hub.daos.TagRepository;
 import com.hub.exceptions.HubNotFoundException;
+import com.hub.models.Subscription;
 import com.hub.models.Tag;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
 public class TagService {
 
     private TagRepository tagRepository;
+    private SubscriptionRepository subscriptionRepository;
 
-    TagService(TagRepository tagRepository){
+    TagService(TagRepository tagRepository, SubscriptionRepository subscriptionRepository){
 
+        this.subscriptionRepository = subscriptionRepository;
         this.tagRepository = tagRepository;
     }
 
@@ -66,5 +71,22 @@ public class TagService {
 
         Tag updatedTag = tagRepository.save(newTag);
         return updatedTag;
+    }
+
+    public ArrayList<Optional<Tag>> getTagsBySub(Integer userID){
+
+        Iterable<Subscription> subscriptions = subscriptionRepository.findByUserID(userID);
+
+        ArrayList<Optional<Tag>> optionals = new ArrayList<>();
+        for (Subscription sub : subscriptions){
+
+            Optional<Tag> tag = tagRepository.findById(sub.getTagID());
+
+            if(tag.isPresent()){
+
+                optionals.add(tag);
+            }
+        }
+        return optionals;
     }
 }

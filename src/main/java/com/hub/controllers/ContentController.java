@@ -207,10 +207,9 @@ public class ContentController {
         contentService.likeContent(userID, contentID);
     }
 
-//    @RequestMapping(value = "/content/tag/{contentID}/{tagID}", method = RequestMethod.POST)
-//    public void addTag(@PathVariable(value = "contentID") Integer contentID, @PathVariable(value = "tagID") Integer tagID){
-//
-//        contentService.addTagToContent(contentID, tagID);
-//    }
+    @RequestMapping(value = "/content/dislike/{userID}/{contentID}", method = RequestMethod.DELETE)
+    public void dislikeContent(@PathVariable(value = "userID") Integer userID, @PathVariable(value = "contentID") Integer contentID){
 
+        contentService.dislikeContent(userID, contentID);
+    }
 }

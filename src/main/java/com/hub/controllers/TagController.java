@@ -4,6 +4,7 @@ import com.hub.models.Tag;
 import com.hub.services.TagService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @CrossOrigin(origins = "*", allowCredentials = "true", allowedHeaders = "*")
@@ -44,5 +45,11 @@ public class TagController {
     public @ResponseBody Tag editTag(@RequestBody Tag tag, @PathVariable(value = "tagID") Integer tagID){
 
         return tagService.editTag(tag, tagID);
+    }
+
+    @RequestMapping(value = "/subs/{userID}", method = RequestMethod.GET)
+    public @ResponseBody ArrayList<Optional<Tag>> getTagsBySub(@PathVariable(value = "userID") Integer userID){
+
+        return tagService.getTagsBySub(userID);
     }
 }

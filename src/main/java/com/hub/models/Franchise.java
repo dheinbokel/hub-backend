@@ -99,10 +99,12 @@ public class Franchise {
         this.hubEvents = hubEvents;
     }
 
+    @JsonIgnore
     public boolean isActive() {
         return isActive;
     }
 
+    @JsonProperty
     public void setActive(boolean active) {
         isActive = active;
     }

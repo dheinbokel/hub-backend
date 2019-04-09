@@ -145,13 +145,7 @@ public class ContentService {
         }
     }
 
-    /**
-     * Adds a record in the like table with an associated userID and contentID.  The count of records associated with a
-     * particular piece of content can be used to check the amount of likes a piece of content has.
-     * @param userID
-     * @param contentID
-     */
-    public void likeContent(Integer userID, Integer contentID){
+    public String createLikeID(Integer userID, Integer contentID){
 
         String user;
 
@@ -172,9 +166,50 @@ public class ContentService {
         }
         String likeID = user + content;
 
-        Like newLike = new Like(likeID, userID, contentID);
+        return likeID;
+    }
+
+    /**
+     * Adds a record in the like table with an associated userID and contentID.  The count of records associated with a
+     * particular piece of content can be used to check the amount of likes a piece of content has.
+     * @param userID
+     * @param contentID
+     */
+    public void likeContent(Integer userID, Integer contentID){
+
+//        String user;
+//
+//        if(userID >= 10){
+//            user = userID.toString();
+//        }
+//        else{
+//            user = "0" + userID.toString();
+//        }
+//
+//        String content;
+//
+//        if(contentID >= 10) {
+//            content = contentID.toString();
+//        }
+//        else{
+//            content = "0" + contentID.toString();
+//        }
+//        String likeID = user + content;
+
+        Like newLike = new Like(createLikeID(userID, contentID), userID, contentID);
         likeRepository.save(newLike);
 
+    }
+
+    public void dislikeContent(Integer userID, Integer contentID){
+
+        String likeID = createLikeID(userID, contentID);
+        Optional<Like> like = likeRepository.findById(likeID);
+
+        if(like.isPresent()){
+
+            likeRepository.deleteById(likeID);
+        }
     }
 
     public void addTagToContent(Integer contentID, Integer[] tagArray){
