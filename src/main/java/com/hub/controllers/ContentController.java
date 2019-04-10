@@ -87,7 +87,7 @@ public class ContentController {
         return contentService.getContentTagsByTagID(tagID);
     }
 
-    @RequestMapping(value = "/contentTags", method = RequestMethod.GET)
+    @RequestMapping(value = "/contentTags", method = RequestMethod.POST)
     public @ResponseBody ArrayList<ContentTag> getContentTagsByTagsArray(@RequestBody ContentTagRequest contentTagRequest){
 
         return contentService.getContentTagByAllTags(contentTagRequest);
