@@ -22,9 +22,9 @@ public class TagService {
         this.tagRepository = tagRepository;
     }
 
-    public Iterable<Tag> findAllTags(){
+    public Iterable<Tag> findAllTagsBYActiveStatus(boolean isActive){
 
-        return tagRepository.findAll();
+        return tagRepository.findByIsActive(isActive);
     }
 
     public Optional<Tag> findTagById(Integer tagID){
@@ -53,6 +53,12 @@ public class TagService {
 
         if(tag.isActive()){
             tag.setActive(false);
+            Iterable<Subscription> subscriptions = subscriptionRepository.findByTagID(tagID);
+
+            for(Subscription subscription : subscriptions){
+
+                subscriptionRepository.deleteById(subscription.getSubID());
+            }
         }
         else{
             tag.setActive(true);

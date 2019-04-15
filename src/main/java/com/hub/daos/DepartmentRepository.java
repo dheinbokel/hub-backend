@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface DepartmentRepository extends JpaRepository<Department, Integer> {
 
     Department findByDptName(String dptName);
+
+    Iterable<Department> findByIsActive(boolean isActive);
 }

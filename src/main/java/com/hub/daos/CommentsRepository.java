@@ -7,9 +7,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CommentsRepository extends JpaRepository<Comments, Integer> {
 
-    Iterable<Comments> findByContentID(Integer contentID);
+    Iterable<Comments> findByContentIDAndIsActive(Integer contentID, boolean isActive);
 
     Iterable<Comments> findByUserID(Integer userID);
 
     Iterable<Comments> findByUserName(String username);
+
+    Iterable<Comments> findByIsActive(boolean isActive);
 }

@@ -23,9 +23,9 @@ public class CommentService {
      * Returns all comments in the database that come back from the commentsRepository method call. Sends as an iterable.
      * @return
      */
-    public Iterable<Comments> findAllComments(){
+    public Iterable<Comments> findAllCommentsByActiveStatus(boolean active){
 
-        return commentsRepository.findAll();
+        return commentsRepository.findByIsActive(active);
     }
 
     /**
@@ -33,9 +33,9 @@ public class CommentService {
      * @param contentID
      * @return
      */
-    public Iterable<Comments> findCommentsByContentID(Integer contentID){
+    public Iterable<Comments> findCommentsByContentID(Integer contentID, boolean active){
 
-        return commentsRepository.findByContentID(contentID);
+        return commentsRepository.findByContentIDAndIsActive(contentID, active);
     }
 
     /**

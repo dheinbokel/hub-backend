@@ -29,8 +29,9 @@ public class CommentController {
      * @return
      */
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public @ResponseBody Iterable<Comments> getAllComments(){
-        return commentService.findAllComments();
+    public @ResponseBody Iterable<Comments> getAllComments(@RequestParam(defaultValue = "true", required = false)
+                                                           boolean active){
+        return commentService.findAllCommentsByActiveStatus(active);
     }
 
     /**
@@ -39,10 +40,12 @@ public class CommentController {
      * @param contentID
      * @return
      */
-    @RequestMapping(value = "/all/content/{contentID}", method = RequestMethod.GET)
-    public @ResponseBody Iterable<Comments> findCommentsByContentID(@PathVariable(value = "contentID") Integer contentID){
+    @RequestMapping(value = "/bycontent", method = RequestMethod.GET)
+    public @ResponseBody Iterable<Comments> findCommentsByContentID(@RequestParam Integer contentID,
+                                                                    @RequestParam(defaultValue = "true", required = false)
+                                                                    boolean active){
 
-        return commentService.findCommentsByContentID(contentID);
+        return commentService.findCommentsByContentID(contentID, active);
     }
 
     /**

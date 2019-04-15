@@ -28,8 +28,10 @@ public class BusinessInfoController {
      * @return
      */
     @RequestMapping(value = "/departments", method = RequestMethod.GET)
-    public @ResponseBody Iterable<Department> getAllDepartments(){
-        return businessInfoService.findAllDepartments();
+    public @ResponseBody Iterable<Department> getAllDepartments(@RequestParam(defaultValue = "true", required = false)
+                                                                boolean active){
+
+        return businessInfoService.findAllDepartmentsByActiveStatus(active);
     }
 
     /**
@@ -47,8 +49,10 @@ public class BusinessInfoController {
      * @return
      */
     @RequestMapping(value = "/franchises", method = RequestMethod.GET)
-    public @ResponseBody Iterable<Franchise> getAllFranchises(){
-        return businessInfoService.findAllFranchises();
+    public @ResponseBody Iterable<Franchise> getAllFranchises(@RequestParam(defaultValue = "true", required = false)
+                                                                          boolean active){
+
+        return businessInfoService.findAllFranchisesByActiveStatus(active);
     }
 
     /**

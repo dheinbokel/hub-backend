@@ -25,18 +25,18 @@ public class BusinessInfoService {
      * Finds and returns all departments as an iterable list of departments.
      * @return
      */
-    public Iterable<Department> findAllDepartments(){
+    public Iterable<Department> findAllDepartmentsByActiveStatus(boolean isActive){
 
-        return departmentRepository.findAll();
+        return departmentRepository.findByIsActive(isActive);
     }
 
     /**
      * Finds and returns all franchises as an iterable list of franchises.
      * @return
      */
-    public Iterable<Franchise> findAllFranchises(){
+    public Iterable<Franchise> findAllFranchisesByActiveStatus(boolean isActive){
 
-        return franchiseRepository.findAll();
+        return franchiseRepository.findByIsActive(isActive);
     }
 
     /**

@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface ContentRepository extends JpaRepository<Content, Integer> {
 
     Iterable<Content> findByContentType(String contentType);
+
+    Iterable<Content> findByIsActive(boolean isActive);
 }

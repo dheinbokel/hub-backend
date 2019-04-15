@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface FranchiseRepository extends JpaRepository<Franchise, Integer> {
 
     Franchise findByFrName(String frName);
+
+    Iterable<Franchise> findByIsActive(boolean isActive);
 }

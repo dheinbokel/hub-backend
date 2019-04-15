@@ -9,4 +9,5 @@ public interface NotificationRepository extends JpaRepository<Notification, Inte
 
     Iterable<Notification> findByUserID(Integer userID);
 
+    Iterable<Notification> findByUserIDAndIsActive(Integer userID, boolean isActive);
 }

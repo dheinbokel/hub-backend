@@ -43,16 +43,6 @@ public class ContentController {
     }
 
     /**
-     * This endpoint method is used to return a list of every piece of content from the
-     * database.  It sends back the entire list as JSON.
-     * @return Iterable<Content>
-     */
-    @RequestMapping(value = "/content", method = RequestMethod.GET)
-    public @ResponseBody Iterable<Content> getAllContent(){
-        return contentService.findAllContent();
-    }
-
-    /**
      * This method returns all content with the same content type as what was passed through the parameters.  It sends
      * it back in the form of an iterable in the response body. Sends iterable in JSON.
      * @param contentType
@@ -211,5 +201,17 @@ public class ContentController {
     public void dislikeContent(@PathVariable(value = "userID") Integer userID, @PathVariable(value = "contentID") Integer contentID){
 
         contentService.dislikeContent(userID, contentID);
+    }
+
+    /**
+     * This endpoint will retrieve content based on its active status, being either active or inactive. The defult
+     * value is set to true so all content that is currently active will be sent back if nothing is sent as a parameter.
+     * @param active
+     * @return
+     */
+    @RequestMapping(value = "/content", method = RequestMethod.GET)
+    public Iterable<Content> findActiveContent(@RequestParam(defaultValue = "true", required = false) boolean active){
+
+        return contentService.findByActive(active);
     }
 }

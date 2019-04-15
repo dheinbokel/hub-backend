@@ -1,13 +1,20 @@
 package com.hub.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 @Entity
 @Table(name = "COMMENTS")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Comments {
+
+    private static final DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,6 +41,9 @@ public class Comments {
 
     Comments(){
 
+        Calendar cal = Calendar.getInstance();
+        String dateTime = sdf.format(cal.getTime());
+        createDate =dateTime;
         isActive = true;
     }
 
@@ -89,10 +99,12 @@ public class Comments {
         this.userName = userName;
     }
 
+    @JsonIgnore
     public boolean isActive() {
         return isActive;
     }
 
+    @JsonProperty
     public void setActive(boolean active) {
         isActive = active;
     }

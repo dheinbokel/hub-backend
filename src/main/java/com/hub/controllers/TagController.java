@@ -20,8 +20,8 @@ public class TagController {
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public @ResponseBody Iterable<Tag> getAllTags(){
-        return tagService.findAllTags();
+    public @ResponseBody Iterable<Tag> getAllTags(@RequestParam(defaultValue = "true", required = false) boolean active){
+        return tagService.findAllTagsBYActiveStatus(active);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

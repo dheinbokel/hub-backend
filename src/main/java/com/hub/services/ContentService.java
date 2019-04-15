@@ -369,4 +369,14 @@ public class ContentService {
             contentTagRepository.deleteById(contentTag.getContentTagID());
         }
     }
+
+    /**
+     * This method returns content based on the active status of it.
+     * @param active boolean
+     * @return
+     */
+    public Iterable<Content> findByActive(boolean active){
+
+        return contentRepository.findByIsActive(active);
+    }
 }
