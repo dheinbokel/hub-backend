@@ -79,9 +79,9 @@ public class ContentService {
      * @param contentType
      * @return
      */
-    public Iterable<Content> findByContentType(String contentType){
+    public Iterable<Content> findByContentType(String contentType, boolean active){
 
-        return contentRepository.findByContentType(contentType);
+        return contentRepository.findByContentTypeAndIsActive(contentType, active);
     }
 
     /**
@@ -91,6 +91,15 @@ public class ContentService {
     public Iterable<Content> findAllContent(){
 
         return contentRepository.findAll();
+    }
+
+    /**
+     * Finds all content that is marked as featured and sends it back as an Iterable of content.
+     * @return Iterable of Content
+     */
+    public Iterable<Content> findAllFeaturedContent(){
+
+        return contentRepository.findByIsFeatured(true);
     }
 
     /**
@@ -177,28 +186,17 @@ public class ContentService {
      */
     public void likeContent(Integer userID, Integer contentID){
 
-//        String user;
-//
-//        if(userID >= 10){
-//            user = userID.toString();
-//        }
-//        else{
-//            user = "0" + userID.toString();
-//        }
-//
-//        String content;
-//
-//        if(contentID >= 10) {
-//            content = contentID.toString();
-//        }
-//        else{
-//            content = "0" + contentID.toString();
-//        }
-//        String likeID = user + content;
-
         Like newLike = new Like(createLikeID(userID, contentID), userID, contentID);
         likeRepository.save(newLike);
 
+    }
+
+    public int countLikesForContent(Integer contentID){
+
+        ArrayList<Like> likes = likeRepository.findByContentID(contentID);
+
+        int total = likes.size();
+        return total;
     }
 
     public void dislikeContent(Integer userID, Integer contentID){
@@ -314,11 +312,29 @@ public class ContentService {
 
         if(content.isActive()){
             content.setActive(false);
+            content.setFeatured(false);
         }
         else{
             content.setActive(true);
         }
 
+        contentRepository.save(content);
+        return contentID;
+    }
+
+    public Integer toggleFeaturedContent(Integer contentID){
+
+        Content content = contentRepository.findById(contentID)
+                .orElseThrow(() -> new HubNotFoundException("Could not find content for contentID: " + contentID));
+
+        if(content.isFeatured()){
+
+            content.setFeatured(false);
+        }
+        else{
+            content.setFeatured(true);
+            content.setActive(true);
+        }
         contentRepository.save(content);
         return contentID;
     }

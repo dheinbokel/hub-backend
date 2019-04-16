@@ -47,6 +47,9 @@ public class Content {
     @Column(name = "DATE_CREATED")
     private String createDate;
 
+    @Column(name = "FEATURED")
+    private boolean isFeatured;
+
     @Column(name = "ACTIVE")
     private boolean isActive;
 
@@ -64,6 +67,7 @@ public class Content {
 
     public Content(){
 
+        isFeatured = false;
     }
 
     /**
@@ -115,10 +119,12 @@ public class Content {
         this.contentTags = contentTags;
     }
 
+    @JsonIgnore
     public List<Like> getLikes() {
         return likes;
     }
 
+    @JsonProperty
     public void setLikes(List<Like> likes) {
         this.likes = likes;
     }
@@ -161,5 +167,15 @@ public class Content {
 
     public void setContentName(String contentName) {
         this.contentName = contentName;
+    }
+
+    @JsonIgnore
+    public boolean isFeatured() {
+        return isFeatured;
+    }
+
+    @JsonProperty
+    public void setFeatured(boolean featured) {
+        isFeatured = featured;
     }
 }

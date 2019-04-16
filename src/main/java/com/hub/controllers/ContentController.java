@@ -48,10 +48,17 @@ public class ContentController {
      * @param contentType
      * @return
      */
-    @RequestMapping(value = "/content/all/{contentType}", method = RequestMethod.GET)
-    public @ResponseBody Iterable<Content> findByContentType(@PathVariable(value = "contentType") String contentType){
+    @RequestMapping(value = "/content/all", method = RequestMethod.GET)
+    public @ResponseBody Iterable<Content> findByContentType(@RequestParam String contentType,
+                                                             @RequestParam(defaultValue = "true", required = false) boolean active){
 
-        return contentService.findByContentType(contentType);
+        return contentService.findByContentType(contentType, active);
+    }
+
+    @RequestMapping(value = "content/featured", method = RequestMethod.GET)
+    public @ResponseBody Iterable<Content> findAllFeaturedContent(){
+
+        return contentService.findAllFeaturedContent();
     }
 
     /**
@@ -87,6 +94,12 @@ public class ContentController {
     public @ResponseBody Integer toggleContent(@PathVariable(value = "contentID") Integer contentID){
 
         return contentService.toggleContent(contentID);
+    }
+
+    @RequestMapping(value = "/featured/toggle/{contentID}", method = RequestMethod.PUT)
+    public @ResponseBody Integer toggleFeaturedContent(@PathVariable(value = "contentID") Integer contentID){
+
+        return contentService.toggleFeaturedContent(contentID);
     }
 
     /**
@@ -204,13 +217,24 @@ public class ContentController {
     }
 
     /**
+     * This endpoint sends a count of the amount of likes a piece of content has back to the front end as an int value.
+     * @param contentID Integer
+     * @return int count of likes for the associated content.
+     */
+    @RequestMapping(value = "/likes/{contentID}", method = RequestMethod.GET)
+    public @ResponseBody int getContentLikes(@PathVariable(value = "contentID") Integer contentID){
+
+        return contentService.countLikesForContent(contentID);
+    }
+
+    /**
      * This endpoint will retrieve content based on its active status, being either active or inactive. The defult
      * value is set to true so all content that is currently active will be sent back if nothing is sent as a parameter.
      * @param active
      * @return
      */
     @RequestMapping(value = "/content", method = RequestMethod.GET)
-    public Iterable<Content> findActiveContent(@RequestParam(defaultValue = "true", required = false) boolean active){
+    public @ResponseBody Iterable<Content> findActiveContent(@RequestParam(defaultValue = "true", required = false) boolean active){
 
         return contentService.findByActive(active);
     }
