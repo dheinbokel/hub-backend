@@ -65,11 +65,11 @@ public class CommentController {
      * @param userName
      * @return
      */
-    @RequestMapping(value = "/all/username/{userName}", method = RequestMethod.GET)
-    public @ResponseBody Iterable<Comments> findByUserName(@PathVariable(value = "userName") String userName){
-
-        return commentService.findByUserName(userName);
-    }
+//    @RequestMapping(value = "/all/username/{userName}", method = RequestMethod.GET)
+//    public @ResponseBody Iterable<Comments> findByUserName(@PathVariable(value = "userName") String userName){
+//
+//        return commentService.findByUserName(userName);
+//    }
 
     /**
      * This endpoint returns a comment based on the commentID passed into the endpoint as a path variable.  May come back

@@ -12,4 +12,6 @@ public interface ContentRepository extends JpaRepository<Content, Integer> {
     Iterable<Content> findByIsActive(boolean isActive);
 
     Iterable<Content> findByIsFeatured(boolean isFeatured);
+
+
 }

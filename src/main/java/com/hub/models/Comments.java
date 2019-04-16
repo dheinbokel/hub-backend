@@ -30,8 +30,11 @@ public class Comments {
     @Column(name = "CONTENT_ID")
     private Integer contentID;
 
-    @Column(name = "COMMENTER")
-    private String userName;
+    @Column(name = "FIRST_NAME")
+    private String fName;
+
+    @Column(name = "LAST_NAME")
+    private String lName;
 
     @Column(name = "USER_ID")
     private Integer userID;
@@ -91,12 +94,20 @@ public class Comments {
         this.userID = userID;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getfName() {
+        return fName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setfName(String fName) {
+        this.fName = fName;
+    }
+
+    public String getlName() {
+        return lName;
+    }
+
+    public void setlName(String lName) {
+        this.lName = lName;
     }
 
     @JsonIgnore
