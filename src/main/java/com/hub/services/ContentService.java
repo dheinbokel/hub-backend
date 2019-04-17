@@ -395,4 +395,14 @@ public class ContentService {
 
         return contentRepository.findByIsActive(active);
     }
+
+    public Optional<Content> findByContentName(String contentName){
+
+        Optional<Content> content = contentRepository.findByContentName(contentName);
+
+        if(content.isPresent()){
+            return content;
+        }
+        throw new HubNotFoundException("Could not find content for content name: " + contentName);
+    }
 }

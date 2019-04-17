@@ -11,7 +11,5 @@ public interface CommentsRepository extends JpaRepository<Comments, Integer> {
 
     Iterable<Comments> findByUserID(Integer userID);
 
-    //Iterable<Comments> findByUserName(String username);
-
     Iterable<Comments> findByIsActive(boolean isActive);
 }

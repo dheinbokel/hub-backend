@@ -5,7 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,32 +35,38 @@ public class HubUser {
     @Column(name = "USER_ID")
     private Integer userID;
 
-    @NotNull
+    @NotBlank
     @Column(name = "USERNAME", unique = true)
     private String userName;
 
-    @NotNull
+    @NotBlank
     @Column(name = "PASSWORD")
     private String password;
 
-    @NotNull
+    @NotBlank
+    @Email(message = "Email must be valid")
     @Column(name = "EMAIL")
     private String email;
 
-    @NotNull
+    @NotBlank
+    @Size(min = 2, max = 15)
     @Column(name = "FIRST_NAME")
     private String fName;
 
-    @NotNull
+    @NotBlank
+    @Size(min = 2, max = 30)
     @Column(name = "LAST_NAME")
     private String lName;
 
+    @NotNull
     @Column(name = "DEPARTMENT_ID")
     private Integer dptID;
 
+    @NotNull
     @Column(name = "FRANCHISE_ID")
     private Integer frID;
 
+    @NotNull
     @Column(name = "PERMISSIONS_ID")
     private Integer prmID;
 
@@ -106,7 +115,7 @@ public class HubUser {
 
     @JsonProperty
     public void setPassword(String password) {
-        this.password = password;
+        this.password = password.replaceAll("\\s","");
     }
 
     public String getEmail() {
@@ -122,7 +131,7 @@ public class HubUser {
     }
 
     public void setfName(String fName) {
-        this.fName = fName;
+        this.fName = fName.replaceAll("\\s","");
     }
 
     public String getlName() {
@@ -130,7 +139,7 @@ public class HubUser {
     }
 
     public void setlName(String lName) {
-        this.lName = lName;
+        this.lName = lName.replaceAll("\\s","");
     }
 
     public Integer getDptID() {
@@ -162,7 +171,7 @@ public class HubUser {
     }
 
     public void setUserName(String userName) {
-        this.userName = userName;
+        this.userName = userName.replaceAll("\\s","");
     }
 
     @JsonIgnore
@@ -205,10 +214,12 @@ public class HubUser {
         this.notifications = notifications;
     }
 
+    @JsonIgnore
     public boolean isActive() {
         return isActive;
     }
 
+    @JsonProperty
     public void setActive(boolean active) {
         isActive = active;
     }

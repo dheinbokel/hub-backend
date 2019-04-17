@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -14,28 +17,34 @@ import java.util.Calendar;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Comments {
 
-    private static final DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    private static final DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "COMMENT_ID")
     private Integer commentID;
 
+    @NotBlank
     @Column(name = "COMMENT")
+    @Size(max = 250)
     private String comment;
 
     @Column(name = "CREATE_DATE")
     private String createDate;
 
+    @NotNull
     @Column(name = "CONTENT_ID")
     private Integer contentID;
 
+    @NotBlank
     @Column(name = "FIRST_NAME")
     private String fName;
 
+    @NotBlank
     @Column(name = "LAST_NAME")
     private String lName;
 
+    @NotNull
     @Column(name = "USER_ID")
     private Integer userID;
 
@@ -67,7 +76,7 @@ public class Comments {
     }
 
     public void setComment(String comment) {
-        this.comment = comment;
+        this.comment = comment.trim();
     }
 
     public String getCreateDate() {
@@ -99,7 +108,7 @@ public class Comments {
     }
 
     public void setfName(String fName) {
-        this.fName = fName;
+        this.fName = fName.replaceAll("\\s","");
     }
 
     public String getlName() {
@@ -107,7 +116,7 @@ public class Comments {
     }
 
     public void setlName(String lName) {
-        this.lName = lName;
+        this.lName = lName.replaceAll("\\s","");
     }
 
     @JsonIgnore

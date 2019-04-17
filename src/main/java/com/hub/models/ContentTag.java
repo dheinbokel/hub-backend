@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "CONTENT_TAG")
@@ -16,12 +18,15 @@ public class ContentTag {
     @Column(name = "CONTENT_TAG_ID")
     private String contentTagID;
 
+    @NotBlank
     @Column(name = "RELATED_CONTENT")
     private String relatedContent;
 
+    @NotNull
     @Column(name = "CONTENT_ID")
     private Integer contentID;
 
+    @NotNull
     @Column(name = "TAG_ID")
     private Integer tagID;
 
@@ -65,6 +70,6 @@ public class ContentTag {
     }
 
     public void setRelatedContent(String relatedContent) {
-        this.relatedContent = relatedContent;
+        this.relatedContent = relatedContent.trim();
     }
 }

@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,15 +30,18 @@ public class Content {
     @Column(name = "CONTENT_ID")
     private Integer contentID;
 
+    @NotBlank
     @Column(name = "FILE_NAME")
     private String fileName;
 
     @Column(name = "CONTENT_LOCATION")
     private String fileDownloadUri;
 
+    @NotBlank
     @Column(name = "CONTENT_NAME")
     private String contentName;
 
+    @NotBlank
     @Column(name = "CONTENT_TYPE")
     private String contentType;
 
@@ -134,7 +138,7 @@ public class Content {
     }
 
     public void setContentType(String contentType) {
-        this.contentType = contentType;
+        this.contentType = contentType.replaceAll("\\s","");
     }
 
     public String getFileName() {
@@ -166,7 +170,7 @@ public class Content {
     }
 
     public void setContentName(String contentName) {
-        this.contentName = contentName;
+        this.contentName = contentName.trim();
     }
 
     @JsonIgnore

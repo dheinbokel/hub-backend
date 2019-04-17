@@ -35,7 +35,7 @@ public class ContentController {
 
     private ContentService contentService;
     private static final Logger logger = LoggerFactory.getLogger(ContentController.class);
-    private static final DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    private static final DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 
     ContentController(ContentService contentService){
 
@@ -59,6 +59,12 @@ public class ContentController {
     public @ResponseBody Iterable<Content> findAllFeaturedContent(){
 
         return contentService.findAllFeaturedContent();
+    }
+
+    @RequestMapping(value = "content/name", method = RequestMethod.GET)
+    public @ResponseBody Optional<Content> findContentByNameAndActiveStatus(@RequestParam String contentName){
+
+        return contentService.findByContentName(contentName);
     }
 
     /**
