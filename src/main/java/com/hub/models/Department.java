@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class Department {
     @Column(name = "DEPARTMENT_ID")
     private Integer dptID;
 
+    @NotBlank
     @Column(name = "DPT_NAME")
     private String dptName;
 
@@ -65,7 +67,7 @@ public class Department {
     }
 
     public void setDptName(String dptName) {
-        this.dptName = dptName;
+        this.dptName = dptName.trim();
     }
 
     @JsonIgnore

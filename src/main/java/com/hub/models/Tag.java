@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class Tag {
     @Column(name = "TAG_ID")
     private Integer tagID;
 
+    @NotBlank
     @Column(name = "TAG_NAME")
     private String tagName;
 
@@ -68,7 +70,7 @@ public class Tag {
     }
 
     public void setTagName(String tagName) {
-        this.tagName = tagName;
+        this.tagName = tagName.trim();
     }
 
     @JsonIgnore

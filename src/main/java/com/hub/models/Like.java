@@ -3,6 +3,7 @@ package com.hub.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * This class represents a like that a piece of content may have.  It holds the userId and contentID of the user logged in
@@ -20,9 +21,11 @@ public class Like {
     @Column(name = "LIKE_ID")
     private String likeID;
 
+    @NotNull
     @Column(name = "USER_ID")
     private Integer userID;
 
+    @NotNull
     @Column(name = "CONTENT_ID")
     private Integer contentID;
 

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,9 +29,11 @@ public class Franchise {
     @Column(name = "FRANCHISE_ID")
     private Integer frID;
 
+    @NotBlank
     @Column(name = "NAME")
     private String frName;
 
+    @NotBlank
     @Column(name = "LOCATION")
     private String frLocation;
 
@@ -68,7 +71,7 @@ public class Franchise {
     }
 
     public void setFrName(String frName) {
-        this.frName = frName;
+        this.frName = frName.trim();
     }
 
     public String getFrLocation() {
@@ -76,7 +79,7 @@ public class Franchise {
     }
 
     public void setFrLocation(String frLocation) {
-        this.frLocation = frLocation;
+        this.frLocation = frLocation.trim();
     }
 
     @JsonIgnore
