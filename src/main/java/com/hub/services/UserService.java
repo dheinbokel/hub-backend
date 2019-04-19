@@ -171,14 +171,10 @@ public class UserService {
 
     }
 
-    public void deleteNotificationsByID(NotificationRequest notificationRequest){
+    public void deleteNotificationsByID(Integer notificationID){
 
-        Integer[] ids = notificationRequest.getNotificationIDs();
 
-        for(Integer id : ids){
-
-            notificationRepository.deleteById(id);
-        }
+            notificationRepository.deleteById(notificationID);
     }
 
     public String deleteSubscriptionByID(String subID){

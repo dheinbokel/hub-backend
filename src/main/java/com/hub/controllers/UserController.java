@@ -164,12 +164,12 @@ public class UserController {
 
     /**
      * This endpoint deletes all notifications with the ids given in the NotificationRequest's notificationsIDs field.
-     * @param notificationRequest
+     *
      */
-    @RequestMapping(value = "/notifications/remove", method = RequestMethod.DELETE)
-    public void deleteNotificationsByUserID(@RequestBody NotificationRequest notificationRequest){
+    @RequestMapping(value = "/notifications/remove/{notificationID}", method = RequestMethod.DELETE)
+    public void deleteNotificationsByUserID(@PathVariable(value = "notificationID") Integer notificationID){
 
-        userService.deleteNotificationsByID(notificationRequest);
+        userService.deleteNotificationsByID(notificationID);
     }
 
     /**

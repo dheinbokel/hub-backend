@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +31,8 @@ public class Department {
     private Integer dptID;
 
     @NotBlank
-    @Column(name = "DPT_NAME")
+    @Pattern(regexp = "^[a-zA-Z_]+( [a-zA-Z_]+)*$")
+    @Column(name = "DPT_NAME", unique = true)
     private String dptName;
 
     @Column(name = "ACTIVE")

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -37,10 +38,12 @@ public class Comments {
     private Integer contentID;
 
     @NotBlank
+    @Pattern(regexp = "^[a-zA-Z]+$")
     @Column(name = "FIRST_NAME")
     private String fName;
 
     @NotBlank
+    @Pattern(regexp = "^[a-zA-Z]+$")
     @Column(name = "LAST_NAME")
     private String lName;
 
@@ -108,7 +111,7 @@ public class Comments {
     }
 
     public void setfName(String fName) {
-        this.fName = fName.replaceAll("\\s","");
+        this.fName = fName;
     }
 
     public String getlName() {
@@ -116,7 +119,7 @@ public class Comments {
     }
 
     public void setlName(String lName) {
-        this.lName = lName.replaceAll("\\s","");
+        this.lName = lName;
     }
 
     @JsonIgnore

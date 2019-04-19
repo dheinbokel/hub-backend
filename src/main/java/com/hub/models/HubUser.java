@@ -5,10 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,11 +47,13 @@ public class HubUser {
 
     @NotBlank
     @Size(min = 2, max = 15)
+    @Pattern(regexp = "^[a-zA-Z]+$")
     @Column(name = "FIRST_NAME")
     private String fName;
 
     @NotBlank
     @Size(min = 2, max = 30)
+    @Pattern(regexp = "^[a-zA-Z]+$")
     @Column(name = "LAST_NAME")
     private String lName;
 
@@ -131,7 +130,7 @@ public class HubUser {
     }
 
     public void setfName(String fName) {
-        this.fName = fName.replaceAll("\\s","");
+        this.fName = fName;
     }
 
     public String getlName() {
@@ -139,7 +138,7 @@ public class HubUser {
     }
 
     public void setlName(String lName) {
-        this.lName = lName.replaceAll("\\s","");
+        this.lName = lName;
     }
 
     public Integer getDptID() {
