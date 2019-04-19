@@ -114,6 +114,11 @@ public class UserService {
         return notificationRepository.findByUserIDAndIsActive(userID, active);
     }
 
+    public Iterable<Notification> findByUserID(Integer userID){
+
+        return notificationRepository.findByUserID(userID);
+    }
+
     public Iterable<Subscription> findSubByUserID(Integer userID){
 
         return subscriptionRepository.findByUserID(userID);
