@@ -177,6 +177,24 @@ public class UserService {
             notificationRepository.deleteById(notificationID);
     }
 
+    public void deleteNotificationsByAllIDs(String idList){
+
+        String[] inputArray = idList.split(",");
+
+        Integer[] numbers = new Integer[inputArray.length];
+
+        for(int i = 0;i < inputArray.length;i++)
+        {
+
+            numbers[i] = Integer.parseInt(inputArray[i]);
+        }
+
+        for(Integer id : numbers){
+
+            notificationRepository.deleteById(id);
+        }
+    }
+
     public String deleteSubscriptionByID(String subID){
 
         subscriptionRepository.deleteById(subID);
