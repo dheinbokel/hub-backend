@@ -74,7 +74,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     static ErrorInfo handleDataIntegrityViolationException(DataIntegrityViolationException e){
 
-        return new ErrorInfo(HttpStatus.BAD_REQUEST.value(), "Username Taken", "Value must be unique.");
+        return new ErrorInfo(HttpStatus.BAD_REQUEST.value(), "Value Taken", "Value must be unique.");
     }
 
     /**

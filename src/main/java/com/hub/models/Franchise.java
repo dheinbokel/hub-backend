@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,10 +31,12 @@ public class Franchise {
     private Integer frID;
 
     @NotBlank
+    @Pattern(regexp = "^[a-zA-Z_]+( [a-zA-Z_]+)*$")
     @Column(name = "NAME")
     private String frName;
 
     @NotBlank
+    @Pattern(regexp = "^[a-zA-Z_]+( [a-zA-Z_]+)*$")
     @Column(name = "LOCATION")
     private String frLocation;
 
@@ -71,7 +74,7 @@ public class Franchise {
     }
 
     public void setFrName(String frName) {
-        this.frName = frName.trim();
+        this.frName = frName;
     }
 
     public String getFrLocation() {
@@ -79,7 +82,7 @@ public class Franchise {
     }
 
     public void setFrLocation(String frLocation) {
-        this.frLocation = frLocation.trim();
+        this.frLocation = frLocation;
     }
 
     @JsonIgnore

@@ -100,7 +100,13 @@ public class BusinessInfoService {
      */
     public Department findDepartmentByDptName(String dptName){
 
-        return departmentRepository.findByDptName(dptName);
+        Department department = departmentRepository.findByDptName(dptName);
+        if(department != null){
+
+            return department;
+        }
+
+        throw new HubNotFoundException("Could not find department with name: " + dptName);
     }
 
     /**
@@ -110,7 +116,14 @@ public class BusinessInfoService {
      */
     public Franchise findFranchiseByFrName(String frName){
 
-        return franchiseRepository.findByFrName(frName);
+        Franchise franchise = franchiseRepository.findByFrName(frName);
+
+        if(franchise != null){
+
+            return franchise;
+        }
+
+        throw new HubNotFoundException("Could not find franchise with name: " + frName);
     }
 
     public Franchise editFranchise(Franchise franchise, Integer frID){

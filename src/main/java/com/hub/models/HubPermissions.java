@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,9 +31,12 @@ public class HubPermissions {
     @Column(name = "PERMISSIONS_ID")
     private Integer prmID;
 
+    @NotNull
     @Column(name = "CREATE_ITEM")
     private boolean createItem;
 
+    @NotBlank
+    @Pattern(regexp = "^[a-zA-Z]+$")
     @Column(name = "NAME")
     private String prmName;
 

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class Tag {
     private Integer tagID;
 
     @NotBlank
+    @Pattern(regexp = "^[a-zA-Z_]+( [a-zA-Z_]+)*$")
     @Column(name = "TAG_NAME")
     private String tagName;
 
@@ -70,7 +72,7 @@ public class Tag {
     }
 
     public void setTagName(String tagName) {
-        this.tagName = tagName.trim();
+        this.tagName = tagName;
     }
 
     @JsonIgnore

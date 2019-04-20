@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,10 +39,12 @@ public class Content {
     private String fileDownloadUri;
 
     @NotBlank
+    @Pattern(regexp = "^[a-zA-Z_0-9]+( [a-zA-Z_0-9]+)*$")
     @Column(name = "CONTENT_NAME")
     private String contentName;
 
     @NotBlank
+    @Pattern(regexp = "^[a-zA-Z0-9]+$")
     @Column(name = "CONTENT_TYPE")
     private String contentType;
 
@@ -138,7 +141,7 @@ public class Content {
     }
 
     public void setContentType(String contentType) {
-        this.contentType = contentType.replaceAll("\\s","");
+        this.contentType = contentType;
     }
 
     public String getFileName() {
@@ -170,7 +173,7 @@ public class Content {
     }
 
     public void setContentName(String contentName) {
-        this.contentName = contentName.trim();
+        this.contentName = contentName;
     }
 
     @JsonIgnore
