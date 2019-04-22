@@ -71,7 +71,7 @@ public class UserController {
      * @param userID
      * @return
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/byID/{id}", method = RequestMethod.GET)
     public @ResponseBody Optional<HubUser> getUserById(@PathVariable(value = "id")Integer userID){
         return userService.findUserById(userID);
     }
