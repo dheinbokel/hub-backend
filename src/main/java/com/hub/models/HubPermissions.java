@@ -32,8 +32,8 @@ public class HubPermissions {
     private Integer prmID;
 
     @NotNull
-    @Column(name = "CREATE_ITEM")
-    private boolean createItem;
+    @Column(name = "ADMIN_ACCESS")
+    private boolean adminAccess;
 
     @NotBlank
     @Pattern(regexp = "^[a-zA-Z]+$")
@@ -62,12 +62,12 @@ public class HubPermissions {
         this.prmID = prmID;
     }
 
-    public boolean isCreateItem() {
-        return createItem;
+    public boolean isAdminAccess() {
+        return adminAccess;
     }
 
-    public void setCreateItem(boolean createItem) {
-        this.createItem = createItem;
+    public void setAdminAccess(boolean adminAccess) {
+        this.adminAccess = adminAccess;
     }
 
     public String getPrmName() {

@@ -246,6 +246,15 @@ public class UserService {
 
         if(user.isActive()){
             user.setActive(false);
+            Iterable<Subscription> subscriptions = subscriptionRepository.findByUserID(userID);
+            Iterable<Notification> notifications = notificationRepository.findByUserID(userID);
+
+            for(Subscription subscription : subscriptions){
+                subscriptionRepository.deleteById(subscription.getSubID());
+            }
+            for(Notification notification : notifications){
+                notificationRepository.deleteById(notification.getNotificationID());
+            }
         }
         else{
             user.setActive(true);
