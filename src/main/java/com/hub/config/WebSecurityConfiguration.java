@@ -31,15 +31,16 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception{
 
-        httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().cors().and().csrf().disable().authorizeRequests()
+        httpSecurity
+                .cors().and().csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
                 .antMatchers(HttpMethod.POST, SecurityConstants.SIGN_UP_URL).permitAll()
-                .antMatchers(HttpMethod.GET, "/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/**").permitAll()
-                .antMatchers(HttpMethod.PUT, "/**").permitAll()
-                .antMatchers(HttpMethod.DELETE, "/**").permitAll()
-                .anyRequest().permitAll().and()
-
+                .antMatchers(HttpMethod.GET, "/**").hasAnyAuthority("ADMIN")
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager(), usersRepository))
                 .addFilter(new JWTAuthorizationFilter(authenticationManager()));
 

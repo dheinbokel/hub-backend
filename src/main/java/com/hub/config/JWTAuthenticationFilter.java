@@ -46,6 +46,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         HubUser hubUser = usersRepository.findByUserName(user.getUsername());
 
+        String role = hubUser.getPrmID() == 1 ? "ADMIN" : "USER";
+
         String token = JWT.create().withSubject(hubUser.getUserName())
                 .withNotBefore(new Date())
                 .withClaim("userName", hubUser.getUserName())
@@ -56,6 +58,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .withClaim("dptID", hubUser.getDptID())
                 .withClaim("frID", hubUser.getFrID())
                 .withClaim("prmID", hubUser.getPrmID())
+                .withClaim(SecurityConstants.AUTHORITIES_KEY, role)
                 .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstants.EXPERATION_TIME))
                 .sign(Algorithm.HMAC512(SecurityConstants.SECRET.getBytes()));
 

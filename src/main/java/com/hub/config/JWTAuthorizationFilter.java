@@ -41,7 +41,6 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
         String token = request.getHeader(SecurityConstants.HEADER_STRING);
         if(token != null){
-
             String user = JWT.require(Algorithm.HMAC512(SecurityConstants.SECRET.getBytes()))
                     .build()
                     .verify(token.replace(SecurityConstants.TOKEN_PREFIX, ""))
@@ -51,7 +50,6 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
                 DecodedJWT jwt = JWT.decode(token.replace(SecurityConstants.TOKEN_PREFIX, ""));
 
                 String role = jwt.getClaim(SecurityConstants.AUTHORITIES_KEY).asString();
-
                 List<SimpleGrantedAuthority> authorities = new ArrayList<>();
                 authorities.add(new SimpleGrantedAuthority(role));
 
