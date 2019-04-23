@@ -55,13 +55,13 @@ public class ContentController {
         return contentService.findByContentType(contentType, active);
     }
 
-    @RequestMapping(value = "content/featured", method = RequestMethod.GET)
+    @RequestMapping(value = "/content/featured", method = RequestMethod.GET)
     public @ResponseBody Iterable<Content> findAllFeaturedContent(){
 
         return contentService.findAllFeaturedContent();
     }
 
-    @RequestMapping(value = "content/name", method = RequestMethod.GET)
+    @RequestMapping(value = "/content/name", method = RequestMethod.GET)
     public @ResponseBody Optional<Content> findContentByNameAndActiveStatus(@RequestParam String contentName){
 
         return contentService.findByContentName(contentName);
