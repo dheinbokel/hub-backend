@@ -36,7 +36,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/content/**").hasAnyAuthority("USER", "ADMIN")
-                .antMatchers(HttpMethod.GET, "/likes/{contentID}", "/downloadFile/{fileName:.+}").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers(HttpMethod.GET, "/likes/{contentID}", "/downloadFile/**").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/content/dislike/{userID}/{contentID}").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers(HttpMethod.POST, "/content/like/{userID}/{contentID}").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers(HttpMethod.POST, "/contentTags").hasAnyAuthority("USER", "ADMIN")
