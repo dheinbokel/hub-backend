@@ -63,8 +63,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .withClaim("frID", hubUser.getFrID())
                 .withClaim("prmID", hubUser.getPrmID())
                 .withClaim(SecurityConstants.AUTHORITIES_KEY, role)
-                .withAudience("https://www.hubteam1.com")
-                .withIssuer("https://dougs-hub-backend.herokuapp.com")
                 .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstants.EXPERATION_TIME))
                 .sign(Algorithm.HMAC512(SecurityConstants.SECRET.getBytes()));
 
