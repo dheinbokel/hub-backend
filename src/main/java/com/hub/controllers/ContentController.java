@@ -55,12 +55,21 @@ public class ContentController {
         return contentService.findByContentType(contentType, active);
     }
 
+    /**
+     * This endpoint retrieves an Iterable list of content that have the featured status of true.
+     * @return an Iterable list of content
+     */
     @RequestMapping(value = "/content/featured", method = RequestMethod.GET)
     public @ResponseBody Iterable<Content> findAllFeaturedContent(){
 
         return contentService.findAllFeaturedContent();
     }
 
+    /**
+     * This endpoint returns a piece of content based on the name of the content.
+     * @param contentName String
+     * @return Optional<Content>
+     */
     @RequestMapping(value = "/content/name", method = RequestMethod.GET)
     public @ResponseBody Optional<Content> findContentByNameAndActiveStatus(@RequestParam String contentName){
 
@@ -78,12 +87,22 @@ public class ContentController {
         return contentService.findContentById(contentID);
     }
 
+    /**
+     * This endpoint returns all the Content Tags associated with a piece of content by searching based on the contentID.
+     * @param contentID Integer
+     * @return Iterable list of ContentTag objects.
+     */
     @RequestMapping(value = "/content/tag/bycontentid/{contentID}", method = RequestMethod.GET)
     public @ResponseBody Iterable<ContentTag> getContentTagByContentID(@PathVariable(value = "contentID") Integer contentID){
 
         return contentService.getContentTagsByContentID(contentID);
     }
 
+    /**
+     *
+     * @param tagID
+     * @return
+     */
     @RequestMapping(value = "/content/tag/bytagid/{tagID}", method = RequestMethod.GET)
     public @ResponseBody Iterable<ContentTag> getContentTagByTagID(@PathVariable(value = "tagID") Integer tagID){
 

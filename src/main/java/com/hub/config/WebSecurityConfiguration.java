@@ -47,7 +47,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, "/comments/**").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/comments/**").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers(HttpMethod.GET, "/users/byID/{id}", "/users/subscription/byuserid/{userID}",
-                        "/users/subscription/bytagid/{tagID}", "/users/notifications").hasAnyAuthority("USER", "ADMIN")
+                        "/users/subscription/bytagid/{tagID}", "/users/notifications", "/users/notifications/byUserID/{userID}").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers(HttpMethod.POST, "/users/subscription/add").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers(HttpMethod.PUT, "/users/notifications/switch").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/users/notifications/remove/{notificationID}", "/users/notifications/remove").hasAnyAuthority("USER", "ADMIN")

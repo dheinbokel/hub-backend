@@ -44,6 +44,12 @@ public class UserController {
         return hubUser;
     }
 
+    /**
+     * This endpoint is used to edit a user and submit new data for this user to the database.
+     * @param hubUser HubUser object
+     * @param id Integer
+     * @return HubUser
+     */
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
     public @ResponseBody HubUser editUser(@RequestBody HubUser hubUser, @PathVariable(value = "id") Integer id){
 
@@ -51,6 +57,11 @@ public class UserController {
         return userService.editUser(hubUser, id);
     }
 
+    /**
+     * Switches the active status of a user from active to inactive and back with each call of the endpoint.
+     * @param userID Integer
+     * @return The Integer ID of the user that was toggled.
+     */
     @RequestMapping(value = "/toggle/{userID}", method = RequestMethod.PUT)
     public @ResponseBody Integer toggleUser(@PathVariable(value = "userID")Integer userID){
 
@@ -116,12 +127,24 @@ public class UserController {
         return userService.findUserByUserName(userName);
     }
 
+    /**
+     * This endpoint grabs all of the subscriptions in the database that share a userID with the ID sent in through the
+     * path variable.
+     * @param userID Integer
+     * @return an Iterable list of subscriptions
+     */
     @RequestMapping(value = "/subscription/byuserid/{userID}", method = RequestMethod.GET)
     public @ResponseBody Iterable<Subscription> getSubByUserID(@PathVariable(value = "userID") Integer userID){
 
         return userService.findSubByUserID(userID);
     }
 
+    /**
+     * This endpoint grabs all of the subscriptions from the database that share a tagID with the ID sent in through the
+     * path variable
+     * @param tagID Integer
+     * @return an Iterable list of subscriptions
+     */
     @RequestMapping(value = "/subscription/bytagid/{tagID}", method = RequestMethod.GET)
     public @ResponseBody Iterable<Subscription> getSubByTagID(@PathVariable(value = "tagID") Integer tagID){
 
@@ -138,6 +161,11 @@ public class UserController {
         userService.addSub(subscriptionRequest);
     }
 
+    /**
+     * Removes a single subscription by its id
+     * @param subID String
+     * @return String ID of the subscription that was deleted
+     */
     @RequestMapping(value = "/subscription/remove/{subID}", method = RequestMethod.DELETE)
     public String deleteSub(@PathVariable(value = "subID") String subID){
 
@@ -145,7 +173,8 @@ public class UserController {
     }
 
     /**
-     * This endpoint finds and returns all notifications that share a userID with the userID in the path variable
+     * This endpoint finds and returns all notifications that share a userID with the userID in the path variable. It also
+     * filters based on whether the notification is active or not.
      * @param userID Integer
      * @return Iterable of notification objects.
      */
@@ -156,14 +185,19 @@ public class UserController {
         return userService.findActiveNotificationByUserID(userID, active);
     }
 
-    @RequestMapping(value = "/notifications/{userID}", method = RequestMethod.GET)
+    /**
+     * This endpoint returns all notifications for a user with the same userID as what was sent in as a path variable.
+     * @param userID Integer
+     * @return Iterable list of notification objects
+     */
+    @RequestMapping(value = "/notifications/byUserID{userID}", method = RequestMethod.GET)
     public Iterable<Notification> getByJustID(@PathVariable(value = "userID") Integer userID){
 
         return userService.findByUserID(userID);
     }
 
     /**
-     * This endpoint deletes all notifications with the id given in the path variable.
+     * This endpoint deletes a notification with the id given in the path variable.
      *
      */
     @RequestMapping(value = "/notifications/remove/{notificationID}", method = RequestMethod.DELETE)
