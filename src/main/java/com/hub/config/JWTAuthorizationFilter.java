@@ -41,14 +41,17 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
     private UsernamePasswordAuthenticationToken getAuthorization(HttpServletRequest request){
 
+        System.out.println("Getting token from request");
         String token = request.getHeader(SecurityConstants.HEADER_STRING);
         if(token != null){
+            System.out.println("Token was not null");
             String user = JWT.require(Algorithm.HMAC512(SecurityConstants.SECRET.getBytes()))
                     .build()
                     .verify(token.replace(SecurityConstants.TOKEN_PREFIX, ""))
                     .getSubject();
 
             if(user != null){
+                System.out.println("User was not null, user is " + user.toString());
                 DecodedJWT jwt = JWT.decode(token.replace(SecurityConstants.TOKEN_PREFIX, ""));
 
                 String role = jwt.getClaim(SecurityConstants.AUTHORITIES_KEY).asString();
