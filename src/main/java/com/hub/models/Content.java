@@ -31,7 +31,6 @@ public class Content {
     @Column(name = "CONTENT_ID")
     private Integer contentID;
 
-    @NotBlank
     @Column(name = "FILE_NAME")
     private String fileName;
 

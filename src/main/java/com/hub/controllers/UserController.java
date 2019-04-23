@@ -190,7 +190,7 @@ public class UserController {
      * @param userID Integer
      * @return Iterable list of notification objects
      */
-    @RequestMapping(value = "/notifications/byUserID{userID}", method = RequestMethod.GET)
+    @RequestMapping(value = "/notifications/{userID}", method = RequestMethod.GET)
     public Iterable<Notification> getByJustID(@PathVariable(value = "userID") Integer userID){
 
         return userService.findByUserID(userID);
