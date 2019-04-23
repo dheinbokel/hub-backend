@@ -28,6 +28,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
         String header = req.getHeader(SecurityConstants.HEADER_STRING);
 
+        System.out.println("Header initialized");
         if(header != null && header.startsWith(SecurityConstants.TOKEN_PREFIX)){
 
             UsernamePasswordAuthenticationToken authenticationToken = getAuthorization(req);
@@ -35,6 +36,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         }
 
         chain.doFilter(req, res);
+        System.out.println("chain.doFilter worked");
     }
 
     private UsernamePasswordAuthenticationToken getAuthorization(HttpServletRequest request){
@@ -53,6 +55,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
                 List<SimpleGrantedAuthority> authorities = new ArrayList<>();
                 authorities.add(new SimpleGrantedAuthority(role));
 
+                System.out.println("Username and password stuff");
                 return new UsernamePasswordAuthenticationToken(user, null, authorities);
             }
             return null;

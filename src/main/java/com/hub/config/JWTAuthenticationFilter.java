@@ -34,6 +34,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res) throws AuthenticationException {
         try{
             HubUser credentials = new ObjectMapper().readValue(req.getInputStream(), HubUser.class);
+            System.out.println("attemptAuthentication()");
             return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(credentials.getUserName(), credentials.getPassword(), new ArrayList<>()));
         }catch (IOException e){
             throw new RuntimeException(e);
@@ -44,9 +45,12 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         User user = (User) authentication.getPrincipal();
 
+        System.out.println(".getPrinciple worked");
         HubUser hubUser = usersRepository.findByUserName(user.getUsername());
 
         String role = hubUser.getPrmID() == 1 ? "ADMIN" : "USER";
+
+        System.out.println("Role set");
 
         String token = JWT.create().withSubject(hubUser.getUserName())
                 .withNotBefore(new Date())
@@ -59,6 +63,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .withClaim("frID", hubUser.getFrID())
                 .withClaim("prmID", hubUser.getPrmID())
                 .withClaim(SecurityConstants.AUTHORITIES_KEY, role)
+                .withAudience("https://www.hubteam1.com")
+                .withIssuer("https://dougs-hub-backend.herokuapp.com")
                 .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstants.EXPERATION_TIME))
                 .sign(Algorithm.HMAC512(SecurityConstants.SECRET.getBytes()));
 
@@ -66,5 +72,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         res.addHeader("Access-Control-Expose-Headers", "Authorization");
 
         res.getWriter().write("{\"" + SecurityConstants.HEADER_STRING + "\":\"" + token + "\"}");
+
+        System.out.println("Token created");
     }
 }
