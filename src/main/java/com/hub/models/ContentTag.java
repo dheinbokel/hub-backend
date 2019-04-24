@@ -30,10 +30,20 @@ public class ContentTag {
     @Column(name = "TAG_ID")
     private Integer tagID;
 
+    /**
+     * Default constructor
+     */
     ContentTag(){
 
     }
 
+    /**
+     * Constructor
+     * @param contentTagID
+     * @param relatedContent
+     * @param contentID
+     * @param tagID
+     */
     public ContentTag(String contentTagID, String relatedContent, Integer contentID, Integer tagID) {
         this.contentTagID = contentTagID;
         this.relatedContent = relatedContent;
@@ -41,6 +51,9 @@ public class ContentTag {
         this.tagID = tagID;
     }
 
+    /**
+     * Getters and setters for the class.
+     */
     public String getContentTagID() {
         return contentTagID;
     }

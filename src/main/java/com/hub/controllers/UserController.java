@@ -33,8 +33,8 @@ public class UserController {
     /**
      * Adds a user to the database and returns it to the front end without the password field. Requires all fields be
      * sent in as a HubUser.  When the user comes in, the password is encrypted for password security.
-     * @param hubUser
-     * @return
+     * @param hubUser HubUser object
+     * @return HubUser object
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public @ResponseBody HubUser addUser(@RequestBody HubUser hubUser){
@@ -70,7 +70,7 @@ public class UserController {
 
     /**
      * Returns all users in the database as an iterable of HubUsers.
-     * @return
+     * @return Iterable of HubUser objects
      */
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public @ResponseBody Iterable<HubUser> getAllUsers(){
@@ -79,8 +79,8 @@ public class UserController {
 
     /**
      * Finds and returns a user by the id passed into as a path variable.
-     * @param userID
-     * @return
+     * @param userID Integer
+     * @return Optional HubUser
      */
     @RequestMapping(value = "/byID/{id}", method = RequestMethod.GET)
     public @ResponseBody Optional<HubUser> getUserById(@PathVariable(value = "id")Integer userID){
@@ -89,8 +89,8 @@ public class UserController {
 
     /**
      * Finds and returns an iterable of HubUsers that have the department id sent in as a path variable.
-     * @param dptID
-     * @return
+     * @param dptID Integer
+     * @return Iterable of HubUser objects
      */
     @RequestMapping(value = "/bydepartment/{dptID}", method = RequestMethod.GET)
     public @ResponseBody Iterable<HubUser> getUsersByDepartmentID(@PathVariable(value = "dptID")Integer dptID){
@@ -99,8 +99,8 @@ public class UserController {
 
     /**
      * Finds and returns an iterable of HubUsers that have the franchise id sent in as a path variable.
-     * @param frID
-     * @return
+     * @param frID Integer
+     * @return Iterable of HubUser objects
      */
     @RequestMapping(value = "/byfranchise/{frID}", method = RequestMethod.GET)
     public @ResponseBody Iterable<HubUser> getUsersByFranchiseID(@PathVariable(value = "frID")Integer frID){
@@ -109,8 +109,8 @@ public class UserController {
 
     /**
      * Finds and returns an iterable of HubUsers that have the permission id sent in as a path variable.
-     * @param prmID
-     * @return
+     * @param prmID Integer
+     * @return Iterable of HubUser objects
      */
     @RequestMapping(value = "/bypermission/{prmID}", method = RequestMethod.GET)
     public @ResponseBody Iterable<HubUser> getUsersByPermissionID(@PathVariable(value = "prmID")Integer prmID){
@@ -119,8 +119,8 @@ public class UserController {
 
     /**
      * Finds and returns a HubUser that has the userName sent in as a path variable.
-     * @param userName
-     * @return
+     * @param userName String userName of user
+     * @return HubUser
      */
     @RequestMapping(value = "/byusername/{userName}", method = RequestMethod.GET)
     public @ResponseBody HubUser getUserByUserName(@PathVariable(value = "userName") String userName){
@@ -153,7 +153,7 @@ public class UserController {
 
     /**
      * This endpoint is used for adding a subscription to a certain tag. It takes in a SubscriptionRequest object.
-     * @param subscriptionRequest
+     * @param subscriptionRequest object
      */
     @RequestMapping(value = "/subscription/add", method = RequestMethod.POST)
     public void subscribe(@RequestBody SubscriptionRequest subscriptionRequest){
@@ -198,7 +198,8 @@ public class UserController {
 
     /**
      * This endpoint deletes a notification with the id given in the path variable.
-     *
+     * @param notificationID Integer ID of the notification
+     * @return void
      */
     @RequestMapping(value = "/notifications/remove/{notificationID}", method = RequestMethod.DELETE)
     public void deleteNotificationsByID(@PathVariable(value = "notificationID") Integer notificationID){
@@ -208,7 +209,8 @@ public class UserController {
 
     /**
      * This endpoint deletes all notifications with the ids given in the NotificationRequest's notificationsIDs field.
-     *
+     * @param idList String comma seperated list of notificationID's
+     * @return void
      */
     @RequestMapping(value = "/notifications/remove", method = RequestMethod.DELETE)
     public void deleteNotificationsByAllIDs(@RequestParam String idList){
@@ -219,8 +221,8 @@ public class UserController {
     /**
      * This endpoint requires a NotificationRequest object and sets all notifications sent in to inactive. Sends back an
      * ArrayList of notifications that were set to inactive.
-     * @param notificationRequest
-     * @return
+     * @param notificationRequest object
+     * @return ArrayList<Notification>
      */
     @RequestMapping(value = "/notifications/switch", method = RequestMethod.PUT)
     public ArrayList<Notification> setNotificationsInactive(@RequestBody NotificationRequest notificationRequest){

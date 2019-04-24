@@ -19,6 +19,12 @@ public class TagController {
         this.tagService = tagService;
     }
 
+    /**
+     * This endpoint returns all tags with the active status passed in with the parameter (true = active, false = inactive).
+     * If no parameter is given, the endpoint defaults to true.
+     * @param active boolean
+     * @return Iterable of tag objects
+     */
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public @ResponseBody Iterable<Tag> getAllTags(@RequestParam(defaultValue = "true", required = false) boolean active){
         return tagService.findAllTagsBYActiveStatus(active);

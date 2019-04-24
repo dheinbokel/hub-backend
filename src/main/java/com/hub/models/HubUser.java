@@ -213,12 +213,10 @@ public class HubUser {
         this.notifications = notifications;
     }
 
-    @JsonIgnore
     public boolean isActive() {
         return isActive;
     }
 
-    @JsonProperty
     public void setActive(boolean active) {
         isActive = active;
     }

@@ -69,6 +69,9 @@ public class Content {
     @JoinColumn(name = "CONTENT_ID", referencedColumnName = "CONTENT_ID")
     private List<Like> likes = new ArrayList<>();
 
+    /**
+     * Default constructor
+     */
     public Content(){
 
         isFeatured = false;
