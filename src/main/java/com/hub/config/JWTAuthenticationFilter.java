@@ -48,29 +48,35 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         System.out.println(".getPrinciple worked");
         HubUser hubUser = usersRepository.findByUserName(user.getUsername());
 
-        String role = hubUser.getPrmID() == 1 ? "ADMIN" : "USER";
+        if(!hubUser.isActive()){
+            //Do Nothing
+        }
+        else {
 
-        System.out.println("Role set");
+            String role = hubUser.getPrmID() == 1 ? "ADMIN" : "USER";
 
-        String token = JWT.create().withSubject(hubUser.getUserName())
-                .withNotBefore(new Date())
-                .withClaim("userName", hubUser.getUserName())
-                .withClaim("userID", hubUser.getUserID())
-                .withClaim("email", hubUser.getEmail())
-                .withClaim("fName", hubUser.getfName())
-                .withClaim("lName", hubUser.getlName())
-                .withClaim("dptID", hubUser.getDptID())
-                .withClaim("frID", hubUser.getFrID())
-                .withClaim("prmID", hubUser.getPrmID())
-                .withClaim(SecurityConstants.AUTHORITIES_KEY, role)
-                .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstants.EXPERATION_TIME))
-                .sign(Algorithm.HMAC512(SecurityConstants.SECRET.getBytes()));
+            System.out.println("Role set");
 
-        res.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + token);
-        res.addHeader("Access-Control-Expose-Headers", "Authorization");
+            String token = JWT.create().withSubject(hubUser.getUserName())
+                    .withNotBefore(new Date())
+                    .withClaim("userName", hubUser.getUserName())
+                    .withClaim("userID", hubUser.getUserID())
+                    .withClaim("email", hubUser.getEmail())
+                    .withClaim("fName", hubUser.getfName())
+                    .withClaim("lName", hubUser.getlName())
+                    .withClaim("dptID", hubUser.getDptID())
+                    .withClaim("frID", hubUser.getFrID())
+                    .withClaim("prmID", hubUser.getPrmID())
+                    .withClaim(SecurityConstants.AUTHORITIES_KEY, role)
+                    .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstants.EXPERATION_TIME))
+                    .sign(Algorithm.HMAC512(SecurityConstants.SECRET.getBytes()));
 
-        res.getWriter().write("{\"" + SecurityConstants.HEADER_STRING + "\":\"" + token + "\"}");
+            res.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + token);
+            res.addHeader("Access-Control-Expose-Headers", "Authorization");
 
-        System.out.println("Token created");
+            res.getWriter().write("{\"" + SecurityConstants.HEADER_STRING + "\":\"" + token + "\"}");
+
+            System.out.println("Token created");
+        }
     }
 }

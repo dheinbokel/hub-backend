@@ -12,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,13 +37,13 @@ public class Content {
     @Column(name = "CONTENT_LOCATION")
     private String fileDownloadUri;
 
-    //@NotBlank
-    //@Pattern(regexp = "^[a-zA-Z_0-9]+( [a-zA-Z_0-9]+)*$")
+    @NotBlank
+    @Pattern(regexp = "^[a-zA-Z_0-9]+( [a-zA-Z_0-9]+)*$")
     @Column(name = "CONTENT_NAME")
     private String contentName;
 
-    //@NotBlank
-    //@Pattern(regexp = "^[a-zA-Z0-9]+$")
+    @NotBlank
+    @Pattern(regexp = "^[a-zA-Z0-9]+$")
     @Column(name = "CONTENT_TYPE")
     private String contentType;
 
