@@ -1,0 +1,1 @@
+<h1>Lorem ipsum:</h1><ol><li>dolor sit <span style="background-color: rgb(255, 255, 0);">amet</span></li><li>consectetur adipiscing elit</li><li><span style="color: rgb(230, 0, 0);">AND sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</span></li></ol><p><br></p><p><span style="color: rgb(230, 0, 0);"><span class="ql-cursor">﻿</span></span></p>
