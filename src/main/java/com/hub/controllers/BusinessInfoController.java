@@ -25,7 +25,8 @@ public class BusinessInfoController {
 
     /**
      * Finds and returns all departments as an iterable list of departments.
-     * @return
+     * @param active boolean status of active field
+     * @return Iterable list of Department objects
      */
     @RequestMapping(value = "/departments", method = RequestMethod.GET)
     public @ResponseBody Iterable<Department> getAllDepartments(@RequestParam(defaultValue = "true", required = false)
@@ -37,6 +38,7 @@ public class BusinessInfoController {
     /**
      * Finds and returns the department with the associated id sent in the path variable. If null, an exception is thrown
      * in the service.
+     * @param dptID Integer Id of the department in question
      * @return
      */
     @RequestMapping(value = "/departments/{id}", method = RequestMethod.GET)
@@ -46,7 +48,8 @@ public class BusinessInfoController {
 
     /**
      * Finds and returns all franchises as an iterable list of franchises.
-     * @return
+     * @param active boolean status of active field
+     * @return Iterable list of franchises
      */
     @RequestMapping(value = "/franchises", method = RequestMethod.GET)
     public @ResponseBody Iterable<Franchise> getAllFranchises(@RequestParam(defaultValue = "true", required = false)
@@ -58,7 +61,8 @@ public class BusinessInfoController {
     /**
      * Finds and returns a franchise with the id associated that was sent in as a path variable. If null, an exception is
      * thrown in the service.
-     * @return
+     * @param frID Integer ID of franchise
+     * @return Optional Franchise
      */
     @RequestMapping(value = "/franchises/{id}", method = RequestMethod.GET)
     public @ResponseBody Optional<Franchise> getFranchiseById(@PathVariable(value = "id") Integer frID){
@@ -68,7 +72,8 @@ public class BusinessInfoController {
     /**
      * Adds a new department to the database. Takes in a @RequestBody Department object and sends back the record that
      * was saved in the database as a Department.
-     * @return
+     * @param department Department object
+     * @return Department that was just added
      */
     @RequestMapping(value = "/departments/add", method = RequestMethod.POST)
     public @ResponseBody Department addDepartment(@RequestBody Department department){
@@ -79,7 +84,8 @@ public class BusinessInfoController {
     /**
      * Adds a new franchise to the database. Takes in a @RequestBody Franchise object and sends back the record that
      * was saved in the database as a Franchise.
-     * @return
+     * @param franchise Franchise object
+     * @return Franchise that was just added
      */
     @RequestMapping(value = "/franchises/add", method = RequestMethod.POST)
     public @ResponseBody Franchise addFranchise(@RequestBody Franchise franchise){
@@ -89,8 +95,8 @@ public class BusinessInfoController {
 
     /**
      * Finds and returns a franchise that shares a name with the path variable that is sent in.
-     * @param frName
-     * @return
+     * @param frName String name of franchise
+     * @return Franchise object
      */
     @RequestMapping(value = "/franchises/byname/{frName}", method = RequestMethod.GET)
     public @ResponseBody Franchise getFranchiseByName(@PathVariable(value = "frName") String frName){
@@ -99,32 +105,54 @@ public class BusinessInfoController {
 
     /**
      * Finds and returns a department that shares a name with the path variable that is sent in.
-     * @param dptName
-     * @return
+     * @param dptName String name of department
+     * @return Department ojbect
      */
     @RequestMapping(value = "/departments/byname/{dptName}", method = RequestMethod.GET)
     public @ResponseBody Department getDepartmentByName(@PathVariable(value = "dptName") String dptName){
         return businessInfoService.findDepartmentByDptName(dptName);
     }
 
+    /**
+     * This endpoint is used to edit a department with the same dptID as what is sent in the path variable.
+     * @param department Department object to replace the department in question
+     * @param dptID Integer of department being edited
+     * @return Department object
+     */
     @RequestMapping(value = "/departments/edit/{dptID}", method = RequestMethod.PUT)
     public @ResponseBody Department editDepartment(@RequestBody Department department, @PathVariable(value = "dptID") Integer dptID){
 
         return businessInfoService.editDepartment(department, dptID);
     }
 
+    /**
+     * This endpoint is used to edit a franchise with the same frID as what is sent in the path variable.
+     * @param franchise object to replace the franchise in question
+     * @param frID Integer of franchise being edited
+     * @return Franchise object
+     */
     @RequestMapping(value = "/franchises/edit/{frID}", method = RequestMethod.PUT)
     public @ResponseBody Franchise editFranchise(@RequestBody Franchise franchise, @PathVariable(value = "frID") Integer frID){
 
         return businessInfoService.editFranchise(franchise, frID);
     }
 
+    /**
+     * This endpoint toggles tha active status of a franchise back and forth(true and false)
+     * @param frID Integer ID of franchise being toggled
+     * @return Integer ID of the toggled franchise
+     */
     @RequestMapping(value = "/franchises/toggle/{frID}", method = RequestMethod.PUT)
     public @ResponseBody Integer toggleFranchise(@PathVariable(value = "frID") Integer frID){
 
         return businessInfoService.toggleFranchise(frID);
     }
 
+    /**
+     * This endpoint toggles the active status of a department back and forth(true and false)
+     * @param dptID Integer of department being toggled
+     * @return Integer ID of the toggled department
+     */
     @RequestMapping(value = "/departments/toggle/{dptID}", method = RequestMethod.PUT)
     public @ResponseBody Integer toggleDepartments(@PathVariable(value = "dptID") Integer dptID){
 

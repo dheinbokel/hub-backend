@@ -22,7 +22,7 @@ public class PermissionsController {
 
     /**
      * Returns an iterable of HubPermissions from the database.
-     * @return
+     * @return Iterable list of HubPermission objects
      */
     @RequestMapping(value = "/permissions", method = RequestMethod.GET)
     public @ResponseBody Iterable<HubPermissions> getAllPermissions(){
@@ -31,8 +31,8 @@ public class PermissionsController {
 
     /**
      * Returns a permission from the database associated with the id in the path variable.
-     * @param prmID
-     * @return
+     * @param prmID Integer ID of the permission
+     * @return Optional HubPermission
      */
     @RequestMapping(value = "/permissions/{id}", method = RequestMethod.GET)
     public @ResponseBody Optional<HubPermissions> getPermissionById(@PathVariable(value = "id") Integer prmID){

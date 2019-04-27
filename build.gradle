@@ -57,6 +57,7 @@ dependencies {
     compile("com.auth0:java-jwt:3.4.0")
     //compile("com.h2database:h2")
     compile 'mysql:mysql-connector-java'
+    //compile('com.microsoft.sqlserver:mssql-jdbc') - Use this and remove the mysql-connector-java compiler to connect with MS SQL
     //compile 'javax.xml.bind:jaxb-api:2.3.0'
     testCompile('org.springframework.boot:spring-boot-starter-test')
     //testCompile("junit:junit")
