@@ -75,8 +75,9 @@ public class ContentService {
     }
 
     /**
-     * Returns all content with the content type that matches what is passed into the parameters.
+     * Returns all active or inactive content with the content type that matches what is passed into the parameters.
      * @param contentType
+     * @param active
      * @return
      */
     public Iterable<Content> findByContentType(String contentType, boolean active){
@@ -140,6 +141,11 @@ public class ContentService {
         }
     }
 
+    /**
+     * Returns a Resource from the file path
+     * @param fileName
+     * @return
+     */
     public Resource loadFileAsResource(String fileName) {
         try {
             Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
@@ -154,6 +160,12 @@ public class ContentService {
         }
     }
 
+    /**
+     * Used to create a like ID that can be used in liking and disliking methods.
+     * @param userID
+     * @param contentID
+     * @return
+     */
     public String createLikeID(Integer userID, Integer contentID){
 
         String user;
@@ -191,6 +203,11 @@ public class ContentService {
 
     }
 
+    /**
+     * Return the amount of likes associated with a piece of content.
+     * @param contentID
+     * @return
+     */
     public int countLikesForContent(Integer contentID){
 
         ArrayList<Like> likes = likeRepository.findByContentID(contentID);
@@ -199,6 +216,12 @@ public class ContentService {
         return total;
     }
 
+    /**
+     * Deletes a like that has the likeID of the userID and contentID combined, effectively removing a user's like from
+     * a content piece they previously liked.
+     * @param userID
+     * @param contentID
+     */
     public void dislikeContent(Integer userID, Integer contentID){
 
         String likeID = createLikeID(userID, contentID);
@@ -210,6 +233,13 @@ public class ContentService {
         }
     }
 
+    /**
+     * Creates a contentTag object with tagID's sent in with the /content/add endpoint and the associated contentID. This
+     * is how we store contentTags.
+     * @param contentID
+     * @param contentName
+     * @param tagArray
+     */
     public void addTagToContent(Integer contentID, String contentName, Integer[] tagArray){
 
         String content;
@@ -246,6 +276,11 @@ public class ContentService {
 
     }
 
+    /**
+     * Returns all content Tags that would match the subscriptions of a user.
+     * @param contentTagRequest
+     * @return ArrayList of ContentTag
+     */
     public ArrayList<ContentTag> getContentTagByAllTags(ContentTagRequest contentTagRequest){
 
         Integer[] tagArray = contentTagRequest.getTagIdArray();
@@ -272,6 +307,13 @@ public class ContentService {
         return contentTags;
     }
 
+    /**
+     * Sends and creates notification objects to users when a piece of content is added or edited to let the user know
+     * of new content.
+     * @param contentID
+     * @param contentName
+     * @param tagArray
+     */
     public void sendNotifications(Integer contentID, String contentName, Integer[] tagArray){
 
         Set<Integer> subs = new HashSet<>();
@@ -295,16 +337,31 @@ public class ContentService {
         }
     }
 
+    /**
+     * Get all content tags associated with a piece of content.
+     * @param contentID
+     * @return Iterable of ContentTag
+     */
     public Iterable<ContentTag> getContentTagsByContentID(Integer contentID){
 
         return contentTagRepository.findByContentID(contentID);
     }
 
+    /**
+     * Get the content tags associated with a tag.
+     * @param tagID
+     * @return Iterable Content Tag
+     */
     public Iterable<ContentTag> getContentTagsByTagID(Integer tagID){
 
         return contentTagRepository.findByTagID(tagID);
     }
 
+    /**
+     * Toggle active status of a piece of content.
+     * @param contentID
+     * @return Integer
+     */
     public Integer toggleContent(Integer contentID){
 
         Content content = contentRepository.findById(contentID)
@@ -339,6 +396,15 @@ public class ContentService {
         return contentID;
     }
 
+    /**
+     * Edit a piece of content and change the data for the contentID
+     * @param contentID
+     * @param file
+     * @param contentName
+     * @param contentType
+     * @param tagArray
+     * @return Content
+     */
     public Content editContent(Integer contentID, MultipartFile file, String contentName, String contentType, String tagArray){
 
         Content content = contentRepository.findById(contentID)

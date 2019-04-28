@@ -6,6 +6,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 
+/**
+ * This class represents a notification that the user would receive to inform them of a new piece of content.
+ */
 @Entity
 @Table(name = "NOTIFICATIONS")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -40,6 +43,9 @@ public class Notification {
         this.message = "New content: " + contentName;
     }
 
+    /**
+     * Getters and setters
+     */
     public Integer getNotificationID() {
         return notificationID;
     }

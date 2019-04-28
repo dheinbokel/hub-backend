@@ -8,6 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+/**
+ * This class represents a user's subscription and is used to relay notifications to the user and subscribe the user
+ * to tags.
+ */
 @Entity
 @Table(name = "SUBSCRIPTION")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -35,6 +39,9 @@ public class Subscription {
         this.tagID = tagID;
     }
 
+    /**
+     * Getters and setters
+     */
     public String getSubID() {
         return subID;
     }

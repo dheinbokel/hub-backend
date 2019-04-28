@@ -2,7 +2,7 @@ package com.hub.models;
 
 /**
  * This class represents a fake token from Active Directory.  The fields represent what will be
- * returned in the JSON web token during the actual AD connection.
+ * returned in the JSON web token connection.
  * @author Doug Heinbokel on 1/14/19
  */
 public class MockToken {

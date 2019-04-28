@@ -22,7 +22,7 @@ public class BusinessInfoService {
     }
 
     /**
-     * Finds and returns all departments as an iterable list of departments.
+     * Finds and returns all active departments as an iterable list of departments.
      * @return
      */
     public Iterable<Department> findAllDepartmentsByActiveStatus(boolean isActive){
@@ -31,7 +31,7 @@ public class BusinessInfoService {
     }
 
     /**
-     * Finds and returns all franchises as an iterable list of franchises.
+     * Finds and returns all active franchises as an iterable list of franchises.
      * @return
      */
     public Iterable<Franchise> findAllFranchisesByActiveStatus(boolean isActive){
@@ -126,6 +126,12 @@ public class BusinessInfoService {
         throw new HubNotFoundException("Could not find franchise with name: " + frName);
     }
 
+    /**
+     * Edits a franchise saved in the database.
+     * @param franchise object
+     * @param frID Integer
+     * @return Edited franchise
+     */
     public Franchise editFranchise(Franchise franchise, Integer frID){
 
         Franchise franchise2 = franchiseRepository.findById(frID)
@@ -138,6 +144,12 @@ public class BusinessInfoService {
         return updatedFranchise;
     }
 
+    /**
+     * Edits a department saved in the database
+     * @param department object
+     * @param dptID Integer
+     * @return department that was edited
+     */
     public Department editDepartment(Department department, Integer dptID){
 
         Department department1 = departmentRepository.findById(dptID)
@@ -149,6 +161,11 @@ public class BusinessInfoService {
         return updatedDepartment;
     }
 
+    /**
+     * Sets the active status of a department back and forth from active to inactive
+     * @param dptID Integer
+     * @return dptID of department toggled
+     */
     public Integer toggleDepartment(Integer dptID){
 
         Department department = departmentRepository.findById(dptID)
@@ -166,6 +183,11 @@ public class BusinessInfoService {
         return dptID;
     }
 
+    /**
+     * Toggle the active status of a franchise
+     * @param frID Integer
+     * @return ID of franchise toggled
+     */
     public Integer toggleFranchise(Integer frID){
 
         Franchise franchise = franchiseRepository.findById(frID)

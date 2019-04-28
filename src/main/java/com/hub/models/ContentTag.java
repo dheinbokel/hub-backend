@@ -9,6 +9,9 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+/**
+ * This class represents an individual tag that is related to a piece of content.
+ */
 @Entity
 @Table(name = "CONTENT_TAG")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})

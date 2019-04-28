@@ -20,7 +20,7 @@ public class CommentService {
     }
 
     /**
-     * Returns all comments in the database that come back from the commentsRepository method call. Sends as an iterable.
+     * Returns all comments in the database with the matching active status that come back from the commentsRepository method call. Sends as an iterable.
      * @return
      */
     public Iterable<Comments> findAllCommentsByActiveStatus(boolean active){
@@ -29,7 +29,8 @@ public class CommentService {
     }
 
     /**
-     * Returns all the comments in the database that are associated with the contentID given to this method's parameter.
+     * Returns all the comments in the database that are associated with the contentID given to this method's parameter
+     * and have an active status matching what was sent in.
      * @param contentID
      * @return
      */
@@ -87,6 +88,12 @@ public class CommentService {
         return comments;
     }
 
+    /**
+     * Edit comment from database
+     * @param comments
+     * @param id
+     * @return
+     */
     public Comments changeComment(Comments comments, Integer id){
 
         Comments comment = commentsRepository.findById(id)
@@ -98,6 +105,11 @@ public class CommentService {
         return updatedComment;
     }
 
+    /**
+     * Toggle active status of comment
+     * @param id
+     * @return
+     */
     public Integer toggleComment(Integer id){
 
         Comments comment = commentsRepository.findById(id)
@@ -114,6 +126,11 @@ public class CommentService {
         return id;
     }
 
+    /**
+     * Delete a comment from the database
+     * @param id
+     * @return
+     */
     public Integer deleteComment(Integer id){
 
         commentsRepository.deleteById(id);

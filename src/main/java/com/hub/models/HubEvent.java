@@ -1,12 +1,15 @@
 package com.hub.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-import javax.persistence.*;
+//This is no longer used but can be used for the calandar if needed later
 
-@Entity
-@Table(name = "HUB_EVENT")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//@Entity
+//@Table(name = "HUB_EVENT")
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class HubEvent {
 
     @Id
